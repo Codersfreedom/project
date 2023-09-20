@@ -48,7 +48,7 @@
                         $_SESSION['logedin'] = true;
 
                         $_SESSION['neckname'] = $row['f_name'];
-                        header('location: /project/main.php?Loginsuccess=true');
+                        header('location: /project/teacher.php?Loginsuccess=true');
 
                       } else {
 

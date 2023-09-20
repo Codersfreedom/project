@@ -7,6 +7,7 @@
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="//cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css">
 
     <title>Theory-class</title>
   </head>
@@ -26,9 +27,42 @@ include 'partials/_nav.php';
 <?php 
 include 'partials/Sub_allot_modal.php'
 ?>
-
-
 </div>
+
+<!-- Implementing update function in Subject table to allocate teachers -->
+
+<?php  
+require 'partials/dbconnect.php';
+    $update = false;
+    $showError='false';
+
+ 
+
+  if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    
+
+   
+    
+    $dept = $_POST['dept'];
+    $sem = $_POST['sem'];
+    $type = $_POST['type'];
+    $sem = $_POST['sem'];
+    $allotTeacher = $_POST['allotTeacher'];
+    
+
+    // update query on subject table
+
+    $sql = "UPDATE `subject` SET ``isAlloted`='',`allotedto1`='$allotTeacher' WHERE 1";
+
+
+  }
+
+
+
+
+
+
+  ?>
 
   <!-- Table to display data -->
 
@@ -49,8 +83,26 @@ include 'partials/Sub_allot_modal.php'
       </thead>
       <tbody>
 
+<?php
+
+$sql = "SELECT * FROM `subject`";
+$result = mysqli_query($conn,$sql);
+      while ($row = mysqli_fetch_assoc($result)) {
 
 
+echo "  <tr>
+<th scope='row'>" . $row['sub_code'] . "</th>
+<td>" . $row['sub_name'] . "</td>
+<td>" . $row['course_type'] . "</td>
+<td>" . $row['semester'] . "</td>
+<td>" . $row['dept'] . "</td>
+<td><button class = 'edit btn btn-sm btn-primary' name = 'edit'> <a class = 'text-light'href='partials/sub_update.php?updateid=" . $row['sub_code'] . "'>Update</a></button>  <button class='delete btn btn-sm btn-primary' id=d" . $row['sub_code'] . ">Delete</button>  </td>
+
+</tr>";
+
+
+}
+?>
 
 
     <!-- Optional JavaScript -->
@@ -59,4 +111,37 @@ include 'partials/Sub_allot_modal.php'
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
   </body>
+
+  <!-- Datatables -->
+<script src="//cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+
+  
+<!-- Initializint Data tables -->
+<script>
+
+  $(document).ready(function () {
+    $('#myTable').DataTable();
+  });
+</script>
+
+<script>
+
+deletes = document.getElementsByClassName('delete');
+    Array.from(deletes).forEach((element) => {
+      element.addEventListener("click", (e) => {
+        console.log("delete ");
+        sno = e.target.id.substr(1);
+
+        if (confirm("Are you sure you want to delete this note!")) {
+          console.log("yes");
+          window.location = `subject.php?delete=${sno}`;
+          // TODO: Create a form and use post request to submit a form
+        }
+        else {
+          console.log("no");
+        }
+      })
+    })
+
+  </script>
 </html>

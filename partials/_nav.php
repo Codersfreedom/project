@@ -9,13 +9,13 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
-    <title>Hello, world!</title>
+    <title></title>
   </head>
   <body>
    
 <ul class="nav nav-tabs d-flex ">
   <li class="nav-item">
-    <a class="nav-link active" href="teacher.php">Teachers</a>
+    <a class="nav-link active" href="teacher.php">Faculty</a>
   </li>
   <li class="nav-item">
     <a class="nav-link" href="subject.php">Subjects</a>
@@ -26,8 +26,7 @@
   <li class="nav-item dropdown">
     <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="partials/_nav.php" role="button" aria-haspopup="true" aria-expanded="false">Allotment</a>
     <div class="dropdown-menu">
-      <a class="dropdown-item" href="theory.php">Theory</a>
-      <a class="dropdown-item" href="lab.php">Lab</a>
+      <a class="dropdown-item" href="theory.php">Subject</a>
       <a class="dropdown-item" href="Allot_room.php">Room</a>
     </div>
   </li>

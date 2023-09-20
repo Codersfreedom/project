@@ -12,6 +12,10 @@
   </head>
   <body>
    
+<?php
+  require 'dbconnect.php';
+?>
+
 <!-- Button trigger modal -->
 <button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModalCenter">
 Allot Subject
@@ -31,15 +35,33 @@ Allot Subject
       <form action="theory.php" method="post">
 
       <div class="form-group">
-    <label for="deptName">Department</label>
-    <select class="form-control" id ="allotTeacher" name="allotTeacher" >
-  <option>CSE</option>
+    <label for="dept">Department</label>
+    <select class="form-control" id ="dept" name="dept" onchange="getDeptOption()" >
+
+      <?php
+    
+     $sql = "SELECT `dept` from `course`";
+     $result = mysqli_query($conn,$sql);
+     
+     
+     while($row = mysqli_fetch_assoc($result)){
+
+echo "
+        
+        <option>
+        ".$row['dept']."
+        </option>
+        ";
+  
+     }
+    
+      ?>
 </select>
   </div>
 
   <div class="form-group">
 <label for="sem">Semester</label>
-  <select class="form-control" id ="sem" name="sem" >
+  <select class="form-control" id ="sem" name="sem" onchange="getSemOption()" >
   <option>1</option>
   <option>2</option>
   <option>3</option>
@@ -53,17 +75,33 @@ Allot Subject
 
 
   <div class="form-group">
-<label for="select">Course Type</label>
-  <select class="form-control" id ="select" name="type" >
-  <option>Theory</option>
-  <option>Lab</option>
+<label for="type">Course Type</label>
+<select class="form-control" id ="type" name="type" onchange="getCourseOption()">
+<option>Theory</option>
+<option>Lab</option>
 </select>
 </div>
 
   <div class="form-group">
     <label for="subname">Subject name</label>
     <select class="form-control" id ="subname" name="subname" >
-  <option>Subject Name</option>
+    <?php
+    
+    $sql = "SELECT `sub_name` from `subject` WHERE `course_type` ";
+    $result = mysqli_query($conn,$sql);
+    
+    
+    while($row = mysqli_fetch_assoc($result)){
+
+echo "
+       
+       <option>
+       ".$row['sub_name']."
+       </option>
+       ";
+ 
+    }
+    ?>
 </select>
   </div>
 
@@ -92,6 +130,29 @@ Allot Subject
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
   </body>
+
+  <script>
+
+    // JavaScript to get Semester input from select tag
+      function getSemOption() {
+        selectElement = document.querySelector('#sem');
+        output = selectElement.value;
+        console.log(output)
+    }
+
+    function getDeptOption() {
+        selectElement = document.querySelector('#dept');
+        output = selectElement.value;
+        console.log(output)
+      
+    }
+    function getCourseOption() {
+        selectElement = document.querySelector('#type');
+        output = selectElement.value;
+        console.log(output)
+      
+    }
+    </script>
 </html>
 
 
