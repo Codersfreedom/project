@@ -1,0 +1,62 @@
+﻿
+body {
+    font-family: 'Open Sans', sans-serif;
+    line-height: 30px;
+    font-size: 14px;
+}
+
+
+
+
+
+/*=====================================
+  FACULTY STYLES 
+  ===================================*/
+#faculty-sec {
+    background-color: #000;
+    color: #fff;
+}
+
+#faculty-sec .header-line {
+    color: #fff;
+}
+
+.faculty-div h4 {
+    line-height: 30px;
+    font-weight: 700;
+}
+
+.faculty-div {
+    padding: 30px;
+}
+
+.faculty-div hr {
+    border: 1px solid #1A94C4;
+}
+
+.faculty-div h3 {
+    font-size: 25px;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.faculty-div p {
+    padding-top: 10px;
+    padding-bottom: 15px;
+}
+
+.faculty-div img {
+    border: 10px double #fff;
+}
+
+
+/*=====================================
+  Footer STYLES 
+  ===================================*/
+#footer {
+    padding: 5px 20px;
+    background-color: #2d3d5a;
+    text-align: right;
+    color: #fff;
+    font-size: 15px;
+}
