@@ -14,8 +14,40 @@
 <?php 
 
 include 'partials/_header.php';
-include 'partials/_nav.php'; ?>
+include 'partials/_nav.php'; 
 
+
+
+?>
+
+
+<div class="container d-flex justify-content-center mt-5 p-5">
+
+<?php 
+include 'partials/Sub_allot_modal.php'
+?>
+
+
+</div>
+
+  <!-- Table to display data -->
+
+  <div class="container p-5">
+
+    <table class="table" id="myTable">
+      <thead>
+        <tr>
+      <th scope="col">Subject Code</th>
+      <th scope="col">Subject Name</th>
+      <th scope="col">Course Type</th>
+      <th scope="col">Semester</th>
+      <th scope="col">Department</th>
+      <th scope="col">Alloted To</th>
+      <th scope="col">Action</th>
+
+        </tr>
+      </thead>
+      <tbody>
 
 
 

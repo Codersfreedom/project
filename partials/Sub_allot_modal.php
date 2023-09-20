@@ -28,35 +28,18 @@ Allot Subject
         </button>
       </div>
       <div class="modal-body">
-      <form action="subject.php" method="post">
+      <form action="theory.php" method="post">
 
       <div class="form-group">
-    <label for="name">Department</label>
-    <input type="text" class="form-control" id="name" name="subname" placeholder="Enter the subject name">
-  </div>
-
-  <div class="form-group">
-    <label for="name">Department</label>
-    <input type="text" class="form-control" id="name" name="subname" placeholder="Enter the subject name">
-  </div>
-
-
-  <div class="form-group">
-<label for="select">Course Type</label>
-  <select class="form-control" id ="select" name="type" >
-  <option>Theory</option>
-  <option>Lab</option>
+    <label for="deptName">Department</label>
+    <select class="form-control" id ="allotTeacher" name="allotTeacher" >
+  <option>CSE</option>
 </select>
-</div>
-
-  <div class="form-group">
-    <label for="name">subject name</label>
-    <input type="text" class="form-control" id="name" name="subname" placeholder="Enter the subject name">
   </div>
 
   <div class="form-group">
-<label for="select">Semester</label>
-  <select class="form-control" id ="select" name="sem" >
+<label for="sem">Semester</label>
+  <select class="form-control" id ="sem" name="sem" >
   <option>1</option>
   <option>2</option>
   <option>3</option>
@@ -68,16 +51,29 @@ Allot Subject
 </select>
 </div>
 
-<div class="form-group">
-<label for="select">Department</label>
-  <select class="form-control" id ="select" name="dept" >
-  <option>CSE</option>
-  <option>ECE</option>
-  <option>ME</option>
-  <option>CYBER SEQURITY</option>
+
+  <div class="form-group">
+<label for="select">Course Type</label>
+  <select class="form-control" id ="select" name="type" >
+  <option>Theory</option>
+  <option>Lab</option>
 </select>
 </div>
 
+  <div class="form-group">
+    <label for="subname">Subject name</label>
+    <select class="form-control" id ="subname" name="subname" >
+  <option>Subject Name</option>
+</select>
+  </div>
+
+  <div class="form-group">
+<label for="allotTeacher">Allocate teacher</label>
+  <select class="form-control" id ="allotTeacher" name="allotTeacher" >
+  <option>Teacher</option>
+  
+</select>
+</div>
 
       </div>
       <div class="modal-footer">
