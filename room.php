@@ -28,7 +28,7 @@ $year = $_POST['year'];
 
 $alloted = $dept.' '. $year;
 
-// Check if faculty id already exists or not
+// Check if room is already allocated or not
 
 $existsql = "SELECT * FROM `room` WHERE `room_no` = '$roomid'";
 $existresult = mysqli_query($conn, $existsql);
@@ -39,7 +39,7 @@ if ($num > 0) {
 }
 
 else{
-$sql = "INSERT INTO `room`(`room_no`, `alloted_to`) VALUES ('$roomid','$alloted')";
+$sql = "INSERT INTO `room`(`room_no`, `alloted_to`,`year`) VALUES ('$roomid','$alloted','$year')";
 $result = mysqli_query($conn, $sql);
 
 
@@ -128,8 +128,8 @@ echo '<div class="alert alert-success alert-dismissible fade show" role="alert">
   <tbody>
     <?php
    
-    $sql = "SELECT* FROM `room`";
-    $result = mysqli_query($conn, $sql);
+   $sql = "SELECT * FROM `room`";
+   $result= mysqli_query($conn,$sql);
 
     while ($row = mysqli_fetch_assoc($result)) {
 

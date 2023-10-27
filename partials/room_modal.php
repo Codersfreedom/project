@@ -46,8 +46,9 @@ $result = mysqli_query($conn,$sql);
 while($row=mysqli_fetch_assoc($result)){
 
     $dept = $row['dept'];
+    $id = $row['dept_id'];
   
-echo '<option>'.$dept.'</option>';
+echo '<option>'.$id.'.'.$dept.'</option>';
     
 }
     

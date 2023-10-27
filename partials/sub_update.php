@@ -20,13 +20,13 @@ $ShowError = 'false';
 
 if(isset($_GET['updateid'])){
  $id = $_GET['updateid'];
-$sql = "SELECT * FROM `subject` WHERE `sub_code` = '$id'";
+$sql = "SELECT * FROM `subject` WHERE `subject_code` = '$id'";
 $result = mysqli_query($conn,$sql);
 $row = mysqli_fetch_assoc($result);
 
-    $subcode = $row['sub_code'];
-    $subname = $row['sub_name'];
-    $type = $row['course_type'];
+    $subcode = $row['subject_code'];
+    $subname = $row['subject_name'];
+    $type = $row['subject_type'];
     $sem = $row['semester'];
     $dept = $row['dept'];
 
@@ -35,7 +35,8 @@ $row = mysqli_fetch_assoc($result);
 }
 
   if($_SERVER['REQUEST_METHOD']=='POST'){
-    // update the record
+
+    // get the values from update form
     $Subcode = $_POST['subcode'];
     $Subname = $_POST['subname'];
     $Type = $_POST['course'];
@@ -46,7 +47,7 @@ $row = mysqli_fetch_assoc($result);
     
    // sql update
 
-    $sql = "UPDATE `subject` SET `sub_code` = '$Subcode' ,`sub_name` = '$Subname', `course_type` = '$Type'   WHERE `subject`.`sub_code` = '$Subcode'";
+    $sql = "UPDATE `subject` SET `subject_code` = '$Subcode' ,`subject_name` = '$Subname', `subject_type` = '$Type', `semester` = '$Sem'   WHERE `subject`.`subject_code` = '$Subcode'";
     $result = mysqli_query($conn,$sql);
     if($result){
         $update = true;

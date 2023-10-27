@@ -34,60 +34,16 @@ Allot Subject
       <div class="modal-body">
       <form action="theory.php" method="post">
 
-      <div class="form-group">
-    <label for="dept">Department</label>
-    <select class="form-control" id ="dept" name="dept" onchange="getDeptOption()" >
-
-      <?php
-    
-     $sql = "SELECT `dept` from `course`";
-     $result = mysqli_query($conn,$sql);
      
-     
-     while($row = mysqli_fetch_assoc($result)){
-
-echo "
-        
-        <option>
-        ".$row['dept']."
-        </option>
-        ";
-  
-     }
-    
-      ?>
-</select>
-  </div>
-
-  <div class="form-group">
-<label for="sem">Semester</label>
-  <select class="form-control" id ="sem" name="sem" onchange="getSemOption()" >
-  <option>1</option>
-  <option>2</option>
-  <option>3</option>
-  <option>4</option>
-  <option>5</option>
-  <option>6</option>
-  <option>7</option>
-  <option>8</option>
-</select>
-</div>
 
 
-  <div class="form-group">
-<label for="type">Course Type</label>
-<select class="form-control" id ="type" name="type" onchange="getCourseOption()">
-<option>Theory</option>
-<option>Lab</option>
-</select>
-</div>
 
   <div class="form-group">
     <label for="subname">Subject name</label>
     <select class="form-control" id ="subname" name="subname" >
     <?php
     
-    $sql = "SELECT `sub_name` from `subject` WHERE `course_type` ";
+    $sql = "SELECT `subject_name` from `subject`";
     $result = mysqli_query($conn,$sql);
     
     
@@ -96,7 +52,7 @@ echo "
 echo "
        
        <option>
-       ".$row['sub_name']."
+       ".$row['subject_name']."
        </option>
        ";
  
@@ -108,7 +64,26 @@ echo "
   <div class="form-group">
 <label for="allotTeacher">Allocate teacher</label>
   <select class="form-control" id ="allotTeacher" name="allotTeacher" >
-  <option>Teacher</option>
+
+
+
+  <?php
+    
+    $sql = "SELECT `name` from `faculty`";
+    $result = mysqli_query($conn,$sql);
+    
+    
+    while($row = mysqli_fetch_assoc($result)){
+
+echo "
+       
+       <option>
+       ".$row['name']."
+       </option>
+       ";
+ 
+    }
+    ?>
   
 </select>
 </div>

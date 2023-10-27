@@ -18,7 +18,7 @@ include 'dbconnect.php';
 $update = false;
 $ShowError = 'false';
 
-// if(isset($_GET['updateid'])){
+if(isset($_GET['updateid'])){
  $id = $_GET['updateid'];
 $sql = "SELECT * FROM `faculty` WHERE `fac_id` = '$id'";
 $result = mysqli_query($conn,$sql);
@@ -31,9 +31,9 @@ $alias = $row['alias'];
 $email = $row['email'];
 $phone = $row['phone'];
 
+}
 
 
-// }
 
   if($_SERVER['REQUEST_METHOD']=='POST'){
     // update the record
@@ -71,7 +71,7 @@ $phone = $row['phone'];
 <form action="fac_update.php" method="post">
   <div class="form-group">
     <label for="facid">Faculty id</label>
-    <input type="number" class="form-control" id="facid" name="facid" value="<?php echo $facid; ?>">
+    <input type="text" class="form-control" id="facid" name="facid" value="<?php echo $facid; ?>">
 
   </div>
   <div class="form-group">

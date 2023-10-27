@@ -15,7 +15,7 @@
    
 <ul class="nav nav-tabs d-flex ">
   <li class="nav-item">
-    <a class="nav-link active" href="teacher.php">Faculty</a>
+    <a class="nav-link " href="teacher.php">Faculty</a>
   </li>
   <li class="nav-item">
     <a class="nav-link" href="subject.php">Subjects</a>

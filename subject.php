@@ -34,7 +34,7 @@ require 'partials/dbconnect.php';
 
   // Check if faculty id already exists or not
 
-    $existsql = "SELECT * FROM `subject` WHERE `sub_code` = '$subcode'";
+    $existsql = "SELECT * FROM `subject` WHERE `subject_code` = '$subcode'";
     $existresult = mysqli_query($conn, $existsql);
     $num = mysqli_num_rows($existresult);
     if ($num > 0) {
@@ -43,7 +43,7 @@ require 'partials/dbconnect.php';
     }
 
 else{
-    $sql = "INSERT INTO `subject`(`sub_code`, `sub_name`, `course_type`, `semester`, `dept`) VALUES ('$subcode','$subname','$type','$sem','$dept')";
+    $sql = "INSERT INTO `subject`(`subject_code`, `subject_name`, `subject_type`, `semester`, `dept`) VALUES ('$subcode','$subname','$type','$sem','$dept')";
     $result = mysqli_query($conn, $sql);
 
   
@@ -65,7 +65,7 @@ else{
 if (isset($_GET['delete'])) {
   $sno = $_GET['delete'];
   $delete = true;
-  $sql = "DELETE FROM `subject` WHERE `sub_code` = '$sno'";
+  $sql = "DELETE FROM `subject` WHERE `subject_code` = '$sno'";
   $result = mysqli_query($conn, $sql);
 }
 
@@ -125,12 +125,12 @@ else if(isset($_GET['insertlog'])){
 
 
       echo "   <tr>
-            <th scope='row'>" . $row['sub_code'] . "</th>
-            <td>" . $row['sub_name'] . "</td>
-            <td>" . $row['course_type'] . "</td>
+            <th scope='row'>" . $row['subject_code'] . "</th>
+            <td>" . $row['subject_name'] . "</td>
+            <td>" . $row['subject_type'] . "</td>
             <td>" . $row['semester'] . "</td>
             <td>" . $row['dept'] . "</td>
-            <td><button class = 'edit btn btn-sm btn-primary' name = 'edit'> <a class = 'text-light'href='partials/sub_update.php?updateid=" . $row['sub_code'] . "'>Update</a></button>  <button class='delete btn btn-sm btn-primary' id=d" . $row['sub_code'] . ">Delete</button>  </td>
+            <td><button class = 'edit btn btn-sm btn-primary' name = 'edit'> <a class = 'text-light'href='partials/sub_update.php?updateid=" . $row['subject_code'] . "'>Update</a></button>  <button class='delete btn btn-sm btn-primary' id=d" . $row['subject_code'] . ">Delete</button>  </td>
         
           </tr>";
 
