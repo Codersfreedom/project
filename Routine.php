@@ -12,96 +12,122 @@
   <link rel="stylesheet" href="//cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css">
 
   <title>Routine</title>
+  <?php
+
+include 'partials/_header.php';
+include 'partials/_nav.php';
+  ?>
 </head>
 
+<div class="container d-flex justify-content-center my-4 p-4">
+  <form class="form-inline" action="Routine.php" method="post">
+    <div class="form-group mb-2">
+      <label for="type" class="mx-3">Department</label>
+      <select class="form-control" id="course" name="course">
+        <option>CSE</option>
+      </select>
+    </div>
+    <div class="form-group mx-sm-3 mb-2">
+      <label for="type" class="mx-3">Year</label>
+      <select class="form-control" id="year" name="year">
+        <option>3</option>
+        <option>4</option>
+      </select>
+    </div>
+    <button type="submit" class="btn btn-primary mb-2">Confirm</button>
+  </form>
+
+</div>
 
 
 <?php
 
 
 
-//for 3rd year routine (wrap within a function)
-function third_year_routine(){
+//function for checking status and allocating on routine table
+function routine($year)
+{
 
-require 'partials/dbconnect.php';
+  require 'partials/dbconnect.php';
 
-$days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"];
+  $days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"];
 
-foreach ($days as $day) {
-  echo $day;
-
-  for ($i = 1; $i < 8; $i++) {
-    $sql = "SELECT `fac_id` FROM `status` WHERE `slot$i` = 1 and `day` = '$day' and `year` = 3";
-
-    $result = mysqli_query($conn, $sql);
-
-    $row = mysqli_fetch_assoc($result);
+  foreach ($days as $day) {
 
 
-    if (isset($row['fac_id'])) {
-      $faculty_id = $row['fac_id'];
-      $subjectQuery = "SELECT subject.subject_name from `subject` INNER join  sub_allot on subject.subject_code = sub_allot.sub_code where sub_allot.fac_id='$faculty_id'";
-      $subjectResult = mysqli_query($conn, $subjectQuery);
-      $subjectRow = mysqli_fetch_assoc($subjectResult);
-
-      if (isset($subjectRow['subject_name'])) {
-        $subject_name = $subjectRow['subject_name'];
-      } 
-
-
-      $facultyQuery = "SELECT `alias` FROM `faculty` WHERE `fac_id` = '$faculty_id'";
-      $facultyResult = mysqli_query($conn, $facultyQuery);
-      $facultyRow = mysqli_fetch_assoc($facultyResult);
-      if (isset($facultyRow['alias'])) {
-        $faculty = $facultyRow['alias'];
-      } 
-
-
-      $data = "$subject_name($faculty)";
-
-
-      $sql = "UPDATE `3year_routine` SET `slot$i` =  '$data' WHERE `day`='$day'";
-
-
-
+    for ($i = 1; $i < 8; $i++) {
+      $sql = "SELECT `fac_id` FROM `status` WHERE `slot$i` = 1 and `day` = '$day' and `year` = $year";
 
       $result = mysqli_query($conn, $sql);
 
-    } 
+      $row = mysqli_fetch_assoc($result);
 
 
-  }
+      if (isset($row['fac_id'])) {
+        $faculty_id = $row['fac_id'];
+        $subjectQuery = "SELECT subject.subject_name from `subject` INNER join  sub_allot on subject.subject_code = sub_allot.sub_code where sub_allot.fac_id='$faculty_id'";
+        $subjectResult = mysqli_query($conn, $subjectQuery);
+        $subjectRow = mysqli_fetch_assoc($subjectResult);
 
-  $sql = "SELECT * FROM `3year_routine` WHERE `slot1` = `slot2` = `slot3` = `slot4` and `day` = '$day'";
-  $result = mysqli_query($conn, $sql);
-  $row = mysqli_fetch_assoc($result);
-  if (isset($row['slot1'])) {
-    $subject = $row['slot1'];
+        if (isset($subjectRow['subject_name'])) {
+          $subject_name = $subjectRow['subject_name'];
+        }
 
 
-    if ($row['slot1'] = $row['slot2'] = $row['slot3'] = $row['slot4']) {
-      $faculty_query = "SELECT * FROM `sub_allot` WHERE `assign` = '$subject'";
-      $facultyidResult = mysqli_query($conn, $faculty_query);
-      $faculty_row = mysqli_fetch_assoc($facultyidResult);
-      if (isset($faculty_row['fac_id'])) {
-        $facultyId = $faculty_row['fac_id'];
+        $facultyQuery = "SELECT `alias` FROM `faculty` WHERE `fac_id` = '$faculty_id'";
+        $facultyResult = mysqli_query($conn, $facultyQuery);
+        $facultyRow = mysqli_fetch_assoc($facultyResult);
+        if (isset($facultyRow['alias'])) {
+          $faculty = $facultyRow['alias'];
+        }
+
+
+        $data = "$subject_name($faculty)";
+
+
+        $sql = "UPDATE  " . $year . "year_routine SET `slot$i` =  '$data' WHERE `day`='$day'";
+
+
+
+
+        $result = mysqli_query($conn, $sql);
+
       }
-      $subject_query = "SELECT * FROM `sub_allot` WHERE `fac_id` = '$facultyId' AND NOT `assign` = '$subject'";
-      $subject_result = mysqli_query($conn, $subject_query);
-      $subject_row = mysqli_fetch_assoc($subject_result);
-      if (isset($subject_row['assign'])) {
-        $new_subject = $subject_row['assign'];
-        $update = "UPDATE `3year_routine` SET `slot1` ='' , `slot2` ='$new_subject',`slot3` ='',`slot4` ='' WHERE `day`='$day'";
-        $update_result = mysqli_query($conn, $update);
-      }
+
 
     }
 
+    $sql = "SELECT * FROM `3year_routine` WHERE `slot1` = `slot2` = `slot3` = `slot4` and `day` = '$day'";
+    $result = mysqli_query($conn, $sql);
+    $row = mysqli_fetch_assoc($result);
+    if (isset($row['slot1'])) {
+      $subject = $row['slot1'];
 
+
+      if ($row['slot1'] = $row['slot2'] = $row['slot3'] = $row['slot4']) {
+        $faculty_query = "SELECT * FROM `sub_allot` WHERE `assign` = '$subject'";
+        $facultyidResult = mysqli_query($conn, $faculty_query);
+        $faculty_row = mysqli_fetch_assoc($facultyidResult);
+        if (isset($faculty_row['fac_id'])) {
+          $facultyId = $faculty_row['fac_id'];
+        }
+        $subject_query = "SELECT * FROM `sub_allot` WHERE `fac_id` = '$facultyId' AND NOT `assign` = '$subject'";
+        $subject_result = mysqli_query($conn, $subject_query);
+        $subject_row = mysqli_fetch_assoc($subject_result);
+        if (isset($subject_row['assign'])) {
+          $new_subject = $subject_row['assign'];
+          $update = "UPDATE `3year_routine` SET `slot1` ='' , `slot2` ='$new_subject',`slot3` ='',`slot4` ='' WHERE `day`='$day'";
+          $update_result = mysqli_query($conn, $update);
+        }
+
+      }
+
+
+
+    }
 
   }
-
-}
+ 
 }
 
 
@@ -111,8 +137,8 @@ foreach ($days as $day) {
 
 
 
-<!-- echo "<h1>Generated Class Schedule</h1>"; -->
-<div class="container p-5">
+
+<div class="container ">
   <h1 class="text-center my-3">Generated Class Schedule</h1>
 
   <table class="table" id="myTable">
@@ -135,62 +161,50 @@ foreach ($days as $day) {
 <?php
 
 
+// function for display routine from table
+function Generate_routine($year)
+{
 
-// $sql = "SELECT * FROM `3year_routine` ORDER BY 
-// CASE `day` WHEN 'Monday' THEN 0
-//   WHEN 'Tuesday ' THEN 1
-//   WHEN 'Wednesday  ' THEN 2
-//   WHEN 'Thursday  ' THEN 3
-//   WHEN 'Friday ' THEN 4
-//   WHEN 'Saturday ' THEN 5
-// END";
+  require 'partials/dbconnect.php';
 
-// $result = mysqli_query($conn, $sql);
-
-// $row = mysqli_fetch_assoc($result);
-
-// foreach ($days as $day) {
-
-//   $sql = "SELECT * FROM `3year_routine` WHERE  day= '$day' ";
-
-//   $result = mysqli_query($conn, $sql);
-
-//   $row = mysqli_fetch_assoc($result);
-
-//   for ($i = 1; $i < 8; $i++) {
-//     $fac = $row['slot' . $i . ''];
-
-//     $fetchSubject = "SELECT subject.subject_name from `subject` INNER join  sub_allot on subject.subject_code = sub_allot.sub_code where sub_allot.fac_id='$fac';";
-//     $fetchResult = mysqli_query($conn, $fetchSubject);
-//     $subjectRow = mysqli_fetch_assoc($fetchResult);
-//     if (isset($subjectRow['subject_name'])) {
-
-//       echo $subjectRow['subject_name'];
+  $sql = "SELECT * FROM " . $year . "year_routine";
 
 
-//     } else {
-//       echo (' ');
-//     }
+  $result = mysqli_query($conn, $sql);
+
+
+
+  while ($row = mysqli_fetch_assoc($result)) {
+
+    echo "  <tr>   
+      <th scope='row'>" . $row['day'] . "</th>
+  <td>" . $row['slot1'] . "</td>
+  <td>" . $row['slot2'] . "</td>
+  <td>" . $row['slot3'] . "</td>
+  <td>" . $row['slot4'] . "</td>
+  <td>" . $row['slot5'] . "</td>
+  <td>" . $row['slot6'] . "</td>
+  <td>" . $row['slot7'] . "</td>
+
+  </tr>";
+  }
+
+}
+
+// Getting post request from dropdown menu
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 
 
 
-//   }
-// }
+  $dept = $_POST['course'];
+  $year = $_POST['year'];
+
+  routine($year);
+  Generate_routine($year);
 
 
-
-// echo "  <tr>   
-//       <th scope='row'>" . $row['day'] . "</th>
-//   <td>" . $row['slot1'] . "</td>
-//   <td>" . $row['slot2'] . "</td>
-//   <td>" . $row['slot3'] . "</td>
-//   <td>" . $row['slot4'] . "</td>
-//   <td>" . $row['slot5'] . "</td>
-//   <td>" . $row['slot6'] . "</td>
-//   <td>" . $row['slot7'] . "</td>
-
-//   </tr>";
+}
 
 
 

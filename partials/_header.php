@@ -15,7 +15,7 @@
 
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
-      <li class="nav-item active">
+      <li class="nav-item">
         <a class="nav-link" href="index.php">Home <span class="sr-only"></span></a>
       </li>
       <li class="nav-item">
@@ -25,10 +25,22 @@
       <li class="nav-item">
         <a class="nav-link" href="#">About</a>
       </li>
+
+      <?php
+      session_start();
+      if(isset($_SESSION['logedin'])){
+        echo'
+ <li class="nav-item">
+        <a class="nav-link" href="teacher.php">Admin Panel</a>
+      </li>';
+      }
+      ?>
+     
+
     </ul>
   </div>
   <?php
-        session_start();
+        
         if (isset($_SESSION['logedin'])) {
           echo '
     

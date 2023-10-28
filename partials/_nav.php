@@ -31,7 +31,7 @@
     </div>
   </li>
   <li class="nav-item">
-    <a class="nav-link" href="routine.php">Generate Routine</a>
+    <a class="nav-link" href="Routine.php">Generate Routine</a>
   </li>
 </ul>
 
