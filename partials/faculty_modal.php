@@ -31,7 +31,7 @@
       <form action="teacher.php" method="post">
   <div class="form-group">
     <label for="facid">Faculty id</label>
-    <input type="number" class="form-control" id="facid" name="facid" placeholder="Enter the Faculty id">
+    <input type="text" class="form-control" id="facid" name="facid" placeholder="Enter the Faculty id">
 
   </div>
   <div class="form-group">

@@ -19,7 +19,7 @@
 <?php
 require 'partials/dbconnect.php';
 
-$days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+$days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"];
 
 
 //for 3rd year routine (wrap within a function)
@@ -29,14 +29,14 @@ foreach ($days as $day) {
 
   for ($i = 1; $i < 8; $i++) {
 
-    $sql = "SELECT * FROM `status` WHERE slot$i = 1 and day= '$day' and year = 3";
+    $sql = "SELECT `fac_id` FROM `status` WHERE `slot$i` = 1 and `day` = '$day' and `year` = 3";
 
     $result = mysqli_query($conn, $sql);
 
     $row = mysqli_fetch_assoc($result);
-
-    if (isset($row['fac_id'])) {
-      $faculty_id = $row['fac_id'];
+    
+   
+      echo $faculty_id = $row['fac_id'];
       $subjectQuery = "SELECT subject.subject_name from `subject` INNER join  sub_allot on subject.subject_code = sub_allot.sub_code where sub_allot.fac_id='$faculty_id'";
       $subjectResult = mysqli_query($conn,$subjectQuery);
       $subjectRow = mysqli_fetch_assoc($subjectResult);
@@ -45,7 +45,7 @@ foreach ($days as $day) {
         $subject_name = $subjectRow['subject_name'];
       }
       else{
-        echo("");
+        echo('');
       
       }
 
@@ -71,9 +71,7 @@ foreach ($days as $day) {
 
       $result = mysqli_query($conn, $sql);
 
-    } else {
-      break;
-    }
+  
 
 
   }
@@ -91,11 +89,17 @@ if($row['slot1']=$row['slot2']=$row['slot3']=$row['slot4']){
   $subject_query = "SELECT * FROM `sub_allot` WHERE `fac_id` = '$facultyId' AND NOT `assign` = '$subject'";
   $subject_result = mysqli_query($conn,$subject_query);
   $subject_row = mysqli_fetch_assoc($subject_result);
-  $new_subject = $subject_row['assign'];
-  echo $new_subject;
-
-  $update = "UPDATE `routine` SET `slot1` ='' , `slot2` ='$new_subject',`slot3` ='',`slot4` ='' WHERE `day`='$day'" ;
+  if(isset($subject_row['assign'])){
+    $new_subject = $subject_row['assign'];  
+    $update = "UPDATE `routine` SET `slot1` ='' , `slot2` ='$new_subject',`slot3` ='',`slot4` ='' WHERE `day`='$day'" ;
   $update_result = mysqli_query($conn,$update);
+  }
+  else{
+    break;
+  }
+ 
+
+
 
 }
 
