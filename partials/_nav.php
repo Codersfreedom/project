@@ -30,7 +30,9 @@
       <a class="dropdown-item" href="Allot_room.php">Room</a>
     </div>
   </li>
-
+  <li class="nav-item">
+    <a class="nav-link" href="routine.php">Generate Routine</a>
+  </li>
 </ul>
 
 

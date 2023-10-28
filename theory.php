@@ -32,12 +32,11 @@
       ?>
   </div>
 
-  <!-- Implementing update function in Subject table to allocate teachers -->
+  
 
   <?php
   require 'partials/dbconnect.php';
-  $update = false;
-  $showError = 'false';
+
 
 
 
@@ -67,7 +66,7 @@
     $fac_id = $row['fac_id'];
     $fac_name = $row['alias'];
 
-    $data =  "$sub_name($fac_name)";
+    $data = "$sub_name($fac_name)";
 
     // insert query on subject_allot table
   
@@ -99,8 +98,8 @@
       <thead>
         <tr>
 
-          <th scope="col">Teacher Name</th>
-          <th scope="col">Subject</th>
+          <th scope="col">Faculty Id</th>
+          <th scope="col">Subject Code</th>
           <th scope="col">Assign</th>
           <th scope="col">Action</th>
 
@@ -125,7 +124,7 @@
 <th scope='row'>" . $row['fac_id'] . "</th>
 <td>" . $row['sub_code'] . "</td>
 <td>" . $row['assign'] . "</td>
-<td><button class = 'edit btn btn-sm btn-primary' name = 'edit'> <a class = 'text-light'href='partials/sub_update.php?updateid=" . $row['sub_code'] . "'>Update</a></button>  <button class='delete btn btn-sm btn-primary' id=d" . $row['sub_code'] . ">Delete</button>  </td>
+<td><button class='delete btn btn-sm btn-primary' id=d" . $row['sub_code'] . ">Delete</button>  </td>
 
 </tr>";
   }

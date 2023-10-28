@@ -17,101 +17,96 @@
 
 
 <?php
+
+
+
+//for 3rd year routine (wrap within a function)
+function third_year_routine(){
+
 require 'partials/dbconnect.php';
 
 $days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"];
 
-
-//for 3rd year routine (wrap within a function)
-
 foreach ($days as $day) {
-
+  echo $day;
 
   for ($i = 1; $i < 8; $i++) {
-
     $sql = "SELECT `fac_id` FROM `status` WHERE `slot$i` = 1 and `day` = '$day' and `year` = 3";
 
     $result = mysqli_query($conn, $sql);
 
     $row = mysqli_fetch_assoc($result);
-    
-   
-      echo $faculty_id = $row['fac_id'];
-      $subjectQuery = "SELECT subject.subject_name from `subject` INNER join  sub_allot on subject.subject_code = sub_allot.sub_code where sub_allot.fac_id='$faculty_id'";
-      $subjectResult = mysqli_query($conn,$subjectQuery);
-      $subjectRow = mysqli_fetch_assoc($subjectResult);
-      
-      if(isset($subjectRow['subject_name'])){
-        $subject_name = $subjectRow['subject_name'];
-      }
-      else{
-        echo('');
-      
-      }
 
-    
+
+    if (isset($row['fac_id'])) {
+      $faculty_id = $row['fac_id'];
+      $subjectQuery = "SELECT subject.subject_name from `subject` INNER join  sub_allot on subject.subject_code = sub_allot.sub_code where sub_allot.fac_id='$faculty_id'";
+      $subjectResult = mysqli_query($conn, $subjectQuery);
+      $subjectRow = mysqli_fetch_assoc($subjectResult);
+
+      if (isset($subjectRow['subject_name'])) {
+        $subject_name = $subjectRow['subject_name'];
+      } 
+
+
       $facultyQuery = "SELECT `alias` FROM `faculty` WHERE `fac_id` = '$faculty_id'";
-      $facultyResult = mysqli_query($conn,$facultyQuery);
+      $facultyResult = mysqli_query($conn, $facultyQuery);
       $facultyRow = mysqli_fetch_assoc($facultyResult);
-      if(isset($facultyRow['alias'])){
-        $faculty = $facultyRow['alias']; 
-      }
-      else{
-        echo('');
-      }
-     
+      if (isset($facultyRow['alias'])) {
+        $faculty = $facultyRow['alias'];
+      } 
+
 
       $data = "$subject_name($faculty)";
-     
 
-      $sql = "UPDATE `routine` SET `slot$i` =  '$data' WHERE `day`='$day'";
+
+      $sql = "UPDATE `3year_routine` SET `slot$i` =  '$data' WHERE `day`='$day'";
 
 
 
 
       $result = mysqli_query($conn, $sql);
 
-  
+    } 
 
 
   }
 
-$sql = "SELECT * FROM `routine` WHERE `slot1` = `slot2` = `slot3` = `slot4` and `day` = '$day'";
-$result = mysqli_query($conn,$sql);
-$row = mysqli_fetch_assoc($result);
-$subject = $row['slot1'];
-if($row['slot1']=$row['slot2']=$row['slot3']=$row['slot4']){
-  $faculty_query="SELECT * FROM `sub_allot` WHERE `assign` = '$subject'";
-  $facultyidResult = mysqli_query($conn,$faculty_query);
-  $faculty_row = mysqli_fetch_assoc($facultyidResult);
-  $facultyId = $faculty_row['fac_id'];
+  $sql = "SELECT * FROM `3year_routine` WHERE `slot1` = `slot2` = `slot3` = `slot4` and `day` = '$day'";
+  $result = mysqli_query($conn, $sql);
+  $row = mysqli_fetch_assoc($result);
+  if (isset($row['slot1'])) {
+    $subject = $row['slot1'];
 
-  $subject_query = "SELECT * FROM `sub_allot` WHERE `fac_id` = '$facultyId' AND NOT `assign` = '$subject'";
-  $subject_result = mysqli_query($conn,$subject_query);
-  $subject_row = mysqli_fetch_assoc($subject_result);
-  if(isset($subject_row['assign'])){
-    $new_subject = $subject_row['assign'];  
-    $update = "UPDATE `routine` SET `slot1` ='' , `slot2` ='$new_subject',`slot3` ='',`slot4` ='' WHERE `day`='$day'" ;
-  $update_result = mysqli_query($conn,$update);
+
+    if ($row['slot1'] = $row['slot2'] = $row['slot3'] = $row['slot4']) {
+      $faculty_query = "SELECT * FROM `sub_allot` WHERE `assign` = '$subject'";
+      $facultyidResult = mysqli_query($conn, $faculty_query);
+      $faculty_row = mysqli_fetch_assoc($facultyidResult);
+      if (isset($faculty_row['fac_id'])) {
+        $facultyId = $faculty_row['fac_id'];
+      }
+      $subject_query = "SELECT * FROM `sub_allot` WHERE `fac_id` = '$facultyId' AND NOT `assign` = '$subject'";
+      $subject_result = mysqli_query($conn, $subject_query);
+      $subject_row = mysqli_fetch_assoc($subject_result);
+      if (isset($subject_row['assign'])) {
+        $new_subject = $subject_row['assign'];
+        $update = "UPDATE `3year_routine` SET `slot1` ='' , `slot2` ='$new_subject',`slot3` ='',`slot4` ='' WHERE `day`='$day'";
+        $update_result = mysqli_query($conn, $update);
+      }
+
+    }
+
+
+
   }
-  else{
-    break;
-  }
- 
-
-
 
 }
-
 }
+
 
 ?>
 
-
-<?php
-
-
-?>
 
 
 
@@ -185,17 +180,17 @@ if($row['slot1']=$row['slot2']=$row['slot3']=$row['slot4']){
 
 
 
-  // echo "  <tr>   
-  //       <th scope='row'>" . $row['day'] . "</th>
-  //   <td>" . $row['slot1'] . "</td>
-  //   <td>" . $row['slot2'] . "</td>
-  //   <td>" . $row['slot3'] . "</td>
-  //   <td>" . $row['slot4'] . "</td>
-  //   <td>" . $row['slot5'] . "</td>
-  //   <td>" . $row['slot6'] . "</td>
-  //   <td>" . $row['slot7'] . "</td>
+// echo "  <tr>   
+//       <th scope='row'>" . $row['day'] . "</th>
+//   <td>" . $row['slot1'] . "</td>
+//   <td>" . $row['slot2'] . "</td>
+//   <td>" . $row['slot3'] . "</td>
+//   <td>" . $row['slot4'] . "</td>
+//   <td>" . $row['slot5'] . "</td>
+//   <td>" . $row['slot6'] . "</td>
+//   <td>" . $row['slot7'] . "</td>
 
-  //   </tr>";
+//   </tr>";
 
 
 
