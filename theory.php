@@ -53,22 +53,25 @@
 
     //getting subject code from subject table
   
-    $sql1 = "SELECT `subject_code` FROM `subject` where `subject_name` = '$allotSubject'";
+    $sql1 = "SELECT * FROM `subject` where `subject_name` = '$allotSubject'";
     $result = mysqli_query($conn, $sql1);
     $row = mysqli_fetch_assoc($result);
     $sub_code = $row['subject_code'];
+    $sub_name = $row['subject_name'];
 
     //getting fac_id from faculty table 
   
-    $sql2 = "SELECT `fac_id` FROM `faculty` where `name` = '$allotTeacher'";
+    $sql2 = "SELECT * FROM `faculty` where `name` = '$allotTeacher'";
     $result = mysqli_query($conn, $sql2);
     $row = mysqli_fetch_assoc($result);
     $fac_id = $row['fac_id'];
+    $fac_name = $row['alias'];
 
+    $data =  "$sub_name($fac_name)";
 
     // insert query on subject_allot table
   
-    $sql = "INSERT INTO `sub_allot`( `fac_id`, `sub_code`) VALUES ('$fac_id','$sub_code')";
+    $sql = "INSERT INTO `sub_allot`( `fac_id`, `sub_code`,`assign`) VALUES ('$fac_id','$sub_code','$data')";
     $result = mysqli_query($conn, $sql);
 
 
@@ -98,6 +101,7 @@
 
           <th scope="col">Teacher Name</th>
           <th scope="col">Subject</th>
+          <th scope="col">Assign</th>
           <th scope="col">Action</th>
 
         </tr>
@@ -110,7 +114,7 @@
 
 
 
-  $sql = "SELECT `fac_id`, `sub_code` FROM `sub_allot`";
+  $sql = "SELECT * FROM `sub_allot`";
 
   $result = mysqli_query($conn, $sql);
   while ($row = mysqli_fetch_assoc($result)) {
@@ -120,6 +124,7 @@
     echo "  <tr>
 <th scope='row'>" . $row['fac_id'] . "</th>
 <td>" . $row['sub_code'] . "</td>
+<td>" . $row['assign'] . "</td>
 <td><button class = 'edit btn btn-sm btn-primary' name = 'edit'> <a class = 'text-light'href='partials/sub_update.php?updateid=" . $row['sub_code'] . "'>Update</a></button>  <button class='delete btn btn-sm btn-primary' id=d" . $row['sub_code'] . ">Delete</button>  </td>
 
 </tr>";
