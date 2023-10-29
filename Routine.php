@@ -14,8 +14,8 @@
   <title>Routine</title>
   <?php
 
-include 'partials/_header.php';
-include 'partials/_nav.php';
+  include 'partials/_header.php';
+  include 'partials/_nav.php';
   ?>
 </head>
 
@@ -34,6 +34,19 @@ include 'partials/_nav.php';
         <option>4</option>
       </select>
     </div>
+    <div class="form-group mx-sm-3 mb-2">
+      <label for="type" class="mx-3">Semester</label>
+      <select class="form-control" id="sem" name="sem">
+        <option>1</option>
+        <option>2</option>
+        <option>3</option>
+        <option>4</option>
+        <option>5</option>
+        <option>6</option>
+        <option>7</option>
+        <option>8</option>
+      </select>
+    </div>
     <button type="submit" class="btn btn-primary mb-2">Confirm</button>
   </form>
 
@@ -45,7 +58,7 @@ include 'partials/_nav.php';
 
 
 //function for checking status and allocating on routine table
-function routine($year)
+function routine($year,$sem)
 {
 
   require 'partials/dbconnect.php';
@@ -65,12 +78,15 @@ function routine($year)
 
       if (isset($row['fac_id'])) {
         $faculty_id = $row['fac_id'];
-        $subjectQuery = "SELECT subject.subject_name from `subject` INNER join  sub_allot on subject.subject_code = sub_allot.sub_code where sub_allot.fac_id='$faculty_id'";
+        $subjectQuery = "SELECT subject.subject_name from `subject` INNER join  sub_allot on subject.subject_code = sub_allot.sub_code where sub_allot.fac_id='$faculty_id' and `sem` = $sem";
         $subjectResult = mysqli_query($conn, $subjectQuery);
         $subjectRow = mysqli_fetch_assoc($subjectResult);
 
         if (isset($subjectRow['subject_name'])) {
           $subject_name = $subjectRow['subject_name'];
+        }
+        else{
+          $subject_name='';
         }
 
 
@@ -97,7 +113,7 @@ function routine($year)
 
     }
 
-    $sql = "SELECT * FROM `3year_routine` WHERE `slot1` = `slot2` = `slot3` = `slot4` and `day` = '$day'";
+    $sql = "SELECT * FROM  " . $year . "year_routine WHERE `slot1` = `slot2` = `slot3` = `slot4` and `day` = '$day'";
     $result = mysqli_query($conn, $sql);
     $row = mysqli_fetch_assoc($result);
     if (isset($row['slot1'])) {
@@ -105,18 +121,18 @@ function routine($year)
 
 
       if ($row['slot1'] = $row['slot2'] = $row['slot3'] = $row['slot4']) {
-        $faculty_query = "SELECT * FROM `sub_allot` WHERE `assign` = '$subject'";
+        $faculty_query = "SELECT * FROM `sub_allot` WHERE `assign` = '$subject' and `sem` = $sem";
         $facultyidResult = mysqli_query($conn, $faculty_query);
         $faculty_row = mysqli_fetch_assoc($facultyidResult);
         if (isset($faculty_row['fac_id'])) {
           $facultyId = $faculty_row['fac_id'];
         }
-        $subject_query = "SELECT * FROM `sub_allot` WHERE `fac_id` = '$facultyId' AND NOT `assign` = '$subject'";
+        $subject_query = "SELECT * FROM `sub_allot` WHERE `fac_id` = '$facultyId' AND `sem`=$sem AND NOT `assign` = '$subject'";
         $subject_result = mysqli_query($conn, $subject_query);
         $subject_row = mysqli_fetch_assoc($subject_result);
         if (isset($subject_row['assign'])) {
           $new_subject = $subject_row['assign'];
-          $update = "UPDATE `3year_routine` SET `slot1` ='' , `slot2` ='$new_subject',`slot3` ='',`slot4` ='' WHERE `day`='$day'";
+          $update = "UPDATE  " . $year . "year_routine SET `slot1` ='' , `slot2` ='$new_subject',`slot3` ='',`slot4` ='' WHERE `day`='$day'";
           $update_result = mysqli_query($conn, $update);
         }
 
@@ -127,7 +143,7 @@ function routine($year)
     }
 
   }
- 
+
 }
 
 
@@ -138,7 +154,7 @@ function routine($year)
 
 
 
-<div class="container ">
+<div class="container">
   <h1 class="text-center my-3">Generated Class Schedule</h1>
 
   <table class="table" id="myTable">
@@ -199,8 +215,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
   $dept = $_POST['course'];
   $year = $_POST['year'];
+  $sem = $_POST['sem'];
 
-  routine($year);
+  routine($year,$sem);
   Generate_routine($year);
 
 
@@ -228,7 +245,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
   $(document).ready(function () {
     $('#myTable').DataTable();
-    "order": []
+    "order": [];
   });
 
 

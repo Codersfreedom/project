@@ -47,6 +47,8 @@
 
     $allotSubject = $_POST['subname'];
     $allotTeacher = $_POST['allotTeacher'];
+    $sem = $_POST['sem'];
+
 
 
 
@@ -70,7 +72,7 @@
 
     // insert query on subject_allot table
   
-    $sql = "INSERT INTO `sub_allot`( `fac_id`, `sub_code`,`assign`) VALUES ('$fac_id','$sub_code','$data')";
+    $sql = "INSERT INTO `sub_allot`( `fac_id`, `sub_code`,`assign`,`sem`) VALUES ('$fac_id','$sub_code','$data','$sem')";
     $result = mysqli_query($conn, $sql);
 
 
@@ -101,6 +103,7 @@
           <th scope="col">Faculty Id</th>
           <th scope="col">Subject Code</th>
           <th scope="col">Assign</th>
+          <th scope="col">Semester</th>
           <th scope="col">Action</th>
 
         </tr>
@@ -124,6 +127,7 @@
 <th scope='row'>" . $row['fac_id'] . "</th>
 <td>" . $row['sub_code'] . "</td>
 <td>" . $row['assign'] . "</td>
+<td>" . $row['sem'] . "</td>
 <td><button class='delete btn btn-sm btn-primary' id=d" . $row['sub_code'] . ">Delete</button>  </td>
 
 </tr>";
