@@ -16,6 +16,9 @@
 
   include 'partials/_header.php';
   include 'partials/_nav.php';
+  if(!isset($_SESSION['logedin'])){
+    header("location: index.php");
+  }
   ?>
 </head>
 

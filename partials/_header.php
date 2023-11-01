@@ -1,8 +1,5 @@
 <?php require 'dbconnect.php';
-
-
-
-
+session_start();
 
 ?>
 
@@ -27,7 +24,7 @@
       </li>
 
       <?php
-      session_start();
+            
       if(isset($_SESSION['logedin'])){
         echo'
  <li class="nav-item">

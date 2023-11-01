@@ -14,6 +14,9 @@
 
    
   <?php    require 'partials/dbconnect.php';
+   if(!isset($_SESSION['logedin'])){
+    header("location: index.php");
+  }
 ?>
 
 

@@ -19,7 +19,9 @@ require 'partials/dbconnect.php';
 $insert = false;
 $showError='false';
 
-
+if(!isset($_SESSION['logedin'])){
+  header("location: index.php");
+}
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 $roomid = $_POST['room'];
