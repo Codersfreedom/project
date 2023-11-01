@@ -22,7 +22,13 @@ require 'partials/dbconnect.php';
     $insert = false;
     $showError='false';
 
- 
+if(!isset($_SESSION['logedin'])){
+  header("location: index.php");
+}
+else{
+  header("location: teacher.php");
+}
+
 
   if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $facid = $_POST['facid'];

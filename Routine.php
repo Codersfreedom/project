@@ -29,14 +29,14 @@
     </div>
     <div class="form-group mx-sm-3 mb-2">
       <label for="type" class="mx-3">Year</label>
-      <select class="form-control" id="year" name="year">
+      <select class="form-control" id="year" name="year" value="">
         <option>3</option>
         <option>4</option>
       </select>
     </div>
     <div class="form-group mx-sm-3 mb-2">
       <label for="type" class="mx-3">Semester</label>
-      <select class="form-control" id="sem" name="sem">
+      <select class="form-control" id="sem" name="sem" value="">
         <option>1</option>
         <option>2</option>
         <option>3</option>
@@ -58,6 +58,9 @@
 
 
 //function for checking status and allocating on routine table
+
+
+
 function routine($year,$sem)
 {
 
@@ -78,7 +81,7 @@ function routine($year,$sem)
 
       if (isset($row['fac_id'])) {
         $faculty_id = $row['fac_id'];
-        $subjectQuery = "SELECT subject.subject_name from `subject` INNER join  sub_allot on subject.subject_code = sub_allot.sub_code where sub_allot.fac_id='$faculty_id' and `sem` = $sem";
+        $subjectQuery = "SELECT subject.subject_name from `subject` INNER join  sub_allot on subject.subject_code = sub_allot.sub_code where sub_allot.fac_id='$faculty_id' and `sem` = $sem and subject.subject_type = 'Theory'" ;
         $subjectResult = mysqli_query($conn, $subjectQuery);
         $subjectRow = mysqli_fetch_assoc($subjectResult);
 
@@ -121,13 +124,14 @@ function routine($year,$sem)
 
 
       if ($row['slot1'] = $row['slot2'] = $row['slot3'] = $row['slot4']) {
-        $faculty_query = "SELECT * FROM `sub_allot` WHERE `assign` = '$subject' and `sem` = $sem";
+        $faculty_query = "SELECT * FROM `sub_allot` WHERE `assign` = '$subject' and `sem` = $sem ";
         $facultyidResult = mysqli_query($conn, $faculty_query);
         $faculty_row = mysqli_fetch_assoc($facultyidResult);
         if (isset($faculty_row['fac_id'])) {
           $facultyId = $faculty_row['fac_id'];
         }
-        $subject_query = "SELECT * FROM `sub_allot` WHERE `fac_id` = '$facultyId' AND `sem`=$sem AND NOT `assign` = '$subject'";
+        // inspite of not assign use where subject type = lab;
+        $subject_query = "SELECT subject.subject_name from `subject` INNER join  sub_allot on subject.subject_code = sub_allot.sub_code where sub_allot.fac_id='$faculty_id' and `sem` = $sem and subject.subject_type = 'Lab'";
         $subject_result = mysqli_query($conn, $subject_query);
         $subject_row = mysqli_fetch_assoc($subject_result);
         if (isset($subject_row['assign'])) {
@@ -235,12 +239,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
   integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 
-
 <!-- Datatables -->
 <script src="//cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
 
 
-<!-- Initializint Data tables -->
+<!-- Initialize Data tables -->
 <script>
 
   $(document).ready(function () {
