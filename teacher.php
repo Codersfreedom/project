@@ -20,14 +20,14 @@
 <?php  
 // session_start();
 include 'partials/_header.php';
-  include 'partials/_nav.php';
+if(!isset($_SESSION['logedin'])){
+  header("location: index.php");
+}
+include 'partials/_nav.php';
 require 'partials/dbconnect.php';
     $insert = false;
     $showError='false';
     // echo $_SESSION['logedin'];
-    if(!isset($_SESSION['logedin'])){
-      header("location: index.php");
-    }
 
 
   if ($_SERVER['REQUEST_METHOD'] == 'POST') {

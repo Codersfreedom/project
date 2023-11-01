@@ -14,6 +14,9 @@
   <body>
 <?php
 include 'partials/_header.php';
+if(!isset($_SESSION['logedin'])){
+  header("location: index.php");
+}
 require 'partials/dbconnect.php';
 
 $insert = false;
