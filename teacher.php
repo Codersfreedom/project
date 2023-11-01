@@ -18,14 +18,16 @@
 <!-- Inserting Data into faculty table from modal -->
 
 <?php  
+// session_start();
+include 'partials/_header.php';
+  include 'partials/_nav.php';
 require 'partials/dbconnect.php';
     $insert = false;
     $showError='false';
-
+    // echo $_SESSION['logedin'];
     if(!isset($_SESSION['logedin'])){
       header("location: index.php");
     }
-
 
 
   if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -79,8 +81,9 @@ if (isset($_GET['delete'])) {
 
 
 
-  <?php include 'partials/_header.php';
-  include 'partials/_nav.php'; 
+  <?php 
+  // include 'partials/_header.php';
+  // include 'partials/_nav.php'; 
 
 
   

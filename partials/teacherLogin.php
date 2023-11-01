@@ -27,8 +27,7 @@
                 <h2 class="text-uppercase text-center mb-5">Login to your account</h2>
 
                 <?php
-
-
+                session_start();
                 require 'dbconnect.php';
                 $login = false;
                 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -44,9 +43,8 @@
 
                       if ($password==$row['password']) {
                         $login = true;
-                        session_start();
+                        
                         $_SESSION['logedin'] = true;
-
                         $_SESSION['neckname'] = $row['f_name'];
                         header('location: /project/teacher.php?Loginsuccess=true');
 
