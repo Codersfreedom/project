@@ -14,9 +14,12 @@
 
    
   <?php    require 'partials/dbconnect.php';
-   if(!isset($_SESSION['logedin'])){
-    header("location: index.php");
-  }
+ include 'partials/_header.php';
+ if(!isset($_SESSION['logedin'])){
+  header("location: index.php");
+}
+ include 'partials/_nav.php'; 
+  // session_start();
 ?>
 
 
@@ -75,8 +78,7 @@ if (isset($_GET['delete'])) {
 ?>
 
 <?php 
-include 'partials/_header.php';
-include 'partials/_nav.php'; 
+
 
 if ($insert) {
   echo '<div class="alert alert-success alert-dismissible fade show my-0" role="alert">
