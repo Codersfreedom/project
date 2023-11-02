@@ -18,7 +18,7 @@
   <?php
 
   include 'partials/_header.php';
-  if(!isset($_SESSION['logedin'])){
+  if (!isset($_SESSION['logedin'])) {
     header("location: index.php");
   }
   include 'partials/_nav.php';
@@ -35,7 +35,7 @@
       ?>
   </div>
 
-  
+
 
   <?php
   require 'partials/dbconnect.php';
@@ -73,10 +73,24 @@
 
     $data = "$sub_name($fac_name)";
 
+    // getting year from semester 
+  
+    if ($sem == 1 || $sem == 2) {
+      $year = 1;
+    } elseif ($sem == 3 || $sem == 4) {
+      $year = 2;
+    } elseif ($sem == 5 || $sem == 6) {
+      $year = 3;
+    } elseif ($sem == 7 || $sem == 8) {
+      $year = 4;
+    }
+
     // insert query on subject_allot table
   
-    $sql = "INSERT INTO `sub_allot`( `fac_id`, `sub_code`,`assign`,`sem`) VALUES ('$fac_id','$sub_code','$data','$sem')";
+    $sql = "INSERT INTO `sub_allot`( `fac_id`, `sub_code`,`assign`,`sem`,`year`) VALUES ('$fac_id','$sub_code','$data',$sem,$year)";
     $result = mysqli_query($conn, $sql);
+
+    
 
 
   }
