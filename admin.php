@@ -82,10 +82,10 @@
             <tbody>
     </div>
     <?php
-    function Show_status($year, $day)
-    {
+    require 'partials/dbconnect.php';
 
-        require 'partials/dbconnect.php';
+    function Show_status($year, $day)
+    {   require 'partials/dbconnect.php';
 
         if ($year == 'All Year' && $day == 'All Day') {
             $sql = "SELECT faculty.name, status.* from `faculty` left JOIN status on faculty.fac_id = status.fac_id";
@@ -101,66 +101,96 @@
         $result = mysqli_query($conn, $sql);
 
 
-
-
-
-
-
         while ($row = mysqli_fetch_assoc($result)) {
 
-            if ($row['slot1'] == 1) {
-                $slot1 = 'Available';
-            } else {
-                $slot1 = 'Not Available';
-            }
+            // if ($row['slot1'] == 1) {
+            //     $slot1 = 'Available';
+            // } else {
+            //     $slot1 = 'Not Available';
+            // }
 
-            if ($row['slot2'] == 1) {
-                $slot2 = 'Available';
-            } else {
-                $slot2 = 'Not Available';
-            }
-            if ($row['slot3'] == 1) {
-                $slot3 = 'Available';
-            } else {
-                $slot3 = 'Not Available';
-            }
-            if ($row['slot4'] == 1) {
-                $slot4 = 'Available';
-            } else {
-                $slot4 = 'Not Available';
-            }
-            if ($row['slot5'] == 1) {
-                $slot5 = 'Available';
-            } else {
-                $slot5 = 'Not Available';
-            }
+            // if ($row['slot2'] == 1) {
+            //     $slot2 = 'Available';
+            // } else {
+            //     $slot2 = 'Not Available';
+            // }
+            // if ($row['slot3'] == 1) {
+            //     $slot3 = 'Available';
+            // } else {
+            //     $slot3 = 'Not Available';
+            // }
+            // if ($row['slot4'] == 1) {
+            //     $slot4 = 'Available';
+            // } else {
+            //     $slot4 = 'Not Available';
+            // }
+            // if ($row['slot5'] == 1) {
+            //     $slot5 = 'Available';
+            // } else {
+            //     $slot5 = 'Not Available';
+            // }
 
-            if ($row['slot6'] == 1) {
-                $slot6 = 'Available';
-            } else {
-                $slot6 = 'Not Available';
-            }
-            if ($row['slot7'] == 1) {
-                $slot7 = 'Available';
-            } else {
-                $slot7 = 'Not Available';
-            }
-
-
-
-            echo "  <tr>   
-        <th scope='row'>" . $row['day'] . "</th>
+            // if ($row['slot6'] == 1) {
+            //     $slot6 = 'Available';
+            // } else {
+            //     $slot6 = 'Not Available';
+            // }
+            // if ($row['slot7'] == 1) {
+            //     $slot7 = 'Available';
+            // } else {
+            //     $slot7 = 'Not Available';
+            // }
+            echo "<div class='container'><form method='post' action='";echo htmlspecialchars($_SERVER["PHP_SELF"]);echo"'>  <tr>
+            <input type='hidden'  name='fac_id' value='".$row['fac_id']."'>
+            <th scope='row'><select class=\"form-select\" name='day'>
+            <option value='Monday'";echo $row['day']==='Monday'?' selected':''; echo" >Monday</option>
+            <option value='Tuesday'";echo $row['day']==='Tuesday '?' selected':''; echo" >Tuesday</option>
+            <option value='Wednesday'";echo $row['day']==='Wednesday '?' selected':''; echo" >Wednesday</option>
+            <option value='Thursday'";echo $row['day']==='Thursday '?' selected':''; echo" >Thursday</option>
+            <option value='Friday'";echo $row['day']==='Friday '?' selected':''; echo" >Friday</option>
+                      
+            </select></th>
         <td>" . $row['name'] . "</td>
-        <td>" . $slot1 . "</td>
-        <td>" . $slot2 . "</td>
-        <td>" . $slot3 . "</td>
-        <td>" . $slot4 . "</td>
-        <td>" . $slot5 . "</td>
-        <td>" . $slot6 . "</td>
-        <td>" . $slot7 . "</td>
-        <td><button class = 'edit btn btn-sm btn-primary' name = 'edit'> <a class = 'text-light'href='partials/Fac_update.php?updateid=" . $row['fac_id'] . "'>Update</a></button> </td>
+        
+        <td><select class=\"form-select\" name='slot1'>
+        <option value='1' ";echo $row['slot1']==1? 'selected':'';echo ">Available</option>
+        <option value='0' ";echo $row['slot1']==0? 'selected':'';echo ">Not Available</option>
+        </select></td>
 
-  </tr>";
+        <td><select class=\"form-select\" name='slot2'>
+        <option value='1' ";echo $row['slot2']==1? 'selected':'';echo ">Available</option>
+        <option value='0' ";echo $row['slot2']==0? 'selected':'';echo ">Not Available</option>
+        </select></td>
+
+        <td><select class=\"form-select\" name='slot3'>
+        <option value='1' ";echo $row['slot3']==1? 'selected':'';echo ">Available</option>
+        <option value='0' ";echo $row['slot3']==0? 'selected':'';echo ">Not Available</option>
+        </select></td>
+
+        <td><select class=\"form-select\" name='slot4'>
+        <option value='1' ";echo $row['slot4']==1? 'selected':'';echo ">Available</option>
+        <option value='0' ";echo $row['slot4']==0? 'selected':'';echo ">Not Available</option>
+        </select></td>
+
+        <td><select class=\"form-select\" name='slot5'>
+        <option value='1' ";echo $row['slot5']==1? 'selected':'';echo ">Available</option>
+        <option value='0' ";echo $row['slot5']==0? 'selected':'';echo ">Not Available</option>
+        </select></td>
+
+        <td><select class=\"form-select\" name='slot6'>
+        <option value='1' ";echo $row['slot6']==1? 'selected':'';echo ">Available</option>
+        <option value='0' ";echo $row['slot6']==0? 'selected':'';echo ">Not Available</option>
+        </select></td>
+
+        <td><select class=\"form-select\" name='slot7'>
+        <option value='1' ";echo $row['slot7']==1? 'selected':'';echo ">Available</option>
+        <option value='0' ";echo $row['slot7']==0? 'selected':'';echo ">Not Available</option>
+        </select></td>
+
+        <td><button type=\"submit\" class=\"btn btn-primary\">Update</button></td>
+        </tr>
+        </form>
+        </div>";
         }
 
     }
@@ -173,18 +203,26 @@
 
 
 
-
-        $day = $_POST['day'];
+        if(isset($_POST['day']) && isset($_POST['year']))
+        {$day = $_POST['day'];
         $year = $_POST['year'];
-        
-       
-        
-
         Show_status($year, $day);
-
-
+        }
+        if(isset($_POST['slot1'])){
+            $slot1=$_POST['slot1'];
+            $slot2=$_POST['slot2'];
+            $slot2=$_POST['slot2'];
+            $slot3=$_POST['slot3'];
+            $slot4=$_POST['slot4'];
+            $slot5=$_POST['slot5'];
+            $slot6=$_POST['slot6'];
+            $slot7=$_POST['slot7'];
+            $day=$_POST['day'];
+            $fac_id=$_POST['fac_id'];
+            //update query fuction
+            echo $slot7;
+        }
     }
-
     ?>
 
 
