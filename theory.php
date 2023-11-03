@@ -90,10 +90,37 @@
     $sql = "INSERT INTO `sub_allot`( `fac_id`, `sub_code`,`assign`,`sem`,`year`) VALUES ('$fac_id','$sub_code','$data',$sem,$year)";
     $result = mysqli_query($conn, $sql);
 
-    
+    //  whenever new faculty arrives
 
+    Add_faculty($fac_id,$year);
 
+}
+    function Add_faculty($fac_id,$year){
+
+    require 'partials/dbconnect.php';
+ 
+    $days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"];
+
+    foreach ($days as $day) {
+  
+  
+      
+        $sql1 = "INSERT INTO `status`(`day`, `fac_id`, `year`, `slot1`, `slot2`, `slot3`, `slot4`, `slot5`, `slot6`, `slot7`) VALUES ('$day','$fac_id',$year,1,1,1,1,1,1,1)";
+        $result = mysqli_query($conn,$sql1);
+
+        if($year%2==0){
+          $other_year=$year-1;
+        }else{
+         $other_year= $year+1;
+        }
+
+       
+          $sql2 = "INSERT INTO `status`(`day`, `fac_id`, `year`, `slot1`, `slot2`, `slot3`, `slot4`, `slot5`, `slot6`, `slot7`) VALUES ('$day','$fac_id',$other_year,0,0,0,0,0,0,0)";
+          $result = mysqli_query($conn,$sql2);
+       
+        
   }
+
   // Delete Quary
   
   if (isset($_GET['delete'])) {
@@ -103,7 +130,7 @@
     $result = mysqli_query($conn, $sql);
   }
 
-
+   }
 
 
 
