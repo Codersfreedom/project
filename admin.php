@@ -27,7 +27,7 @@
             <form action="admin.php" class="d-flex flex-row align-self-center" method="post">
                 <div class="form-group pr-3">
                     <label for="subname">Day</label>
-                    <select class="form-control" id="day" name="day">
+                    <select class="form-control" id="day" name="dropday">
                         <option>Monday</option>
                         <option>Tuesday</option>
                         <option>Wednesday</option>
@@ -38,17 +38,6 @@
                     </select>
                 </div>
 
-                <div class="form-group pr-3">
-                    <label for="subname">Year</label>
-                    <select class="form-control" id="year" name="year">
-                        <option>1</option>
-                        <option>2</option>
-                        <option>3</option>
-                        <option>4</option>
-                        <option selected>All Year</option>
-
-                    </select>
-                </div>
 
                 <div class="pt-2">
                     <button type="submit" class="btn btn-primary my-4 ">Confirm</button>
@@ -59,7 +48,7 @@
 
         </div>
     </div>
-    <div class="container">
+    <div class="container" style="margin-left:100px">
         <h1 class="text-center my-3">Faculty Status</h1>
 
         <table class="table" id="myTable">
@@ -84,18 +73,15 @@
     <?php
     require 'partials/dbconnect.php';
 
-    function Show_status($year, $day)
-    {   require 'partials/dbconnect.php';
+    function Show_status( $day)
+    {
+        require 'partials/dbconnect.php';
 
-        if ($year == 'All Year' && $day == 'All Day') {
+        if ( $day == 'All Day') {
             $sql = "SELECT faculty.name, status.* from `faculty` left JOIN status on faculty.fac_id = status.fac_id";
-
-        } elseif ($year == 'All Year' && $day != 'All Day') {
-            $sql = "SELECT faculty.name, status.* from `faculty` left JOIN status on faculty.fac_id = status.fac_id WHERE `day`='$day'";
-        } elseif ($year != 'All Year' && $day == 'All Day') {
-            $sql = "SELECT faculty.name, status.* from `faculty` left JOIN status on faculty.fac_id = status.fac_id WHERE `year`=$year";
-        } elseif ($year != 'All Year' && $day != 'All Day') {
-            $sql = "SELECT faculty.name, status.* from `faculty` left JOIN status on faculty.fac_id = status.fac_id WHERE `year`=$year and `day`='$day'";
+        }
+        else{
+            $sql = "SELECT faculty.name, status.* from `faculty` left JOIN status on faculty.fac_id = status.fac_id WHERE  `day`='$day'";
         }
 
         $result = mysqli_query($conn, $sql);
@@ -103,88 +89,93 @@
 
         while ($row = mysqli_fetch_assoc($result)) {
 
-            // if ($row['slot1'] == 1) {
-            //     $slot1 = 'Available';
-            // } else {
-            //     $slot1 = 'Not Available';
-            // }
 
-            // if ($row['slot2'] == 1) {
-            //     $slot2 = 'Available';
-            // } else {
-            //     $slot2 = 'Not Available';
-            // }
-            // if ($row['slot3'] == 1) {
-            //     $slot3 = 'Available';
-            // } else {
-            //     $slot3 = 'Not Available';
-            // }
-            // if ($row['slot4'] == 1) {
-            //     $slot4 = 'Available';
-            // } else {
-            //     $slot4 = 'Not Available';
-            // }
-            // if ($row['slot5'] == 1) {
-            //     $slot5 = 'Available';
-            // } else {
-            //     $slot5 = 'Not Available';
-            // }
-
-            // if ($row['slot6'] == 1) {
-            //     $slot6 = 'Available';
-            // } else {
-            //     $slot6 = 'Not Available';
-            // }
-            // if ($row['slot7'] == 1) {
-            //     $slot7 = 'Available';
-            // } else {
-            //     $slot7 = 'Not Available';
-            // }
-            echo "<div class='container'><form method='post' action='";echo htmlspecialchars($_SERVER["PHP_SELF"]);echo"'>  <tr>
-            <input type='hidden'  name='fac_id' value='".$row['fac_id']."'>
+            echo "<div class='container'><form method='post' action='";
+            echo htmlspecialchars($_SERVER["PHP_SELF"]);
+            echo "'>  <tr>
+            <input type='hidden'  name='fac_id' value='" . $row['fac_id'] . "'>
+            <input type='hidden'  name='year' value='" . $row['year'] . "'>
             <th scope='row'><select class=\"form-select\" name='day'>
-            <option value='Monday'";echo $row['day']==='Monday'?' selected':''; echo" >Monday</option>
-            <option value='Tuesday'";echo $row['day']==='Tuesday '?' selected':''; echo" >Tuesday</option>
-            <option value='Wednesday'";echo $row['day']==='Wednesday '?' selected':''; echo" >Wednesday</option>
-            <option value='Thursday'";echo $row['day']==='Thursday '?' selected':''; echo" >Thursday</option>
-            <option value='Friday'";echo $row['day']==='Friday '?' selected':''; echo" >Friday</option>
+            <option value='Monday'";
+            echo $row['day'] === 'Monday' ? ' selected' : '';
+            echo " >Monday</option>
+            <option value='Tuesday'";
+            echo $row['day'] === 'Tuesday ' ? ' selected' : '';
+            echo " >Tuesday</option>
+            <option value='Wednesday'";
+            echo $row['day'] === 'Wednesday ' ? ' selected' : '';
+            echo " >Wednesday</option>
+            <option value='Thursday'";
+            echo $row['day'] === 'Thursday ' ? ' selected' : '';
+            echo " >Thursday</option>
+            <option value='Friday'";
+            echo $row['day'] === 'Friday ' ? ' selected' : '';
+            echo " >Friday</option>
                       
             </select></th>
         <td>" . $row['name'] . "</td>
         
         <td><select class=\"form-select\" name='slot1'>
-        <option value='1' ";echo $row['slot1']==1? 'selected':'';echo ">Available</option>
-        <option value='0' ";echo $row['slot1']==0? 'selected':'';echo ">Not Available</option>
+        <option value='1' ";
+            echo $row['slot1'] == 1 ? 'selected' : '';
+            echo ">Available</option>
+        <option value='0' ";
+            echo $row['slot1'] == 0 ? 'selected' : '';
+            echo ">Not Available</option>
         </select></td>
 
         <td><select class=\"form-select\" name='slot2'>
-        <option value='1' ";echo $row['slot2']==1? 'selected':'';echo ">Available</option>
-        <option value='0' ";echo $row['slot2']==0? 'selected':'';echo ">Not Available</option>
+        <option value='1' ";
+            echo $row['slot2'] == 1 ? 'selected' : '';
+            echo ">Available</option>
+        <option value='0' ";
+            echo $row['slot2'] == 0 ? 'selected' : '';
+            echo ">Not Available</option>
         </select></td>
 
         <td><select class=\"form-select\" name='slot3'>
-        <option value='1' ";echo $row['slot3']==1? 'selected':'';echo ">Available</option>
-        <option value='0' ";echo $row['slot3']==0? 'selected':'';echo ">Not Available</option>
+        <option value='1' ";
+            echo $row['slot3'] == 1 ? 'selected' : '';
+            echo ">Available</option>
+        <option value='0' ";
+            echo $row['slot3'] == 0 ? 'selected' : '';
+            echo ">Not Available</option>
         </select></td>
 
         <td><select class=\"form-select\" name='slot4'>
-        <option value='1' ";echo $row['slot4']==1? 'selected':'';echo ">Available</option>
-        <option value='0' ";echo $row['slot4']==0? 'selected':'';echo ">Not Available</option>
+        <option value='1' ";
+            echo $row['slot4'] == 1 ? 'selected' : '';
+            echo ">Available</option>
+        <option value='0' ";
+            echo $row['slot4'] == 0 ? 'selected' : '';
+            echo ">Not Available</option>
         </select></td>
 
         <td><select class=\"form-select\" name='slot5'>
-        <option value='1' ";echo $row['slot5']==1? 'selected':'';echo ">Available</option>
-        <option value='0' ";echo $row['slot5']==0? 'selected':'';echo ">Not Available</option>
+        <option value='1' ";
+            echo $row['slot5'] == 1 ? 'selected' : '';
+            echo ">Available</option>
+        <option value='0' ";
+            echo $row['slot5'] == 0 ? 'selected' : '';
+            echo ">Not Available</option>
         </select></td>
 
         <td><select class=\"form-select\" name='slot6'>
-        <option value='1' ";echo $row['slot6']==1? 'selected':'';echo ">Available</option>
-        <option value='0' ";echo $row['slot6']==0? 'selected':'';echo ">Not Available</option>
+        <option value='1' ";
+            echo $row['slot6'] == 1 ? 'selected' : '';
+            echo ">Available</option>
+        <option value='0' ";
+            echo $row['slot6'] == 0 ? 'selected' : '';
+            echo ">Not Available</option>
         </select></td>
 
         <td><select class=\"form-select\" name='slot7'>
-        <option value='1' ";echo $row['slot7']==1? 'selected':'';echo ">Available</option>
-        <option value='0' ";echo $row['slot7']==0? 'selected':'';echo ">Not Available</option>
+        <option value='1' ";
+            echo $row['slot7'] == 1 ? 'selected' : '';
+            echo ">Available</option>
+        <option value='0' ";
+            echo $row['slot7'] == 0 ? 'selected' : '';
+            echo ">Not Available</option>
         </select></td>
 
         <td><button type=\"submit\" class=\"btn btn-primary\">Update</button></td>
@@ -203,25 +194,100 @@
 
 
 
-        if(isset($_POST['day']) && isset($_POST['year']))
-        {$day = $_POST['day'];
-        $year = $_POST['year'];
-        Show_status($year, $day);
+        if (isset($_POST['dropday'])) {
+            $dropdown_day = $_POST['dropday'];
+        
+            Show_status($dropdown_day);
         }
-        if(isset($_POST['slot1'])){
-            $slot1=$_POST['slot1'];
-            $slot2=$_POST['slot2'];
-            $slot2=$_POST['slot2'];
-            $slot3=$_POST['slot3'];
-            $slot4=$_POST['slot4'];
-            $slot5=$_POST['slot5'];
-            $slot6=$_POST['slot6'];
-            $slot7=$_POST['slot7'];
-            $day=$_POST['day'];
-            $fac_id=$_POST['fac_id'];
+        else{
+            $dropdown_day = 'All Day';
+           
+        }
+        if (isset($_POST['slot1'])) {
+            $slot1 = $_POST['slot1'];
+            $slot2 = $_POST['slot2'];
+            $slot2 = $_POST['slot2'];
+            $slot3 = $_POST['slot3'];
+            $slot4 = $_POST['slot4'];
+            $slot5 = $_POST['slot5'];
+            $slot6 = $_POST['slot6'];
+            $slot7 = $_POST['slot7'];
+            $day = $_POST['day'];
+            $fac_id = $_POST['fac_id'];
+            $year = $_POST['year'];
+
+            echo $slot1;
+            echo$year;
+            echo $day;
+
             //update query fuction
-            echo $slot7;
+            Update_Status($slot1,$slot2,$slot3,$slot4,$slot5,$slot6,$slot7,$day,$year,$fac_id);
+            Show_status($dropdown_day);
+
+
         }
+    }
+
+    function Update_Status($slot1, $slot2, $slot3, $slot4, $slot5, $slot6, $slot7, $day, $year, $fac_id)
+    {
+        require 'partials/dbconnect.php';
+
+
+        $sql1 = "UPDATE `status` SET `slot1`=$slot1,`slot2`=$slot2,`slot3`=$slot3,`slot4`=$slot4,`slot5`=$slot5,`slot6`=$slot6,`slot7`=$slot7 WHERE `day`='$day' and `fac_id`='$fac_id' and `year`=$year";
+        $result = mysqli_query($conn, $sql1);
+
+        if ($year % 2 == 0) {
+            $other_year = $year - 1;
+        } else {
+            $other_year = $year + 1;
+        }
+
+        if ($slot1 == 1) {
+            $new_slot1 = 0;
+        } else {
+            $new_slot1 = 1;
+        }
+
+        if ($slot2 == 1) {
+            $new_slot2 = 0;
+        } else {
+            $new_slot2 = 1;
+        }
+
+        if($slot3 ==1){
+            $new_slot3=0;
+        }
+        else{
+            $new_slot3 = 1;
+        }
+
+        if($slot4==1){
+            $new_slot4 = 0;
+        }else{
+            $new_slot4=1;
+        }
+
+        if($slot5==1){
+            $new_slot5=0;
+        }
+        else{
+            $new_slot5=1;
+        }
+        if($slot6==1){
+            $new_slot6 =0;
+        }else{
+            $new_slot6=1;
+        }
+
+        if($slot7==1){
+            $new_slot7=0;
+        }else{
+            $new_slot7=1;
+        }
+
+
+        $sql2 = "UPDATE `status` SET `slot1`=$new_slot1,`slot2`=$new_slot2,`slot3`=$new_slot3,`slot4`=$new_slot4,`slot5`=$new_slot5,`slot6`=$new_slot6,`slot7`=$new_slot7 WHERE `day`='$day' and `fac_id`='$fac_id' and `year`=$other_year";
+        $result = mysqli_query($conn,$sql2);
     }
     ?>
 
