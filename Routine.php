@@ -33,6 +33,7 @@
     <div class="form-group mx-sm-3 mb-2">
       <label for="type" class="mx-3">Year</label>
       <select class="form-control" id="year" name="year" value="">
+        <option>2</option>
         <option>3</option>
         <option>4</option>
       </select>
@@ -266,11 +267,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   // if(year.value=='3'){
     sem.getElementsByTagName('option')[0].style.display="none";
     sem.getElementsByTagName('option')[1].style.display="none";
-    sem.getElementsByTagName('option')[2].style.display="none";
-    sem.getElementsByTagName('option')[3].style.display="none";
+    sem.getElementsByTagName('option')[2].setAttribute('selected','true');
+   
     sem.getElementsByTagName('option')[6].style.display="none";
+    sem.getElementsByTagName('option')[5].style.display="none";
     sem.getElementsByTagName('option')[7].style.display="none";
-    sem.getElementsByTagName('option')[4].setAttribute('selected', 'true');
+    sem.getElementsByTagName('option')[4].style.display="none";
   // }
   year.addEventListener('change',()=>{
     if(year.value=='4'){
@@ -278,9 +280,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     sem.getElementsByTagName('option')[6].style.display="inline";
     sem.getElementsByTagName('option')[6].setAttribute('selected', 'true');
     sem.getElementsByTagName('option')[7].style.display="inline";
+    sem.getElementsByTagName('option')[2].style.display="none";
+    sem.getElementsByTagName('option')[3].style.display="none";
     sem.getElementsByTagName('option')[4].style.display="none";
     sem.getElementsByTagName('option')[5].style.display="none";
     sem.getElementsByTagName('option')[4].removeAttribute('selected');
+    sem.getElementsByTagName('option')[2].removeAttribute('selected');
     }
     else if(year.value=='3'){
       console.log(year.value);
@@ -289,6 +294,21 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     sem.getElementsByTagName('option')[5].style.display="inline";
     sem.getElementsByTagName('option')[6].style.display="none";
     sem.getElementsByTagName('option')[7].style.display="none";
+    sem.getElementsByTagName('option')[2].style.display="none";
+    sem.getElementsByTagName('option')[3].style.display="none";
+    sem.getElementsByTagName('option')[6].removeAttribute('selected');
+    sem.getElementsByTagName('option')[2].removeAttribute('selected');
+    }
+    else if(year.value=='2'){
+      console.log(year.value);
+    sem.getElementsByTagName('option')[2].style.display="inline";
+    sem.getElementsByTagName('option')[2].setAttribute('selected', 'true');
+    sem.getElementsByTagName('option')[3].style.display="inline";
+    sem.getElementsByTagName('option')[4].style.display="none";
+    sem.getElementsByTagName('option')[6].style.display="none";
+    sem.getElementsByTagName('option')[7].style.display="none";
+    sem.getElementsByTagName('option')[5].style.display="none";
+    sem.getElementsByTagName('option')[4].removeAttribute('selected');
     sem.getElementsByTagName('option')[6].removeAttribute('selected');
     }
   }) 
