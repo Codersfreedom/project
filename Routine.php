@@ -68,11 +68,13 @@ function routine($year,$sem)
 {
 
   require 'partials/dbconnect.php';
-
+  $trSql="Truncate TABLE ". $year . "year_routine";
+  $result1 = mysqli_query($conn, $trSql);
   $days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"];
 
   foreach ($days as $day) {
-
+    $daySql= "Insert into ". $year . "year_routine (day) values ('$day')";
+    $result1 = mysqli_query($conn, $daySql);
 
     for ($i = 1; $i < 8; $i++) {
       $sql = "SELECT `fac_id` FROM `status` WHERE `slot$i` = 1 and `day` = '$day' and `year` = $year";
@@ -105,12 +107,8 @@ function routine($year,$sem)
 
 
         $data = "$subject_name($faculty)";
-
-
+        // $sql="INSERT INTO ". $year . "year_routine (slot$i) values ('$data')";
         $sql = "UPDATE  " . $year . "year_routine SET `slot$i` =  '$data' WHERE `day`='$day'";
-
-
-
 
         $result = mysqli_query($conn, $sql);
 
@@ -190,7 +188,7 @@ function Generate_routine($year)
 
   require 'partials/dbconnect.php';
 
-  $sql = "SELECT * FROM " . $year . "year_routine";
+  $sql = "SELECT * FROM " . $year . "year_routine order by id asc";
 
 
   $result = mysqli_query($conn, $sql);

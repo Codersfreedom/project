@@ -223,9 +223,9 @@ include 'partials/_nav.php';
             $fac_id = $_POST['fac_id'];
             $year = $_POST['year'];
 
-            echo $slot1;
-            echo$year;
-            echo $day;
+            // echo $slot1;
+            // echo$year;
+            // echo $day;
 
             //update query fuction
             Update_Status($slot1,$slot2,$slot3,$slot4,$slot5,$slot6,$slot7,$day,$year,$fac_id);
