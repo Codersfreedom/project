@@ -323,6 +323,7 @@ include 'partials/_nav.php';
         $('#myTable').DataTable();
         order[];
     });
+    
 </script>
 
 </html>

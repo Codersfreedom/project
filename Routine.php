@@ -255,11 +255,37 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <!-- Initialize Data tables -->
 <script>
 
-  $(document).ready(function () {
-    $('#myTable').DataTable();
-    "order": [];
-  });
+  // $(document).ready(function () {
+  //   $('#myTable').DataTable();
+  //   "order": [];
+  // });
 
 
-
+  const year=document.querySelector('#year');
+  const sem=document.querySelector('#sem');
+  if(year.value=='3'){
+    sem.getElementsByTagName('option')[0].style.display="none";
+    sem.getElementsByTagName('option')[1].style.display="none";
+    sem.getElementsByTagName('option')[2].style.display="none";
+    sem.getElementsByTagName('option')[3].style.display="none";
+    sem.getElementsByTagName('option')[6].style.display="none";
+    sem.getElementsByTagName('option')[7].style.display="none";
+    sem.getElementsByTagName('option')[4].setAttribute('selected', 'true');
+  }
+  year.addEventListener('change',()=>{
+    if(year.value=='4'){
+    sem.getElementsByTagName('option')[6].style.display="inline";
+    sem.getElementsByTagName('option')[6].setAttribute('selected', 'true');
+    sem.getElementsByTagName('option')[7].style.display="inline";
+    sem.getElementsByTagName('option')[4].style.display="none";
+    sem.getElementsByTagName('option')[5].style.display="none";
+    }
+    else if(year.value=='3'){
+    sem.getElementsByTagName('option')[4].style.display="inline";
+    sem.getElementsByTagName('option')[4].setAttribute('selected', 'true');
+    sem.getElementsByTagName('option')[4].style.display="inline";
+    sem.getElementsByTagName('option')[6].style.display="none";
+    sem.getElementsByTagName('option')[7].style.display="none";
+    }
+  }) 
 </script>
