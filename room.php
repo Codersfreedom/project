@@ -74,7 +74,8 @@ if ($result) {
 
 ?>
 
-<?php include 'partials/_nav.php'; 
+<?php 
+include 'partials/_nav.php'; 
 if($insert){
 
   echo '<div class="alert alert-success alert-dismissible fade show my-0" role="alert">
