@@ -14,7 +14,14 @@
 
 
 <body>
+<?php
+include 'partials/_header.php';
+if(!isset($_SESSION['logedin'])){
+  header("location: index.php");
+}
+include 'partials/_nav.php';
 
+?>
 
 
     <!-- Modal ends here -->

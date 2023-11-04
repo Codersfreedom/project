@@ -63,8 +63,8 @@ session_start();
     <span class="sr-only">Toggle Dropdown</span>
   </button>
   <div class="dropdown-menu">
-    <a class="dropdown-item" href="partials/studentLogin.php">Student </a>
-    <a class="dropdown-item" href="partials/teacherLogin.php">Teacher </a>
+    <a class="dropdown-item" href="partials/studentLogin.php">Student</a>
+    <a class="dropdown-item" href="partials/teacherLogin.php">Admin</a>
     
   </div>
 </div>
