@@ -263,7 +263,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
   const year=document.querySelector('#year');
   const sem=document.querySelector('#sem');
-  if(year.value=='3'){
+  // if(year.value=='3'){
     sem.getElementsByTagName('option')[0].style.display="none";
     sem.getElementsByTagName('option')[1].style.display="none";
     sem.getElementsByTagName('option')[2].style.display="none";
@@ -271,21 +271,25 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     sem.getElementsByTagName('option')[6].style.display="none";
     sem.getElementsByTagName('option')[7].style.display="none";
     sem.getElementsByTagName('option')[4].setAttribute('selected', 'true');
-  }
+  // }
   year.addEventListener('change',()=>{
     if(year.value=='4'){
+      console.log(year.value);
     sem.getElementsByTagName('option')[6].style.display="inline";
     sem.getElementsByTagName('option')[6].setAttribute('selected', 'true');
     sem.getElementsByTagName('option')[7].style.display="inline";
     sem.getElementsByTagName('option')[4].style.display="none";
     sem.getElementsByTagName('option')[5].style.display="none";
+    sem.getElementsByTagName('option')[4].removeAttribute('selected');
     }
     else if(year.value=='3'){
+      console.log(year.value);
     sem.getElementsByTagName('option')[4].style.display="inline";
     sem.getElementsByTagName('option')[4].setAttribute('selected', 'true');
-    sem.getElementsByTagName('option')[4].style.display="inline";
+    sem.getElementsByTagName('option')[5].style.display="inline";
     sem.getElementsByTagName('option')[6].style.display="none";
     sem.getElementsByTagName('option')[7].style.display="none";
+    sem.getElementsByTagName('option')[6].removeAttribute('selected');
     }
   }) 
 </script>
