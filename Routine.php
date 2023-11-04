@@ -130,17 +130,25 @@ function routine($year,$sem)
         $faculty_row = mysqli_fetch_assoc($facultyidResult);
         if (isset($faculty_row['fac_id'])) {
           $facultyId = $faculty_row['fac_id'];
-        }
+       
         // inspite of not assign use where subject type = lab;
-        $subject_query = "SELECT subject.subject_name from `subject` INNER join  sub_allot on subject.subject_code = sub_allot.sub_code where sub_allot.fac_id='$faculty_id' and `sem` = $sem and subject.subject_type = 'Lab'";
+        $subject_query = "SELECT * from `subject` INNER join  sub_allot on subject.subject_code = sub_allot.sub_code where sub_allot.fac_id='$facultyId' and `sem` = $sem and subject.subject_type = 'Lab'";
         $subject_result = mysqli_query($conn, $subject_query);
-        $subject_row = mysqli_fetch_assoc($subject_result);
-        if (isset($subject_row['assign'])) {
-          $new_subject = $subject_row['assign'];
-          $update = "UPDATE  " . $year . "year_routine SET `slot1` ='' , `slot2` ='$new_subject',`slot3` ='',`slot4` ='' WHERE `day`='$day'";
-          $update_result = mysqli_query($conn, $update);
-        }
+        $subject_row = mysqli_fetch_assoc($subject_result); 
+        if (isset($subject_row['subject_name'])) {
+          
+        
+        $new_subject =$subject_row['subject_name'];
+        $aliasQuery = "SELECT * FROM `faculty` WHERE `fac_id` = '$facultyId'";
+        $aliasResult = mysqli_query($conn,$aliasQuery); 
+        $alias_row =  mysqli_fetch_assoc($aliasResult );
+        $alias = $alias_row['alias'];
+        $data = "$new_subject($alias)";
 
+        $update = "UPDATE  " . $year . "year_routine SET `slot1` ='' , `slot2` ='$data',`slot3` ='',`slot4` ='' WHERE `day`='$day'";
+        $update_result = mysqli_query($conn, $update);
+        }
+}
       }
 
 
