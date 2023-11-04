@@ -26,7 +26,7 @@
       <a class="nav-link" href="room.php">Rooms</a>
     </li>
     <li class="nav-item dropdown">
-      <a class="nav-link dropdown-toggle"  data-toggle="dropdown" href="#" role="button"
+      <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="partials/_nav.php" role="button"
         aria-haspopup="true" aria-expanded="false">Allotment</a>
       <div class="dropdown-menu">
         <a class="dropdown-item" href="theory.php">Subject</a>
