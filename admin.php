@@ -321,6 +321,7 @@
         $('#myTable').DataTable();
         //order[];
     });
+    
 </script>
 
 </html>
