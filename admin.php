@@ -102,24 +102,9 @@
             echo "'>  <tr>
             <input type='hidden'  name='fac_id' value='" . $row['fac_id'] . "'>
             <input type='hidden'  name='year' value='" . $row['year'] . "'>
-            <th scope='row'><select class=\"form-select\" name='day'>
-            <option value='Monday'";
-            echo $row['day'] === 'Monday' ? ' selected' : '';
-            echo " >Monday</option>
-            <option value='Tuesday'";
-            echo $row['day'] === 'Tuesday ' ? ' selected' : '';
-            echo " >Tuesday</option>
-            <option value='Wednesday'";
-            echo $row['day'] === 'Wednesday ' ? ' selected' : '';
-            echo " >Wednesday</option>
-            <option value='Thursday'";
-            echo $row['day'] === 'Thursday ' ? ' selected' : '';
-            echo " >Thursday</option>
-            <option value='Friday'";
-            echo $row['day'] === 'Friday ' ? ' selected' : '';
-            echo " >Friday</option>
-                      
-            </select></th>
+            <input type='hidden'  name='day' value='" . $row['day'] . "'>
+            
+            <td>" . $row['day'] . "</td>
             <td>" . $row['year'] . "</td>
         <td>" . $row['name'] . "</td>
         
