@@ -14,17 +14,17 @@
 
 
 <body>
-<?php
-include 'partials/_header.php';
-if(!isset($_SESSION['logedin'])){
-  header("location: index.php");
-}
-include 'partials/_nav.php';
+    <?php
+    include 'partials/_header.php';
+    if (!isset($_SESSION['logedin'])) {
+        header("location: index.php");
+    }
+    include 'partials/_nav.php';
 
-?>
+    ?>
 
 
-    <!-- Modal ends here -->
+    
 
 
     <h2 class="text-center py-3">Check availability</h2>
@@ -63,6 +63,7 @@ include 'partials/_nav.php';
                 <tr>
 
                     <th scope="col">Days</th>
+                    <th scope="col">Year</th>
                     <th scope="col">Faculty</th>
                     <th scope="col">Period 1</th>
                     <th scope="col">Period 2</th>
@@ -80,15 +81,14 @@ include 'partials/_nav.php';
     <?php
     require 'partials/dbconnect.php';
 
-    function Show_status( $day)
+    function Show_status($day)
     {
         require 'partials/dbconnect.php';
 
-        if ( $day == 'All Day') {
-            $sql = "SELECT faculty.name, status.* from `faculty` left JOIN status on faculty.fac_id = status.fac_id";
-        }
-        else{
-            $sql = "SELECT faculty.name, status.* from `faculty` left JOIN status on faculty.fac_id = status.fac_id WHERE  `day`='$day'";
+        if ($day == 'All Day') {
+            $sql = "SELECT faculty.name, status.* from `faculty` left JOIN status on faculty.fac_id = status.fac_id order by `year` and `day` ASC";
+        } else {
+            $sql = "SELECT faculty.name, status.* from `faculty` left JOIN status on faculty.fac_id = status.fac_id WHERE  `day`='$day' order by `year` and `day` ASC";
         }
 
         $result = mysqli_query($conn, $sql);
@@ -120,6 +120,7 @@ include 'partials/_nav.php';
             echo " >Friday</option>
                       
             </select></th>
+            <td>" . $row['year'] . "</td>
         <td>" . $row['name'] . "</td>
         
         <td><select class=\"form-select\" name='slot1'>
@@ -203,12 +204,11 @@ include 'partials/_nav.php';
 
         if (isset($_POST['dropday'])) {
             $dropdown_day = $_POST['dropday'];
-        
+
             Show_status($dropdown_day);
-        }
-        else{
+        } else {
             $dropdown_day = 'All Day';
-           
+
         }
         if (isset($_POST['slot1'])) {
             $slot1 = $_POST['slot1'];
@@ -226,9 +226,9 @@ include 'partials/_nav.php';
             // echo $slot1;
             // echo$year;
             // echo $day;
-
+    
             //update query fuction
-            Update_Status($slot1,$slot2,$slot3,$slot4,$slot5,$slot6,$slot7,$day,$year,$fac_id);
+            Update_Status($slot1, $slot2, $slot3, $slot4, $slot5, $slot6, $slot7, $day, $year, $fac_id);
             Show_status($dropdown_day);
 
 
@@ -261,47 +261,45 @@ include 'partials/_nav.php';
             $new_slot2 = 1;
         }
 
-        if($slot3 ==1){
-            $new_slot3=0;
-        }
-        else{
+        if ($slot3 == 1) {
+            $new_slot3 = 0;
+        } else {
             $new_slot3 = 1;
         }
 
-        if($slot4==1){
+        if ($slot4 == 1) {
             $new_slot4 = 0;
-        }else{
-            $new_slot4=1;
+        } else {
+            $new_slot4 = 1;
         }
 
-        if($slot5==1){
-            $new_slot5=0;
+        if ($slot5 == 1) {
+            $new_slot5 = 0;
+        } else {
+            $new_slot5 = 1;
         }
-        else{
-            $new_slot5=1;
-        }
-        if($slot6==1){
-            $new_slot6 =0;
-        }else{
-            $new_slot6=1;
+        if ($slot6 == 1) {
+            $new_slot6 = 0;
+        } else {
+            $new_slot6 = 1;
         }
 
-        if($slot7==1){
-            $new_slot7=0;
-        }else{
-            $new_slot7=1;
+        if ($slot7 == 1) {
+            $new_slot7 = 0;
+        } else {
+            $new_slot7 = 1;
         }
 
 
         $sql2 = "UPDATE `status` SET `slot1`=$new_slot1,`slot2`=$new_slot2,`slot3`=$new_slot3,`slot4`=$new_slot4,`slot5`=$new_slot5,`slot6`=$new_slot6,`slot7`=$new_slot7 WHERE `day`='$day' and `fac_id`='$fac_id' and `year`=$other_year";
-        $result = mysqli_query($conn,$sql2);
+        $result = mysqli_query($conn, $sql2);
     }
     ?>
 
 
 </body>
 
-<!-- Optional JavaScript -->
+
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
     integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
@@ -316,12 +314,12 @@ include 'partials/_nav.php';
 <script src="//cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
 
 
-<!-- Initializint Data tables -->
+<!-- Initialize Data tables -->
 <script>
 
     $(document).ready(function () {
         $('#myTable').DataTable();
-        order[];
+        //order[];
     });
 </script>
 
