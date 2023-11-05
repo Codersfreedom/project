@@ -93,8 +93,16 @@
     $result = mysqli_query($conn, $sql);
 
     //  whenever new faculty arrives
+    // check if  the faculty id already exists in status table
   
-    Add_faculty($fac_id, $year);
+    $exists = "SELECT * FROM `status` where `fac_id` = '$fac_id'";
+    $exists_result = mysqli_query($conn, $exists);
+    $num = mysqli_num_rows($exists_result);
+    if ($num <= 0) {
+      Add_faculty($fac_id, $year);
+    }
+
+
 
   }
   function Add_faculty($fac_id, $year)
@@ -137,16 +145,16 @@
 
   }
 
-//   if ($delete) {
+  //   if ($delete) {
 //     echo '<div class="alert alert-success alert-dismissible fade show my-0" role="alert">
 //   <strong>successfully deleted</strong>
 //   <button type="button" class="close" data-dismiss="alert" aria-label="Close">
 //   <span aria-hidden="true">&times;</span>
 //   </button>
 // </div>';
-
-//   }
-
+  
+  //   }
+  
 
 
   ?>

@@ -86,7 +86,7 @@
         require 'partials/dbconnect.php';
 
         if ($day == 'All Day') {
-            $sql = "SELECT faculty.name, status.* from `faculty` left JOIN status on faculty.fac_id = status.fac_id order by `year` and `day` ASC";
+            $sql = "SELECT faculty.name, status.* from `faculty` left JOIN status on faculty.fac_id = status.fac_id";
         } else {
             $sql = "SELECT faculty.name, status.* from `faculty` left JOIN status on faculty.fac_id = status.fac_id WHERE  `day`='$day' order by `year` and `day` ASC";
         }
