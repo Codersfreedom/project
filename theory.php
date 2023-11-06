@@ -93,8 +93,16 @@
     $result = mysqli_query($conn, $sql);
 
     //  whenever new faculty arrives
+    // check if  the faculty id already exists in status table
   
-    Add_faculty($fac_id, $year);
+    $exists = "SELECT * FROM `status` where `fac_id` = '$fac_id'";
+    $exists_result = mysqli_query($conn, $exists);
+    $num = mysqli_num_rows($exists_result);
+    if ($num <= 0) {
+      Add_faculty($fac_id, $year);
+    }
+
+
 
   }
   function Add_faculty($fac_id, $year)
@@ -111,15 +119,15 @@
       $sql1 = "INSERT INTO `status`(`day`, `fac_id`, `year`, `slot1`, `slot2`, `slot3`, `slot4`, `slot5`, `slot6`, `slot7`) VALUES ('$day','$fac_id',$year,1,1,1,1,1,1,1)";
       $result = mysqli_query($conn, $sql1);
 
-      if ($year % 2 == 0) {
-        $other_year = $year - 1;
-      } else {
-        $other_year = $year + 1;
-      }
+      // if ($year % 2 == 0) {
+      //   $other_year = $year - 1;
+      // } else {
+      //   $other_year = $year + 1;
+      // }
 
 
-      $sql2 = "INSERT INTO `status`(`day`, `fac_id`, `year`, `slot1`, `slot2`, `slot3`, `slot4`, `slot5`, `slot6`, `slot7`) VALUES ('$day','$fac_id',$other_year,0,0,0,0,0,0,0)";
-      $result = mysqli_query($conn, $sql2);
+      // $sql2 = "INSERT INTO `status`(`day`, `fac_id`, `year`, `slot1`, `slot2`, `slot3`, `slot4`, `slot5`, `slot6`, `slot7`) VALUES ('$day','$fac_id',$other_year,0,0,0,0,0,0,0)";
+      // $result = mysqli_query($conn, $sql2);
 
 
     }
@@ -137,16 +145,16 @@
 
   }
 
-//   if ($delete) {
+  //   if ($delete) {
 //     echo '<div class="alert alert-success alert-dismissible fade show my-0" role="alert">
 //   <strong>successfully deleted</strong>
 //   <button type="button" class="close" data-dismiss="alert" aria-label="Close">
 //   <span aria-hidden="true">&times;</span>
 //   </button>
 // </div>';
-
-//   }
-
+  
+  //   }
+  
 
 
   ?>

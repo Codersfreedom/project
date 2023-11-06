@@ -24,7 +24,7 @@
     ?>
 
 
-    
+
 
 
     <h2 class="text-center py-3">Check availability</h2>
@@ -86,9 +86,9 @@
         require 'partials/dbconnect.php';
 
         if ($day == 'All Day') {
-            $sql = "SELECT faculty.name, status.* from `faculty` left JOIN status on faculty.fac_id = status.fac_id order by `year` and `day` ASC";
+            $sql = "SELECT faculty.name, status.* from `faculty` INNER JOIN status on faculty.fac_id = status.fac_id order by `year` and `day` asc";
         } else {
-            $sql = "SELECT faculty.name, status.* from `faculty` left JOIN status on faculty.fac_id = status.fac_id WHERE  `day`='$day' order by `year` and `day` ASC";
+            $sql = "SELECT faculty.name, status.* from `faculty` INNER JOIN status on faculty.fac_id = status.fac_id WHERE  `day`='$day' order by `year` and `day` ASC";
         }
 
         $result = mysqli_query($conn, $sql);
@@ -104,7 +104,12 @@
             <input type='hidden'  name='year' value='" . $row['year'] . "'>
             <input type='hidden'  name='day' value='" . $row['day'] . "'>
             
+<<<<<<< HEAD
             <td>" . $row['day'] . "</td>
+=======
+            <td>" . $row['day'] . "</td> 
+           
+>>>>>>> 044725e5075392c73ea603fda2686438c7c9a5f8
             <td>" . $row['year'] . "</td>
         <td>" . $row['name'] . "</td>
         
@@ -228,56 +233,56 @@
         $sql1 = "UPDATE `status` SET `slot1`=$slot1,`slot2`=$slot2,`slot3`=$slot3,`slot4`=$slot4,`slot5`=$slot5,`slot6`=$slot6,`slot7`=$slot7 WHERE `day`='$day' and `fac_id`='$fac_id' and `year`=$year";
         $result = mysqli_query($conn, $sql1);
 
-        if ($year % 2 == 0) {
-            $other_year = $year - 1;
-        } else {
-            $other_year = $year + 1;
-        }
+        // if ($year % 2 == 0) {
+        //     $other_year = $year - 1;
+        // } else {
+        //     $other_year = $year + 1;
+        // }
 
-        if ($slot1 == 1) {
-            $new_slot1 = 0;
-        } else {
-            $new_slot1 = 1;
-        }
+        // if ($slot1 == 1) {
+        //     $new_slot1 = 0;
+        // } else {
+        //     $new_slot1 = 1;
+        // }
 
-        if ($slot2 == 1) {
-            $new_slot2 = 0;
-        } else {
-            $new_slot2 = 1;
-        }
+        // if ($slot2 == 1) {
+        //     $new_slot2 = 0;
+        // } else {
+        //     $new_slot2 = 1;
+        // }
 
-        if ($slot3 == 1) {
-            $new_slot3 = 0;
-        } else {
-            $new_slot3 = 1;
-        }
+        // if ($slot3 == 1) {
+        //     $new_slot3 = 0;
+        // } else {
+        //     $new_slot3 = 1;
+        // }
 
-        if ($slot4 == 1) {
-            $new_slot4 = 0;
-        } else {
-            $new_slot4 = 1;
-        }
+        // if ($slot4 == 1) {
+        //     $new_slot4 = 0;
+        // } else {
+        //     $new_slot4 = 1;
+        // }
 
-        if ($slot5 == 1) {
-            $new_slot5 = 0;
-        } else {
-            $new_slot5 = 1;
-        }
-        if ($slot6 == 1) {
-            $new_slot6 = 0;
-        } else {
-            $new_slot6 = 1;
-        }
+        // if ($slot5 == 1) {
+        //     $new_slot5 = 0;
+        // } else {
+        //     $new_slot5 = 1;
+        // }
+        // if ($slot6 == 1) {
+        //     $new_slot6 = 0;
+        // } else {
+        //     $new_slot6 = 1;
+        // }
 
-        if ($slot7 == 1) {
-            $new_slot7 = 0;
-        } else {
-            $new_slot7 = 1;
-        }
+        // if ($slot7 == 1) {
+        //     $new_slot7 = 0;
+        // } else {
+        //     $new_slot7 = 1;
+        // }
 
 
-        $sql2 = "UPDATE `status` SET `slot1`=$new_slot1,`slot2`=$new_slot2,`slot3`=$new_slot3,`slot4`=$new_slot4,`slot5`=$new_slot5,`slot6`=$new_slot6,`slot7`=$new_slot7 WHERE `day`='$day' and `fac_id`='$fac_id' and `year`=$other_year";
-        $result = mysqli_query($conn, $sql2);
+        // $sql2 = "UPDATE `status` SET `slot1`=$new_slot1,`slot2`=$new_slot2,`slot3`=$new_slot3,`slot4`=$new_slot4,`slot5`=$new_slot5,`slot6`=$new_slot6,`slot7`=$new_slot7 WHERE `day`='$day' and `fac_id`='$fac_id' and `year`=$other_year";
+        // $result = mysqli_query($conn, $sql2);
     }
     ?>
 
@@ -303,10 +308,15 @@
 <script>
 
     $(document).ready(function () {
-        $('#myTable').DataTable();
-        //order[];
+        $('#myTable').DataTable(
+            {
+                "aaSorting":[]
+            }
+        );
+        
+       
     });
-    
+
 </script>
 
 </html>

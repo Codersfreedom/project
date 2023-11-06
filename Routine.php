@@ -22,6 +22,19 @@
   ?>
 </head>
 
+<body>
+
+<style>
+
+
+tbody tr:nth-child(odd) {
+  background-color: #fff;
+}
+
+tbody tr:nth-child(even) {
+  background-color: #eee;
+}
+</style>
 <div class="container d-flex justify-content-center my-4 p-4">
   <form class="form-inline" action="Routine.php" method="post">
     <div class="form-group mb-2">
@@ -176,18 +189,20 @@ function routine($year,$sem)
       <tr>
 
         <th scope="col">Days</th>
-        <th scope="col">Period 1</th>
-        <th scope="col">Period 2</th>
-        <th scope="col">Period 3</th>
-        <th scope="col">Period 4</th>
-        <th scope="col">Period 5</th>
-        <th scope="col">Period 6</th>
-        <th scope="col">Period 7</th>
+        <th scope="col">Period 1 (09:20-10:20)</th>
+        <th scope="col">Period 2 (10:20-11:20)</th>
+        <th scope="col">Period 3 (11:20-12:20)</th>
+        <th scope="col">Period 4 (12:20-13:20)</th>
+        <th scope="col">Period 5 (14:10-15:10)</th>
+        <th scope="col">Period 6 (15:10-16:10)</th>
+        <th scope="col">Period 7 (16:10-17:10)</th>
 
       </tr>
     </thead>
     <tbody>
 </div>
+
+
 <?php
 
 
@@ -241,7 +256,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 
 ?>
-
+</body>
 <!-- <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
   integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
