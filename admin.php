@@ -209,9 +209,9 @@
             $fac_id = $_POST['fac_id'];
             $year = $_POST['year'];
 
-            // echo $slot1;
-            // echo$year;
-            // echo $day;
+            echo $slot1;
+            echo$year;
+            echo $day;
     
             //update query fuction
             Update_Status($slot1, $slot2, $slot3, $slot4, $slot5, $slot6, $slot7, $day, $year, $fac_id);
@@ -296,6 +296,7 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
     integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
     crossorigin="anonymous"></script> -->
+
 <!-- Datatables -->
 <script src="//cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
 
@@ -305,9 +306,9 @@
 
     $(document).ready(function () {
         $('#myTable').DataTable(
-            {
-                "aaSorting":[]
-            }
+            // {
+            //    "aaSorting":[]
+            // }
         );
         
        
