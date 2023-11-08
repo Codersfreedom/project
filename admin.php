@@ -86,7 +86,7 @@
         require 'partials/dbconnect.php';
 
         if ($day == 'All Day') {
-            $sql = "SELECT faculty.name, status.* from `faculty` INNER JOIN status on faculty.fac_id = status.fac_id order by `year` and `day` asc";
+            $sql = "SELECT faculty.name, status.* from `faculty` INNER JOIN status on faculty.fac_id = status.fac_id order by `id` asc,`year` asc";
         } else {
             $sql = "SELECT faculty.name, status.* from `faculty` INNER JOIN status on faculty.fac_id = status.fac_id WHERE  `day`='$day' order by `year` and `day` ASC";
         }
@@ -104,12 +104,8 @@
             <input type='hidden'  name='year' value='" . $row['year'] . "'>
             <input type='hidden'  name='day' value='" . $row['day'] . "'>
             
-<<<<<<< HEAD
-            <td>" . $row['day'] . "</td>
-=======
             <td>" . $row['day'] . "</td> 
            
->>>>>>> 044725e5075392c73ea603fda2686438c7c9a5f8
             <td>" . $row['year'] . "</td>
         <td>" . $row['name'] . "</td>
         
@@ -176,7 +172,7 @@
             echo ">Not Available</option>
         </select></td>
 
-        <td><button type=\"submit\" class=\"btn btn-primary\">Update</button></td>
+        <td><button  type=\"submit\" class=\"btn btn-primary\">Update</button></td>
         </tr>
         </form>
         </div>";
@@ -194,7 +190,6 @@
 
         if (isset($_POST['dropday'])) {
             $dropdown_day = $_POST['dropday'];
-
             Show_status($dropdown_day);
         } else {
             $dropdown_day = 'All Day';
@@ -308,15 +303,21 @@
 <!-- Initialize Data tables -->
 <script>
 
-    $(document).ready(function () {
-        $('#myTable').DataTable(
-            // {
-            //    "aaSorting":[]
-            // }
-        );
+    // $(document).ready(function () {
+    //     $('#myTable').DataTable(
+    //         {
+    //            "aaSorting":[],
+    //            "processing": true,
+    //         "serverSide": true,
+    //            "ajax": {
+    //             "url" : "/project/admin.php",
+    //             "type" : "POST"
+    //         }
+    //         }
+    //     );
         
        
-    });
+    // });
 
 </script>
 

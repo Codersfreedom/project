@@ -95,7 +95,7 @@
     //  whenever new faculty arrives
     // check if  the faculty id already exists in status table
   
-    $exists = "SELECT * FROM `status` where `fac_id` = '$fac_id'";
+    $exists = "SELECT * FROM `status` where `fac_id` = '$fac_id' and `year`='$year'";
     $exists_result = mysqli_query($conn, $exists);
     $num = mysqli_num_rows($exists_result);
     if ($num <= 0) {
