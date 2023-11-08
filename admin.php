@@ -104,8 +104,12 @@
             <input type='hidden'  name='year' value='" . $row['year'] . "'>
             <input type='hidden'  name='day' value='" . $row['day'] . "'>
             
+<<<<<<< HEAD
+            <td>" . $row['day'] . "</td>
+=======
             <td>" . $row['day'] . "</td> 
            
+>>>>>>> 044725e5075392c73ea603fda2686438c7c9a5f8
             <td>" . $row['year'] . "</td>
         <td>" . $row['name'] . "</td>
         
