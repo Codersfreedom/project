@@ -34,6 +34,7 @@
             <form action="admin.php" class="d-flex flex-row align-self-center" method="post">
                 <div class="form-group pr-3">
                     <label for="subname">Day</label>
+                    
                     <select class="form-control" id="day" name="dropday">
                         <option>Monday</option>
                         <option>Tuesday</option>
@@ -45,6 +46,33 @@
                     </select>
                 </div>
 
+                <div class="form-group pr-3">
+                    <label for="faculty">Faculty</label>
+
+                    <select class="form-control" id="faculty" name="faculty" >
+                       
+                     <?php
+
+                     $sql = "SELECT DISTINCT faculty.fac_id,`name`  from `faculty` inner join  `status` on faculty.fac_id = status.fac_id;";
+                     $result = mysqli_query($conn, $sql);
+
+
+                     while ($row = mysqli_fetch_assoc($result)) {
+
+                         echo "
+       
+                        <option value =" . $row['fac_id'] . ">
+                        " . $row['name'] . "
+                        </option>
+                        ";
+
+                     }
+                     ?>
+                    <option selected>All</option>
+                    </select>
+                </div>
+
+                
 
                 <div class="pt-2">
                     <button type="submit" class="btn btn-primary my-4 ">Confirm</button>
@@ -80,14 +108,19 @@
     <?php
     require 'partials/dbconnect.php';
 
-    function Show_status($day)
+    function Show_status($day, $faculty)
     {
         require 'partials/dbconnect.php';
 
-        if ($day == 'All Day') {
-            $sql = "SELECT faculty.name, status.* from `faculty` INNER JOIN status on faculty.fac_id = status.fac_id order by `id` asc,`year` asc";
-        } else {
+        if ($day == 'All Day' && $faculty == 'All') {
+            $sql = "SELECT  faculty.name, status.* from `faculty` INNER JOIN status on faculty.fac_id = status.fac_id order by `id` asc,`year` asc";
+
+        } else if ($day == 'All Day' && $faculty != 'All') {
+            $sql = "SELECT faculty.name, status.* from `faculty` INNER JOIN status on faculty.fac_id = status.fac_id WHERE  status.fac_id='$faculty' order by `year` and `day` ASC";
+        } else if ($faculty == 'All' && $day != 'All Day') {
             $sql = "SELECT faculty.name, status.* from `faculty` INNER JOIN status on faculty.fac_id = status.fac_id WHERE  `day`='$day' order by `year` and `day` ASC";
+        } elseif ($faculty != 'All' && $day != 'All Day') {
+            $sql = "SELECT faculty.name, status.* from `faculty` INNER JOIN status on faculty.fac_id = status.fac_id WHERE status.fac_id='$faculty' and `day`='$day' order by `year` and `day` ASC";
         }
 
         $result = mysqli_query($conn, $sql);
@@ -189,10 +222,11 @@
 
         if (isset($_POST['dropday'])) {
             $dropdown_day = $_POST['dropday'];
-            Show_status($dropdown_day);
-        } else {
+            $faculty = $_POST['faculty'];
+            Show_status($dropdown_day, $faculty);
+        } else{
             $dropdown_day = 'All Day';
-
+            $faculty = "All";
         }
         if (isset($_POST['slot1'])) {
             $slot1 = $_POST['slot1'];
@@ -206,14 +240,16 @@
             $day = $_POST['day'];
             $fac_id = $_POST['fac_id'];
             $year = $_POST['year'];
+           
+    
 
-            echo $slot1;
-            echo$year;
-            echo $day;
+            // echo $slot1;
+            // echo $year;
+            // echo $day;
     
             //update query fuction
             Update_Status($slot1, $slot2, $slot3, $slot4, $slot5, $slot6, $slot7, $day, $year, $fac_id);
-            Show_status($dropdown_day);
+            Show_status($dropdown_day, $faculty);
 
 
         }
@@ -232,31 +268,31 @@
         // } else {
         //     $other_year = $year + 1;
         // }
-
+    
         // if ($slot1 == 1) {
         //     $new_slot1 = 0;
         // } else {
         //     $new_slot1 = 1;
         // }
-
+    
         // if ($slot2 == 1) {
         //     $new_slot2 = 0;
         // } else {
         //     $new_slot2 = 1;
         // }
-
+    
         // if ($slot3 == 1) {
         //     $new_slot3 = 0;
         // } else {
         //     $new_slot3 = 1;
         // }
-
+    
         // if ($slot4 == 1) {
         //     $new_slot4 = 0;
         // } else {
         //     $new_slot4 = 1;
         // }
-
+    
         // if ($slot5 == 1) {
         //     $new_slot5 = 0;
         // } else {
@@ -267,13 +303,13 @@
         // } else {
         //     $new_slot6 = 1;
         // }
-
+    
         // if ($slot7 == 1) {
         //     $new_slot7 = 0;
         // } else {
         //     $new_slot7 = 1;
         // }
-
+    
 
         // $sql2 = "UPDATE `status` SET `slot1`=$new_slot1,`slot2`=$new_slot2,`slot3`=$new_slot3,`slot4`=$new_slot4,`slot5`=$new_slot5,`slot6`=$new_slot6,`slot7`=$new_slot7 WHERE `day`='$day' and `fac_id`='$fac_id' and `year`=$other_year";
         // $result = mysqli_query($conn, $sql2);
