@@ -52,7 +52,6 @@
 
             </form>
 
-
         </div>
     </div>
     <div class="container" style="margin-left:100px">
@@ -280,7 +279,6 @@
         // $result = mysqli_query($conn, $sql2);
     }
     ?>
-
 
 </body>
 

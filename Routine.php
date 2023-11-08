@@ -84,49 +84,78 @@ function routine($year,$sem)
   require 'partials/dbconnect.php';
   $trSql="Truncate TABLE ". $year . "year_routine";
   $result1 = mysqli_query($conn, $trSql);
-  $days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"];
+  $days = ["Monday","Tuesday","Wednesday","Thursday","Friday"];
 
+  
   foreach ($days as $day) {
     $daySql= "Insert into ". $year . "year_routine (day) values ('$day')";
     $result1 = mysqli_query($conn, $daySql);
-
+    // $sub=array();
+    // $fac=array();
+    $subfac=array();
     for ($i = 1; $i < 8; $i++) {
       $sql = "SELECT `fac_id` FROM `status` WHERE `slot$i` = 1 and `day` = '$day' and `year` = $year";
 
       $result = mysqli_query($conn, $sql);
-
-      $row = mysqli_fetch_assoc($result);
-
-
-      if (isset($row['fac_id'])) {
+      
+      // $faculty_id;
+      
+      while($row = mysqli_fetch_assoc($result)){
         $faculty_id = $row['fac_id'];
         $subjectQuery = "SELECT subject.subject_name from `subject` INNER join  sub_allot on subject.subject_code = sub_allot.sub_code where sub_allot.fac_id='$faculty_id' and `sem` = $sem and subject.subject_type = 'Theory'" ;
         $subjectResult = mysqli_query($conn, $subjectQuery);
-        $subjectRow = mysqli_fetch_assoc($subjectResult);
-
-        if (isset($subjectRow['subject_name'])) {
-          $subject_name = $subjectRow['subject_name'];
-        }
-        else{
-          $subject_name='';
-        }
-
-
         $facultyQuery = "SELECT `alias` FROM `faculty` WHERE `fac_id` = '$faculty_id'";
         $facultyResult = mysqli_query($conn, $facultyQuery);
         $facultyRow = mysqli_fetch_assoc($facultyResult);
-        if (isset($facultyRow['alias'])) {
-          $faculty = $facultyRow['alias'];
+        $faculty = $facultyRow['alias'];
+        $j=0;
+        while($subjectRow = mysqli_fetch_assoc($subjectResult)){
+          
+            $key=$row['fac_id'].$j;
+            $subfac[$key]=$subjectRow['subject_name']."(".$faculty.")";
+            $j++;
         }
 
+      }
+      if (isset($rowfac['fac_id'])) {
+        // $faculty_id = $row['fac_id'];
+        // $subjectQuery = "SELECT subject.subject_name from `subject` INNER join  sub_allot on subject.subject_code = sub_allot.sub_code where sub_allot.fac_id='$faculty_id' and `sem` = $sem and subject.subject_type = 'Theory'" ;
+        // $subjectResult = mysqli_query($conn, $subjectQuery);
+        
+        // while($subjectRow = mysqli_fetch_assoc($subjectResult)){
+          //   array_push($sub,$subjectRow['subject_name']);
+          // }
+          
+          // if (isset($subjectRow['subject_name'])) {
+            //   $subject_name = $subjectRow['subject_name'];
+            // }
+            // else{
+              //   $subject_name='';
+              // }
+        //       $faculty_id = $rowfac['fac_id'];
+        //         echo $faculty_id;
+        //       $facultyQuery = "SELECT `alias` FROM `faculty` WHERE `fac_id` = '$faculty_id'";
+        //       $facultyResult = mysqli_query($conn, $facultyQuery);
+        //       $facultyRow = mysqli_fetch_assoc($facultyResult);
+        // if (isset($facultyRow['alias'])) {
+        //   $faculty = $facultyRow['alias'];
+        // }
 
-        $data = "$subject_name($faculty)";
+      }
+      
+      foreach($subfac as $fac => $sub){
+        $data = "$sub";
+        // $sql="INSERT INTO ". $year . "year_routine (slot$i) values ('$data')";
+        // $sql = "UPDATE  " . $year . "year_routine SET `slot$i` =  '$data' WHERE `day`='$day'";
+
+        // $result = mysqli_query($conn, $sql);
+      }
+        // $data = "$subject_name($faculty)";
         // $sql="INSERT INTO ". $year . "year_routine (slot$i) values ('$data')";
         $sql = "UPDATE  " . $year . "year_routine SET `slot$i` =  '$data' WHERE `day`='$day'";
 
         $result = mysqli_query($conn, $sql);
 
-      }
 
 
     }
@@ -170,6 +199,11 @@ function routine($year,$sem)
     }
 
   }
+  
+  print_r($subfac);
+  // $fa=array_unique($fac);
+  // print_r($sub);
+  // print_r($fa);
 
 }
 
