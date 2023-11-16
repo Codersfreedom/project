@@ -73,8 +73,16 @@
 function updateWorkload($workLoad,$year,$conn){
 
   foreach($workLoad as $fac=>$wl){
-    $updateWlSql="UPDATE Workload SET workLoad=$wl WHERE year=$year AND facId='$fac'";
-    $upwlRes=mysqli_query($conn,$updateWlSql);
+    $wlSql="SELECT workLoad FROM workload WHERE facId='$fac' AND year=$year";
+    $wlRow=mysqli_fetch_assoc(mysqli_query($conn, $wlSql));
+    $totalWlSql="SELECT totalWL FROM total_wl WHERE fac_id='$fac'";
+    $totalWlRow=mysqli_fetch_assoc(mysqli_query($conn,$totalWlSql));
+    $workLoad=($wlRow['workLoad']+$totalWlRow['totalWL'])-$wl;
+    
+    $updateTotalWlSql="UPDATE total_wl SET totalWL=$wl WHERE  fac_id='$fac'";
+    $upTwlRes=mysqli_query($conn,$updateTotalWlSql);
+    $updateCurrWlSql="UPDATE workload SET workLoad=$workLoad WHERE year=$year AND facId='$fac'";
+    $upCurrWlRes=mysqli_query($conn,$updateCurrWlSql);
   }
 }
 
@@ -96,7 +104,7 @@ function updateWorkload($workLoad,$year,$conn){
       foreach($slots as $slot=>$fa){
         $updateSql="UPDATE status SET $slot=0 WHERE day='$days' AND fac_id='$fa' AND year=$year";
         $updateRes = mysqli_query($conn, $updateSql);
-        echo $days." ".$slot."=>".$fa."<br/>";
+        
       }
     }
   }
@@ -285,7 +293,9 @@ function updateWorkload($workLoad,$year,$conn){
     foreach($semFac as $sf){
       $wlSql="SELECT workLoad FROM workload WHERE facId='$sf' AND year=$year";
       $wlRow=mysqli_fetch_assoc(mysqli_query($conn, $wlSql));
-      $workLoad[$sf]=$wlRow['workLoad'];
+      $totalWlSql="SELECT totalWL FROM total_wl WHERE fac_id='$sf'";
+      $totalWlRow=mysqli_fetch_assoc(mysqli_query($conn,$totalWlSql));
+      $workLoad[$sf]=$wlRow['workLoad']+$totalWlRow['totalWL'];
 
     }
 
@@ -365,13 +375,12 @@ function updateWorkload($workLoad,$year,$conn){
 
         if ($i == 1 && $labFlag && $status[$faculty_id][$day]['slot1'] == 1 && $status[$faculty_id][$day]['slot2'] == 1 && $status[$faculty_id][$day]['slot3'] == 1 && $status[$faculty_id][$day]['slot4'] == 1) {
           $labCount = count($lab);
-          echo "Tul6e ".$day."<br>";
           if ($labCount == 1) {
             //? Only one lab....
             foreach($semFac as $sf){
               if($faculty_id==$sf){
                 echo $sf;
-                if (checkLab($allotedLab, $lab[0])&& $workLoad[$faculty_id]>0) {
+                if (checkLab($allotedLab, $lab[0])&& $workLoad[$faculty_id]>5) {
                   $routine[$day]['slot1'] = $routine[$day]['slot2'] = $routine[$day]['slot3'] = $routine[$day]['slot4'] = $lab[0];
                   $facRoutine[$day]['slot1'] = $facRoutine[$day]['slot2'] = $facRoutine[$day]['slot3'] = $facRoutine[$day]['slot4'] = $faculty_id;
                   $workLoad[$faculty_id]=$workLoad[$faculty_id]-4;
@@ -383,7 +392,7 @@ function updateWorkload($workLoad,$year,$conn){
               elseif(isset($labFac[$sf]) && $status[$sf][$day]['slot1'] == 1 && $status[$sf][$day]['slot2'] == 1 && $status[$sf][$day]['slot3'] == 1 && $status[$sf][$day]['slot4'] == 1){
                 $lbcount=count($labFac[$sf]);
                 for($t=0;$t<$lbcount;$t++){
-                  if($workLoad[$sf]>0 && checkLab($allotedLab, $labFac[$sf][$t])){$routine[$day]['slot1'] = $routine[$day]['slot2'] = $routine[$day]['slot3'] = $routine[$day]['slot4'] = $labFac[$sf][$t];
+                  if($workLoad[$sf]>5 && checkLab($allotedLab, $labFac[$sf][$t])){$routine[$day]['slot1'] = $routine[$day]['slot2'] = $routine[$day]['slot3'] = $routine[$day]['slot4'] = $labFac[$sf][$t];
                     $facRoutine[$day]['slot1'] = $facRoutine[$day]['slot2'] = $facRoutine[$day]['slot3'] = $facRoutine[$day]['slot4'] = $sf;
                     $workLoad[$sf]=$workLoad[$sf]-4;
                     array_push($allotedLab, $labFac[$sf][$t]);
@@ -397,7 +406,7 @@ function updateWorkload($workLoad,$year,$conn){
             foreach($semFac as $sf){
               if($faculty_id==$sf){
                 for ($j = 0; $j < $labCount; $j++) {
-                  if ($workLoad[$faculty_id]>0 && checkLab($allotedLab, $lab[$j])) {
+                  if ($workLoad[$faculty_id]>5 && checkLab($allotedLab, $lab[$j])) {
                     $routine[$day]['slot1'] = $routine[$day]['slot2'] = $routine[$day]['slot3'] = $routine[$day]['slot4'] = $lab[$j];
                     $facRoutine[$day]['slot1'] = $facRoutine[$day]['slot2'] = $facRoutine[$day]['slot3'] = $facRoutine[$day]['slot4'] = $faculty_id;
                     $workLoad[$faculty_id]=$workLoad[$faculty_id]-4;
@@ -409,7 +418,7 @@ function updateWorkload($workLoad,$year,$conn){
               elseif(isset($labFac[$sf]) && $status[$sf][$day]['slot1'] == 1 && $status[$sf][$day]['slot2'] == 1 && $status[$sf][$day]['slot3'] == 1 && $status[$sf][$day]['slot4'] == 1){
                 $lbcount=count($labFac[$sf]);
                 for($t=0;$t<$lbcount;$t++){
-                  if($workLoad[$sf]>0 && checkLab($allotedLab, $labFac[$sf][$t])){$routine[$day]['slot1'] = $routine[$day]['slot2'] = $routine[$day]['slot3'] = $routine[$day]['slot4'] = $labFac[$sf][$t];
+                  if($workLoad[$sf]>5 && checkLab($allotedLab, $labFac[$sf][$t])){$routine[$day]['slot1'] = $routine[$day]['slot2'] = $routine[$day]['slot3'] = $routine[$day]['slot4'] = $labFac[$sf][$t];
                     $facRoutine[$day]['slot1'] = $facRoutine[$day]['slot2'] = $facRoutine[$day]['slot3'] = $facRoutine[$day]['slot4'] = $sf;
                     $workLoad[$sf]=$workLoad[$sf]-4;
                     array_push($allotedLab, $labFac[$sf][$t]);
@@ -445,10 +454,10 @@ function updateWorkload($workLoad,$year,$conn){
                     $facRoutine[$day]['slot' . $i] = $sf;
                     $workLoad[$sf]=$workLoad[$sf]-1;
                     array_push($allotedSubjects, $newSub[$m]);
-                    break;
+                    break 2;
                   }
                 }
-                break;
+                
               }
             }
           } elseif ($i == 7) {
@@ -573,11 +582,11 @@ function updateWorkload($workLoad,$year,$conn){
     echo "<pre>";
     print_r($routine);
     echo "</pre>";
-    // echo "<pre>";
+    echo "<pre>";
     // // echo $FacSub['E3'];
-    // print_r($facRoutine);
+    print_r($facRoutine);
     // // print_r($status['C1']);
-    // echo "</pre>";
+    echo "</pre>";
     echo "<pre>";
     print_r($allotedSubjects);
     echo "</pre>";
@@ -601,13 +610,13 @@ function updateWorkload($workLoad,$year,$conn){
     //   }
     // }
     echo "<pre>";
+    echo "this is workload";
     print_r($workLoad);
     echo "</pre>";
+    updateWorkload($workLoad,$year,$conn);
     if ($year == '3') {
-      updateWorkload($workLoad,4,$conn);
       updateStatus($facRoutine, 4, $conn);
     } elseif ($year == '4') {
-      updateWorkload($workLoad,3,$conn);
       updateStatus($facRoutine, 3, $conn);
     }
   }
