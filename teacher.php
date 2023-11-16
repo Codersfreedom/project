@@ -15,20 +15,21 @@
 
 <body>
 
-<!-- Inserting Data into faculty table from modal -->
+  <!-- Inserting Data into faculty table from modal -->
 
-<?php  
-// session_start();
-include 'partials/_header.php';
-if(!isset($_SESSION['logedin'])){
-  header("location: index.php");
-}
-include 'partials/_nav.php';
-require 'partials/dbconnect.php';
-    $insert = false;
-    $showError='false';
-    // echo $_SESSION['logedin'];
-
+  <?php
+  // session_start();
+  include 'partials/_header.php';
+  if (!isset($_SESSION['logedin'])) {
+    header("location: index.php");
+  }
+  include 'partials/_nav.php';
+  require 'partials/dbconnect.php';
+  $insert = false;
+  $delete = false;
+  $showError = 'false';
+  // echo $_SESSION['logedin'];
+  
 
   if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $facid = $_POST['facid'];
@@ -37,43 +38,110 @@ require 'partials/dbconnect.php';
     $alias = $_POST['alias'];
     $email = $_POST['email'];
     $phone = $_POST['ph'];
+    $workload = $_POST['workload'];
 
-  // Check if faculty id already exists or not
-
+    // Check if faculty id already exists or not
+  
     $existsql = "SELECT * FROM `faculty` WHERE `fac_id` = '$facid'";
     $existresult = mysqli_query($conn, $existsql);
     $num = mysqli_num_rows($existresult);
+
     if ($num > 0) {
-        $ShowError= "Faculty id is already exists";
-        header("location: teacher.php?insertlog='.$ShowError.'");
-    }
-
-else{
-    $sql = "INSERT INTO `faculty`(`fac_id`, `name`, `alias`, `designation`, `phone`, `email`) VALUES ('$facid','$name','$alias','$designation','$phone','$email')";
-    $result = mysqli_query($conn, $sql);
-
-  
-    if ($result) {
-      $insert = true;
- 
-      
-    } else {
-      $showError = "Can't insert";
+      $ShowError = "Faculty id is already exists";
       header("location: teacher.php?insertlog='.$ShowError.'");
+    } else {
 
+      // insert into faculty table
+      $sql = "INSERT INTO `faculty`(`fac_id`, `name`, `alias`, `designation`, `phone`, `email`) VALUES ('$facid','$name','$alias','$designation','$phone','$email')";
+      $result = mysqli_query($conn, $sql);
+
+      // insert into totalworkload table
+      $totalWlSql = "INSERT INTO `total_wl`( `fac_id`, `totalWL`) VALUES ('$facid',$workload)";
+      $totalWlRes = mysqli_query($conn, $totalWlSql);
+
+      // insert into individual workload table
+      for ($i = 1; $i < 5; $i++) {
+
+        $eachWlSql = "insert into workload (facId,year,workLoad) values ('$facid', $i , 0)";
+        $eachWlRes = mysqli_query($conn, $eachWlSql);
+      }
+
+
+
+      if ($result && $totalWlRes) {
+        $insert = true;
+
+
+      } else {
+        $showError = "Can't insert";
+        header("location: teacher.php?insertlog='.$ShowError.'");
+
+      }
     }
-  }
   }
 
   // Delete function
-
   
-if (isset($_GET['delete'])) {
-  $sno = $_GET['delete'];
-  $delete = true;
-  $sql = "DELETE FROM `faculty` WHERE `fac_id` = $sno";
-  $result = mysqli_query($conn, $sql);
-}
+
+  if (isset($_GET['delete'])) {
+    $sno = $_GET['delete'];
+
+    $FacExistsSql = "Select distinct year from sub_allot join faculty on sub_allot.fac_id= faculty.fac_id where sub_allot.fac_id = '$sno'";
+    $FacExistsRes = mysqli_query($conn, $FacExistsSql);
+    $FacNum = mysqli_num_rows($FacExistsRes);
+
+    // if faculty exists in sub_allot table 
+    if ($FacNum > 0) {
+
+      // Deleting from status table
+      $days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"];
+
+      foreach ($days as $day) {
+        $FacExistsSql = "Select distinct year from sub_allot join faculty on sub_allot.fac_id= faculty.fac_id where sub_allot.fac_id = '$sno'";
+        $FacExistsRes = mysqli_query($conn, $FacExistsSql);
+        while ($FacRow = mysqli_fetch_assoc($FacExistsRes)) {
+          $year = $FacRow['year'];
+          $DelStatusSql = " Delete from status where day = '$day' and fac_id = '$sno' and year = $year";
+          mysqli_query($conn, $DelStatusSql);
+
+
+        }
+
+
+      }
+
+      // Deleting from totalWorkLoad table
+      $DelTwlSql = "Delete from total_wl where fac_id = '$sno'";
+      mysqli_query($conn, $DelTwlSql);
+
+      // Deleting from Individual workload table
+      $DelInWlSql = "Delete from workload where facId = '$sno'";
+      mysqli_query($conn, $DelInWlSql);
+
+      // Deleting from sub_allot table
+      $FacExistsSql = "Select distinct year from sub_allot join faculty on sub_allot.fac_id= faculty.fac_id where sub_allot.fac_id = '$sno'";
+      $FacExistsRes = mysqli_query($conn, $FacExistsSql);
+      while ($FacRow = mysqli_fetch_assoc($FacExistsRes)) {
+        $year = $FacRow['year'];
+        $DelSub_allot_Sql = "Delete from sub_allot where fac_id = '$sno' and year = $year";
+        mysqli_query($conn, $DelSub_allot_Sql);
+
+      }
+
+      // Deleting from faculty table
+      $DeleteSql = "DELETE FROM `faculty` WHERE `fac_id` = '$sno'";
+      $DeleteRes = mysqli_query($conn, $DeleteSql);
+
+      if ($DeleteRes) {
+        $delete = true;
+      } else {
+
+        $showError = "Can't delete";
+        header("location: teacher.php?deletelog='.$ShowError.'");
+      }
+    }
+
+  }
   ?>
 
 
@@ -81,12 +149,12 @@ if (isset($_GET['delete'])) {
 
 
 
-  <?php 
+  <?php
   // include 'partials/_header.php';
   // include 'partials/_nav.php'; 
-
-
   
+
+
   if ($insert) {
     echo '<div class="alert alert-success alert-dismissible fade show my-0" role="alert">
     <strong>Inserted successfully.</strong>
@@ -94,19 +162,17 @@ if (isset($_GET['delete'])) {
     <span aria-hidden="true">&times;</span>
     </button>
   </div>';
-  
-  }
-  else if(isset($_GET['insertlog'])){
+
+
+  } else if (isset($_GET['insertlog'])) {
     $insertlog = $_GET['insertlog'];
     echo '<div class="alert alert-warning alert-dismissible fade show my-0" role="alert">
-    <strong>Insertion Failed!</strong> '.$insertlog.'.
+    <strong>Insertion Failed!</strong> ' . $insertlog . '.
     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
       <span aria-hidden="true">&times;</span>
     </button>
   </div>';
-  }
-
-  else if(isset($_GET['updatelog']) == true){
+  } else if (isset($_GET['updatelog']) == true) {
 
     echo '<div class="alert alert-success alert-dismissible fade show my-0" role="alert">
     <strong>Successfully Updated!</strong>
@@ -117,10 +183,26 @@ if (isset($_GET['delete'])) {
 
   }
 
+  if ($delete) {
+    echo '<div class="alert alert-success alert-dismissible fade show my-0" role="alert">
+    <strong> successfully Deleted!.</strong>
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+    </button>
+  </div>';
+  } elseif (isset($_GET['deletelog'])) {
+    $deletelog = $_GET['deletelog'];
+    echo '<div class="alert alert-warning alert-dismissible fade show my-0" role="alert">
+    <strong>Delete Failed!</strong> ' . $deletelog . '.
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>';
+
+  }
 
 
-
-   ?>
+  ?>
 
   <div class="container d-flex justify-content-center mt-5 p-5">
     <?php include 'partials/faculty_modal.php' ?>
@@ -130,7 +212,7 @@ if (isset($_GET['delete'])) {
 
 
 
- 
+
 
 
   <!-- Table to display data -->
@@ -185,7 +267,7 @@ if (isset($_GET['delete'])) {
     integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
     crossorigin="anonymous"></script>
 
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
     integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
     crossorigin="anonymous"></script>
   <!-- Bootstrap -->
@@ -195,7 +277,7 @@ if (isset($_GET['delete'])) {
   <!-- Datatables -->
   <script src="//cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
 
-  
+
   <!-- Initializint Data tables -->
   <script>
 
@@ -204,9 +286,9 @@ if (isset($_GET['delete'])) {
     });
   </script>
 
-<script>
+  <script>
 
-deletes = document.getElementsByClassName('delete');
+    deletes = document.getElementsByClassName('delete');
     Array.from(deletes).forEach((element) => {
       element.addEventListener("click", (e) => {
         console.log("delete ");

@@ -52,6 +52,10 @@
 </select>
 </div>
 
+<div class="form-group">
+    <label for="workload">Workload</label>
+    <input type="number" class="form-control" id="workload" name="workload" placeholder="Enter the Workload">
+  </div>
 
   <div class="form-group">
     <label for="ph">Phone No.</label>

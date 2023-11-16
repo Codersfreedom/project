@@ -31,6 +31,12 @@ $alias = $row['alias'];
 $email = $row['email'];
 $phone = $row['phone'];
 
+$wlSql = "select totalWL from total_wl join faculty on  total_wl.fac_id = faculty.fac_id WHERE faculty.fac_id = '$facid'";
+$wlRow = mysqli_fetch_assoc(mysqli_query($conn,$wlSql));
+$workload = $wlRow['totalWL'];
+
+
+
 }
 
 
@@ -43,14 +49,20 @@ $phone = $row['phone'];
     $Alias = $_POST['alias'];
     $Email = $_POST['email'];
     $Phone = $_POST['ph'];
+    $workload = $_POST['workload'];
+
+
 
   
     
    // sql update
 
-    $sql = "UPDATE `faculty` SET `fac_id` = '$Facid' ,`name` = '$Name', `designation` = '$Designation' , `alias` = '$Alias', `email` = '$Email', `phone` ='$Phone'  WHERE `faculty`.`fac_id` = $Facid";
+    $sql = "UPDATE `faculty` SET `fac_id` = '$Facid' ,`name` = '$Name', `designation` = '$Designation' , `alias` = '$Alias', `email` = '$Email', `phone` ='$Phone'  WHERE `fac_id` = '$Facid'";
     $result = mysqli_query($conn,$sql);
-    if($result){
+    $WlUpdateSql = "UPDATE total_wl SET totalWL=$workload WHERE fac_id = '$Facid'";
+    $WlupdateRes = mysqli_query($conn,$WlUpdateSql);
+
+    if($result && $WlupdateRes){
         $update = true;
  
       header('location:/project/teacher.php?updatelog='.$update.'');
@@ -87,12 +99,16 @@ $phone = $row['phone'];
 <div class="form-group">
 <label for="select">Designation</label>
   <select class="form-control" id ="select" name="designation"  >
-  <option value="none" selected disabled hidden><?php echo $designation; ?></option>
+  <option  selected hidden input><?php echo $designation; ?></option>
   <option>Professor</option>
   <option>Asst. Professor</option>
 </select>
 </div>
 
+<div class="form-group">
+    <label for="workload">Workload</label>
+    <input type="number" class="form-control" id="workload" name="workload" value="<?php  echo $workload; ?>" placeholder="Enter the Workload">
+  </div>
 
   <div class="form-group">
     <label for="ph">Phone No.</label>
