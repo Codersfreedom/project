@@ -29,6 +29,7 @@ $row = mysqli_fetch_assoc($result);
     $type = $row['subject_type'];
     $sem = $row['semester'];
     $dept = $row['dept'];
+    $hpw = $row['h_per_w'];
 
 
 
@@ -42,12 +43,13 @@ $row = mysqli_fetch_assoc($result);
     $Type = $_POST['course'];
     $Sem = $_POST['sem'];
     $Dept = $_POST['dept'];
+    $hours= $_POST['hpw'];
 
   
     
    // sql update
 
-    $sql = "UPDATE `subject` SET `subject_code` = '$Subcode' ,`subject_name` = '$Subname', `subject_type` = '$Type', `semester` = '$Sem'   WHERE `subject`.`subject_code` = '$Subcode'";
+    $sql = "UPDATE `subject` SET `subject_code` = '$Subcode' ,`subject_name` = '$Subname', `subject_type` = '$Type', `semester` = '$Sem' , `h_per_w` = $hours   WHERE `subject`.`subject_code` = '$Subcode'";
     $result = mysqli_query($conn,$sql);
     if($result){
         $update = true;
@@ -81,7 +83,7 @@ $row = mysqli_fetch_assoc($result);
   <div class="form-group">
 <label for="type">Course Type</label>
   <select class="form-control" id ="type" name="course" >
-  <option value="none" selected disabled hidden><?php echo $type; ?></option>
+  <option  selected   ><?php echo $type; ?></option>
   <option>Theory</option>
   <option>Lab</option>
 </select>
@@ -91,7 +93,7 @@ $row = mysqli_fetch_assoc($result);
   <div class="form-group">
 <label for="sem">Semester</label>
   <select class="form-control" id ="sem" name="sem" >
-  <option value="none" selected disabled hidden><?php echo $sem; ?></option>
+  <option  selected  ><?php echo $sem; ?></option>
   <option>1</option>
   <option>2</option>
   <option>3</option>
@@ -104,9 +106,14 @@ $row = mysqli_fetch_assoc($result);
 </div>
 
 <div class="form-group">
+    <label for="hpw">Hours Per Week</label>
+    <input type="number" class="form-control" id="hpw" name="hpw" value="<?php echo $hpw; ?>" placeholder="Enter total hours per week">
+  </div>
+
+<div class="form-group">
 <label for="dept">Department</label>
   <select class="form-control" id ="dept" name="dept" >
-  <option value="none" selected disabled hidden><?php echo $dept; ?></option>
+  <option  selected ><?php echo $dept; ?></option>
   <option>CSE</option>
   <option>ECE</option>
   <option>ME</option>

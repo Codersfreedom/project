@@ -40,6 +40,7 @@
     $type = $_POST['type'];
     $sem = $_POST['sem'];
     $dept = $_POST['dept'];
+    $h_per_week = $_POST['hpw'];
 
     // Check if faculty id already exists or not
   
@@ -47,10 +48,23 @@
     $existresult = mysqli_query($conn, $existsql);
     $num = mysqli_num_rows($existresult);
     if ($num > 0) {
-      $ShowError = "Subject code is already exists";
+      $ShowError = "Subject  is already exists";
       header("location: subject.php?insertlog='.$ShowError.'");
     } else {
-      $sql = "INSERT INTO `subject`(`subject_code`, `subject_name`, `subject_type`, `semester`, `dept`) VALUES ('$subcode','$subname','$type','$sem','$dept')";
+
+      // calculating year
+  
+      if ($sem == 1 || $sem == 2) {
+        $year = 1;
+      } elseif ($sem == 3 || $sem == 4) {
+        $year = 2;
+      } elseif ($sem == 5 || $sem == 6) {
+        $year = 3;
+      } elseif ($sem == 7 || $sem == 8) {
+        $year = 4;
+      }
+
+      $sql = "INSERT INTO `subject`(`subject_code`, `subject_name`, `subject_type`, `semester`, `dept`, `year`,`h_per_w`) VALUES ('$subcode','$subname','$type','$sem','$dept', $year,$h_per_week)";
       $result = mysqli_query($conn, $sql);
 
 
@@ -72,13 +86,37 @@
   if (isset($_GET['delete'])) {
     $sno = $_GET['delete'];
 
-    $sql = "DELETE FROM `subject` WHERE `subject_code` = '$sno'";
-    $result = mysqli_query($conn, $sql);
-    if ($result) {
-      $delete = true;
-      
+
+    // checking if the subject is assigned in sub_allot table
+  
+    $ExistsSubSql = "select assign from sub_allot where sub_code = '$sno'";
+    $ExistsRes = mysqli_query($conn, $ExistsSubSql);
+    $Exists = mysqli_num_rows($ExistsRes);
+    if ($Exists>0) {
+
+      // Deleting from sub_allot table
+  
+      $DelSub_allot_sql = "Delete  from sub_allot where sub_code = '$sno' ";
+      mysqli_query($conn, $DelSub_allot_sql);
+
+      // Deleting from subject table
+      $sql = "DELETE FROM `subject` WHERE `subject_code` = '$sno'";
+      $result = mysqli_query($conn, $sql);
+      if ($result) {
+        $delete = true;
+
+      }
+
+    } else {
+      $sql = "DELETE FROM `subject` WHERE `subject_code` = '$sno'";
+      $result = mysqli_query($conn, $sql);
+      if ($result) {
+        $delete = true;
+
+      }
     }
   }
+
 
   ?>
 
@@ -101,9 +139,7 @@
     <span aria-hidden="true">&times;</span>
   </button>
 </div>';
-  }
-
-  else if ($delete) {
+  } else if ($delete) {
     echo '<div class="alert alert-success alert-dismissible fade show my-0" role="alert">
   <strong> successfully deleted.</strong>
   <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -112,7 +148,7 @@
 </div>';
 
   }
-  
+
 
   ?>
   <div class="container d-flex justify-content-center mt-5 p-5">

@@ -44,6 +44,7 @@
   <select class="form-control" id ="select" name="type" >
   <option>Theory</option>
   <option>Lab</option>
+  <option>Sessional</option>
 </select>
 </div>
 
@@ -61,6 +62,11 @@
   <option>8</option>
 </select>
 </div>
+
+<div class="form-group">
+    <label for="hpw">Hours Per Week</label>
+    <input type="number" class="form-control" id="hpw" name="hpw" placeholder="Enter total hours per week">
+  </div>
 
 <div class="form-group">
 <label for="select">Department</label>

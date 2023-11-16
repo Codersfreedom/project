@@ -99,7 +99,7 @@ $workload = $wlRow['totalWL'];
 <div class="form-group">
 <label for="select">Designation</label>
   <select class="form-control" id ="select" name="designation"  >
-  <option  selected hidden input><?php echo $designation; ?></option>
+  <option  selected ><?php echo $designation; ?></option>
   <option>Professor</option>
   <option>Asst. Professor</option>
 </select>
