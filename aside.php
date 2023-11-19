@@ -1,7 +1,7 @@
 <style>
   .left-sidebar {
     position: absolute;
-    width: 150px;
+    width: 170px;
     height: 100%;
     top: 0px;
     z-index: 10;
@@ -17,7 +17,39 @@
     <!-- Sidebar navigation-->
     <nav class="sidebar-nav">
       <ul id="sidebarnav" class="pt-4">
-        <li class="sidebar-item">
+
+        <?php
+
+        if (isset($_SESSION['faculty'])) {
+
+          echo '
+
+<li class="sidebar-item">
+<a class="sidebar-link waves-effect waves-dark sidebar-link" href="Faculty_panel.php" aria-expanded="false"><i
+    class="mdi mdi-view-dashboard"></i><span class="hide-menu">Dashboard</span></a>
+</li>
+
+<li class="sidebar-item">
+<a class="sidebar-link waves-effect waves-dark sidebar-link" href="Faculty_workload.php" aria-expanded="false"><i class="mdi mdi-border-inside"></i><span class="hide-menu">Workload</span></a>
+</li>
+
+<li class="sidebar-item">
+<a class="sidebar-link waves-effect waves-dark sidebar-link" href="Faculty_sub.php" aria-expanded="false"><i class="mdi mdi-collage"></i><span class="hide-menu">Subjects</span></a>
+</li>
+
+
+
+
+
+<li class="sidebar-item">
+<a href="Faculty_status.php" class="sidebar-link"><i class="mdi mdi-calendar-check"></i><span
+    class="hide-menu"> Check Status </span></a>
+</li>
+';
+
+        } else if (isset($_SESSION['admin'])) {
+          echo '
+  <li class="sidebar-item">
           <a class="sidebar-link waves-effect waves-dark sidebar-link" href="Admin_panel.php" aria-expanded="false"><i
               class="mdi mdi-view-dashboard"></i><span class="hide-menu">Dashboard</span></a>
         </li>
@@ -34,10 +66,6 @@
           <a class="sidebar-link waves-effect waves-dark sidebar-link" href="room.php" aria-expanded="false"><i class="mdi mdi-border-inside"></i><span class="hide-menu">Rooms</span></a>
         </li>
 
-        <li class="sidebar-item">
-          <a class="sidebar-link waves-effect waves-dark sidebar-link" href="Allot_room.php" aria-expanded="false"><i class="mdi mdi-blur-linear"></i
-                  ><span class="hide-menu">Allot Rooms</span></a>
-        </li>
 
         <li class="sidebar-item">
           <a class="sidebar-link waves-effect waves-dark sidebar-link" href="theory.php" aria-expanded="false"><i class="mdi mdi-pencil"></i
@@ -48,6 +76,17 @@
           <a href="admin.php" class="sidebar-link"><i class="mdi mdi-calendar-check"></i><span
               class="hide-menu"> Check Status </span></a>
         </li>
+
+        <li class="sidebar-item">
+          <a class="sidebar-link waves-effect waves-dark sidebar-link" href="Routine.php" aria-expanded="false"><i class="mdi mdi-blur-linear"></i
+                  ><span class="hide-menu">Generate Routine</span></a>
+        </li>
+  
+  ';
+        }
+        ?>
+
+
 
       </ul>
     </nav>

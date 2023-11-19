@@ -11,20 +11,13 @@
   <meta name="description"
     content="Matrix Admin Lite Free Version is powerful and clean admin dashboard template, inpired from Bootstrap Framework" />
   <meta name="robots" content="noindex,nofollow" />
-  <title>Admin Panel</title>
+  <title>Faculty Panel</title>
   <!-- Favicon icon -->
   <link rel="icon" type="image/png" sizes="16x16" href="./assets/images/favicon.png" />
   <!-- Custom CSS -->
   <link href="./assets/libs/flot/css/float-chart.css" rel="stylesheet" />
   <!-- Custom CSS -->
   <link href="./dist/css/style.min.css" rel="stylesheet" />
-
-  <link
-      href="./assets/libs/fullcalendar/dist/fullcalendar.min.css"
-      rel="stylesheet"
-    />
-    <link href="./assets/extra-libs/calendar/calendar.css" rel="stylesheet" />
-    <link href="./dist/css/style.min.css" rel="stylesheet" />
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
   <!--[if lt IE 9]>
@@ -260,7 +253,7 @@
               <ul class="dropdown-menu dropdown-menu-end user-dd animated" aria-labelledby="navbarDropdown">
                 <a class="dropdown-item" href="javascript:void(0)"><i class="mdi mdi-account me-1 ms-1"></i> My
                   Profile</a>
-
+              
                 <a class="dropdown-item" href="javascript:void(0)"><i class="mdi mdi-email me-1 ms-1"></i> Inbox</a>
                 <div class="dropdown-divider"></div>
                 <a class="dropdown-item" href="javascript:void(0)"><i class="mdi mdi-settings me-1 ms-1"></i> Account
@@ -268,7 +261,7 @@
                 <div class="dropdown-divider"></div>
                 <a class="dropdown-item" href="partials/logout.php"><i class="fa fa-power-off me-1 ms-1"></i> Logout</a>
                 <div class="dropdown-divider"></div>
-
+               
               </ul>
             </li>
             <!-- ============================================================== -->
@@ -290,40 +283,29 @@
         <!-- Sidebar navigation-->
         <nav class="sidebar-nav">
           <ul id="sidebarnav" class="pt-4">
-            <li class="sidebar-item">
-              <a class="sidebar-link waves-effect waves-dark sidebar-link" href="Admin_panel.php"
-                aria-expanded="false"><i class="mdi mdi-view-dashboard"></i><span class="hide-menu">Dashboard</span></a>
-            </li>
+          <li class="sidebar-item">
+          <a class="sidebar-link waves-effect waves-dark sidebar-link" href="Faculty_panel.php" aria-expanded="false"><i
+              class="mdi mdi-view-dashboard"></i><span class="hide-menu">Dashboard</span></a>
+        </li>
 
-            <li class="sidebar-item">
-              <a class="sidebar-link waves-effect waves-dark sidebar-link" href="teacher.php" aria-expanded="false"><i
-                  class="mdi mdi-relative-scale"></i><span class="hide-menu">Faculty</span></a>
-            </li>
+       <li class="sidebar-item">
+          <a class="sidebar-link waves-effect waves-dark sidebar-link" href="Faculty_workload.php" aria-expanded="false"><i class="mdi mdi-border-inside"></i><span class="hide-menu">Workload</span></a>
+        </li>
 
-            <li class="sidebar-item">
-              <a class="sidebar-link waves-effect waves-dark sidebar-link" href="subject.php" aria-expanded="false"><i
-                  class="mdi mdi-collage"></i><span class="hide-menu">Subjects</span></a>
-            </li>
+        <li class="sidebar-item">
+          <a class="sidebar-link waves-effect waves-dark sidebar-link" href="Faculty_sub.php" aria-expanded="false"><i class="mdi mdi-collage"></i><span class="hide-menu">Subjects</span></a>
+        </li>
 
-            <li class="sidebar-item">
-              <a class="sidebar-link waves-effect waves-dark sidebar-link" href="room.php" aria-expanded="false"><i
-                  class="mdi mdi-border-inside"></i><span class="hide-menu">Rooms</span></a>
-            </li>
+        
 
-            <li class="sidebar-item">
-              <a class="sidebar-link waves-effect waves-dark sidebar-link" href="theory.php" aria-expanded="false"><i
-                  class="mdi mdi-pencil"></i><span class="hide-menu">Assign Subjects</span></a>
-            </li>
+       
 
-            <li class="sidebar-item">
-              <a href="admin.php" class="sidebar-link"><i class="mdi mdi-calendar-check"></i><span class="hide-menu">
-                  Check Status </span></a>
-            </li>
+        <li class="sidebar-item">
+          <a href="Faculty_status.php" class="sidebar-link"><i class="mdi mdi-calendar-check"></i><span
+              class="hide-menu"> Check Status </span></a>
+        </li>
 
-            <li class="sidebar-item">
-              <a class="sidebar-link waves-effect waves-dark sidebar-link" href="Routine.php" aria-expanded="false"><i
-                  class="mdi mdi-blur-linear"></i><span class="hide-menu">Generate Routine</span></a>
-            </li>
+        
 
           </ul>
         </nav>
@@ -361,342 +343,67 @@
       <!-- ============================================================== -->
       <!-- End Bread crumb and right sidebar toggle -->
       <!-- ============================================================== -->
-
+ 
       <div class="container-fluid">
-
+     
         <div class="row">
           <!-- Column -->
           <div class="col-md-6 col-lg-2 col-xlg-3">
-            <a href="teacher.php">
-              <div class="card card-hover">
-                <div class="box bg-cyan text-center">
-                  <h1 class="font-light text-white">
-                    <i class="mdi mdi-view-dashboard"></i>
-                  </h1>
-                  <h6 class="text-white">Faculty</h6>
-                </div>
+          <a href="Faculty_workload.php">  <div class="card card-hover">
+              <div class="box bg-cyan text-center">
+                <h1 class="font-light text-white">
+                  <i class="mdi mdi-view-dashboard"></i>
+                </h1>
+                <h6 class="text-white">Workload</h6>
               </div>
-            </a>
+            </div></a>
           </div>
-
-
+         
+        
           <!-- Column -->
           <div class="col-md-6 col-lg-2 col-xlg-3">
-            <a href="subject.php">
-              <div class="card card-hover">
-                <div class="box bg-warning text-center">
-                  <h1 class="font-light text-white">
-                    <i class="mdi mdi-collage"></i>
-                  </h1>
-                  <h6 class="text-white">Subjects</h6>
-                </div>
+          <a href="Faculty_sub.php">  <div class="card card-hover">
+              <div class="box bg-warning text-center">
+                <h1 class="font-light text-white">
+                  <i class="mdi mdi-collage"></i>
+                </h1>
+                <h6 class="text-white">Subjects</h6>
               </div>
-            </a>
+            </div></a>
           </div>
-          <!-- Column -->
+          
+ 
+          
           <div class="col-md-6 col-lg-2 col-xlg-3">
-            <a href="room.php">
-              <div class="card card-hover">
-                <div class="box bg-danger text-center">
-                  <h1 class="font-light text-white">
-                    <i class="mdi mdi-border-outside"></i>
-                  </h1>
-                  <h6 class="text-white">Rooms</h6>
-                </div>
+          <a href="Faculty_status.php"> <div class="card card-hover">
+              <div class="box bg-success text-center">
+                <h1 class="font-light text-white">
+                  <i class="mdi mdi-calendar-check"></i>
+                </h1>
+                <h6 class="text-white">Check Status</h6>
               </div>
-            </a>
+            </div></a> 
           </div>
           <!-- Column -->
 
-          <!-- Column -->
-          <div class="col-md-6 col-lg-2 col-xlg-3">
-            <a href="theory.php">
-              <div class="card card-hover">
-                <div class="box bg-cyan text-center">
-                  <h1 class="font-light text-white">
-                    <i class="mdi mdi-pencil"></i>
-                  </h1>
-                  <h6 class="text-white">Assign Subjects</h6>
-                </div>
-              </div>
-            </a>
-          </div>
-          <!-- Column -->
-          <div class="col-md-6 col-lg-2 col-xlg-3">
-            <a href="admin.php">
-              <div class="card card-hover">
-                <div class="box bg-success text-center">
-                  <h1 class="font-light text-white">
-                    <i class="mdi mdi-calendar-check"></i>
-                  </h1>
-                  <h6 class="text-white">Check Status</h6>
-                </div>
-              </div>
-            </a>
-          </div>
-          <!-- Column -->
-
-          <!-- Column -->
-          <div class="col-md-6 col-lg-2 col-xlg-3">
-            <a href="Routine.php">
-              <div class="card card-hover">
-                <div class="box bg-danger text-center">
-                  <h1 class="font-light text-white">
-                    <i class="mdi mdi-blur-linear"></i>
-                  </h1>
-                  <h6 class="text-white">Generate Routine</h6>
-                </div>
-              </div>
-            </a>
-          </div>
-          <!-- Column -->
-        </div>
-        <!-- card -->
-        <div class="card">
-          <div class="card-body">
-
-            <h4 class="card-title mb-0">Workload</h4>
-            <?php
-            require 'partials/dbconnect.php';
-
-            $sql = "select * from total_wl";
-            $result = mysqli_query($conn, $sql);
-
-            while ($row = mysqli_fetch_assoc($result)) {
-
-
-              echo '
-
-
-           
-            <div class="mt-3">
-              <div class="d-flex no-block align-items-center">
-                <span>' . $row['fac_id'] . '</span>
-                <div class="ms-auto">
-                  <span> ' . $row['totalWL'] . '</span>
-                </div>
-              </div>
-              <div class="progress">
-                <div class="progress-bar progress-bar-striped bg-success" role="progressbar" style="width: ' . $row['totalWL'] . '%"
-                  aria-valuenow="10" aria-valuemin="0" aria-valuemax="100"></div>
-              </div>
-            </div>';
-            }
-            ?>
-
-
-          </div>
+            
         </div>
 
-        <div class="row">
-            <div class="col-md-12">
-              <h5 class="card-title">Calender</h5>
-              <div class="card">
-                <div class="">
-                  <div class="row">
-                    <div class="col-lg-3 border-right pe-0">
-                      <div class="card-body border-bottom">
-                        <h4 class="card-title mt-2">Drag & Drop Event</h4>
-                      </div>
-                      <div class="card-body">
-                        <div class="row">
-                          <div class="col-md-12">
-                            <div id="calendar-events" class="">
-                              <div
-                                class="calendar-events mb-3"
-                                data-class="bg-info"
-                              >
-                                <i class="fa fa-circle text-info me-2"></i>Event
-                                One
-                              </div>
-                              <div
-                                class="calendar-events mb-3"
-                                data-class="bg-success"
-                              >
-                                <i class="fa fa-circle text-success me-2"></i>
-                                Event Two
-                              </div>
-                              <div
-                                class="calendar-events mb-3"
-                                data-class="bg-danger"
-                              >
-                                <i class="fa fa-circle text-danger me-2"></i
-                                >Event Three
-                              </div>
-                              <div
-                                class="calendar-events mb-3"
-                                data-class="bg-warning"
-                              >
-                                <i class="fa fa-circle text-warning me-2"></i
-                                >Event Four
-                              </div>
-                            </div>
-                            <!-- checkbox -->
-                            <div class="form-check">
-                              <input
-                                type="checkbox"
-                                class="form-check-input"
-                                id="drop-remove"
-                              />
-                              <label class="form-check-label" for="drop-remove"
-                                >Remove after drop</label
-                              >
-                            </div>
-                            <a
-                              href="javascript:void(0)"
-                              data-toggle="modal"
-                              data-target="#add-new-event"
-                              class="
-                                d-flex
-                                align-items-center
-                                justify-content-center
-                                btn
-                                mt-3
-                                btn-info
-                                d-block
-                                waves-effect waves-light
-                              "
-                            >
-                              <i class="mdi mdi-plus fs-4 me-1"></i> Add New
-                              Event
-                            </a>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-lg-9">
-                      <div class="card-body b-l calender-sidebar">
-                        <div id="calendar"></div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <!-- BEGIN MODAL -->
-          <div class="modal none-border" id="my-event">
-            <div class="modal-dialog">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h4 class="modal-title"><strong>Add Event</strong></h4>
-                  <button
-                    type="button"
-                    class="close"
-                    data-dismiss="modal"
-                    aria-hidden="true"
-                  >
-                    &times;
-                  </button>
-                </div>
-                <div class="modal-body"></div>
-                <div class="modal-footer">
-                  <button
-                    type="button"
-                    class="btn btn-secondary waves-effect"
-                    data-dismiss="modal"
-                  >
-                    Close
-                  </button>
-                  <button
-                    type="button"
-                    class="btn btn-success save-event waves-effect waves-light"
-                  >
-                    Create event
-                  </button>
-                  <button
-                    type="button"
-                    class="btn btn-danger delete-event waves-effect waves-light"
-                    data-dismiss="modal"
-                  >
-                    Delete
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-           <!-- Modal Add Category -->
-           <div class="modal fade none-border" id="add-new-event">
-            <div class="modal-dialog">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h4 class="modal-title"><strong>Add</strong> a category</h4>
-                  <button
-                    type="button"
-                    class="close"
-                    data-dismiss="modal"
-                    aria-hidden="true"
-                  >
-                    &times;
-                  </button>
-                </div>
-                <div class="modal-body">
-                  <form>
-                    <div class="row">
-                      <div class="col-md-6">
-                        <label class="control-label">Category Name</label>
-                        <input
-                          class="form-control form-white"
-                          placeholder="Enter name"
-                          type="text"
-                          name="category-name"
-                        />
-                      </div>
-                      <div class="col-md-6">
-                        <label class="control-label"
-                          >Choose Category Color</label
-                        >
-                        <select
-                          class="form-select shadow-none form-white"
-                          data-placeholder="Choose a color..."
-                          name="category-color"
-                        >
-                          <option value="success">Success</option>
-                          <option value="danger">Danger</option>
-                          <option value="info">Info</option>
-                          <option value="primary">Primary</option>
-                          <option value="warning">Warning</option>
-                          <option value="inverse">Inverse</option>
-                        </select>
-                      </div>
-                    </div>
-                  </form>
-                </div>
-                <div class="modal-footer">
-                  <button
-                    type="button"
-                    class="
-                      btn btn-danger
-                      waves-effect waves-light
-                      save-category
-                    "
-                    data-dismiss="modal"
-                  >
-                    Save
-                  </button>
-                  <button
-                    type="button"
-                    class="btn btn-secondary waves-effect"
-                    data-dismiss="modal"
-                  >
-                    Close
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-          <!-- END MODAL -->
+        <!-- Workloads -->
+
+
+
 
 
       </div>
-      <!-- column -->
+
+      
     </div>
   </div>
-  </div>
+ 
 
 
-
-
+  
   <!-- ============================================================== -->
   <!-- End Container fluid  -->
   <!-- ============================================================== -->
@@ -705,7 +412,7 @@
   <!-- ============================================================== -->
   <footer class="footer text-center">
     All Rights Reserved by admin.
-
+  
   </footer>
   <!-- ============================================================== -->
   <!-- End footer -->
@@ -726,8 +433,6 @@
   <script src="./assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
   <script src="./assets/libs/perfect-scrollbar/dist/perfect-scrollbar.jquery.min.js"></script>
   <script src="./assets/extra-libs/sparkline/sparkline.js"></script>
-
-  
   <!--Wave Effects -->
   <script src="./dist/js/waves.js"></script>
   <!--Menu sidebar -->
@@ -736,11 +441,15 @@
   <script src="./dist/js/custom.min.js"></script>
   <!--This page JavaScript -->
   <!-- <script src="./dist/js/pages/dashboards/dashboard1.js"></script> -->
-   <!-- this page js -->
-   <script src="./assets/libs/moment/min/moment.min.js"></script>
-    <script src="./assets/libs/fullcalendar/dist/fullcalendar.min.js"></script>
-    <script src="./dist/js/pages/calendar/cal-init.js"></script>
-
+  <!-- Charts js Files -->
+  <script src="./assets/libs/flot/excanvas.js"></script>
+  <script src="./assets/libs/flot/jquery.flot.js"></script>
+  <script src="./assets/libs/flot/jquery.flot.pie.js"></script>
+  <script src="./assets/libs/flot/jquery.flot.time.js"></script>
+  <script src="./assets/libs/flot/jquery.flot.stack.js"></script>
+  <script src="./assets/libs/flot/jquery.flot.crosshair.js"></script>
+  <script src="./assets/libs/flot.tooltip/js/jquery.flot.tooltip.min.js"></script>
+  <script src="./dist/js/pages/chart/chart-page-init.js"></script>
 </body>
 
 </html>

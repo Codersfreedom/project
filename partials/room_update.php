@@ -21,31 +21,36 @@
   $update = false;
   $ShowError = 'false';
 
-  if (isset($_GET['updateid'])) {
+ 
+
+    
+   
+
+
+ if (isset($_GET['updateid'])) {
     $id = $_GET['updateid'];
-    $sql = "SELECT * FROM `room` WHERE `room_no` = $id";
+   
+       $sql = "SELECT * FROM `room` WHERE `id` = $id";
     $result = mysqli_query($conn, $sql);
     $row = mysqli_fetch_assoc($result);
 
     $roomno = $row['room_no'];
     $allot = $row['alloted_to'];
 
+ }
 
-}
 
-  
 
   if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // update the record
     $Roomno = $_POST['roomno'];
     $Allot = $_POST['allot'];
-
-
+  
 
 
     // sql update
-  
-    $sql = "UPDATE `room` SET `room_no` = $Roomno,  `alloted_to` = $Allot WHERE `room_no` = $roomno";
+
+    $sql = "UPDATE `room` SET `room_no` = $Roomno,  `alloted_to` = $Allot WHERE `id` = $id";
     $result = mysqli_query($conn, $sql);
     if ($result) {
       $update = true;
@@ -54,9 +59,9 @@
     } else {
       echo "We could not updated the data";
     }
-  }
-
-
+  
+}
+ 
 
 
   ?>
@@ -67,7 +72,7 @@
     <form action="room_update.php" method="post">
       <div class="form-group">
         <label for="roomno">Room No</label>
-        <input type="text" class="form-control" id="roomno" name="roomno" value="<?php echo $roomno; ?>">
+        <input type="number" class="form-control" id="roomno" name="roomno" value="<?php echo $roomno; ?>">
 
       </div>
 

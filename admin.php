@@ -10,16 +10,23 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
         integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link rel="stylesheet" href="//cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css">
+
+    <!-- Custom CSS -->
+  <link href="./assets/libs/flot/css/float-chart.css" rel="stylesheet" />
+  <!-- Custom CSS -->
+  <link href="./dist/css/style.min.css" rel="stylesheet" />
 </head>
 
 
 <body>
+<div id="main-wrapper" data-layout="vertical" data-navbarbg="skin5" data-sidebartype="full"
+    data-sidebar-position="absolute" data-header-position="absolute" data-boxed-layout="full">
     <?php
-    include 'partials/_header.php';
+    include 'header.php';
     if (!isset($_SESSION['logedin'])) {
         header("location: index.php");
     }
-    include 'partials/_nav.php';
+    include 'aside.php';
 
     ?>
 
@@ -28,7 +35,7 @@
 
 
     <h2 class="text-center py-3">Check availability</h2>
-    <div class="container   my-5">
+    <div class="container  my-5" >
 
         <div class="form-container d-flex flex-column ">
             <form action="admin.php" class="d-flex flex-row align-self-center" method="post">
@@ -82,7 +89,7 @@
 
         </div>
     </div>
-    <div class="container" style="margin-left:100px">
+    <div class="container" style="margin-left:200px">
         <h1 class="text-center my-3">Faculty Status</h1>
 
         <table class="table" id="myTable">
@@ -315,7 +322,7 @@
         // $result = mysqli_query($conn, $sql2);
     }
     ?>
-
+</div>
 </body>
 
 
@@ -333,6 +340,22 @@
 <!-- Datatables -->
 <script src="//cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
 
+<!-- All Jquery -->
+  <!-- ============================================================== -->
+  <script src="./assets/libs/jquery/dist/jquery.min.js"></script>
+  <!-- Bootstrap tether Core JavaScript -->
+  <script src="./assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="./assets/libs/perfect-scrollbar/dist/perfect-scrollbar.jquery.min.js"></script>
+  <script src="./assets/extra-libs/sparkline/sparkline.js"></script>
+  <!--Wave Effects -->
+  <script src="./dist/js/waves.js"></script>
+  <!--Menu sidebar -->
+  <script src="./dist/js/sidebarmenu.js"></script>
+  <!--Custom JavaScript -->
+  <script src="./dist/js/custom.min.js"></script>
+  <!--This page JavaScript -->
+  <!-- <script src="./dist/js/pages/dashboards/dashboard1.js"></script> -->
+ 
 
 <!-- Initialize Data tables -->
 <script>

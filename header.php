@@ -8,7 +8,7 @@ session_start();
     }
 
     #main-wrapper[data-layout=vertical][data-sidebartype=full] .topbar .top-navbar .navbar-header {
-        width: 150px
+        width: 170px
     }
 
     #main-wrapper[data-layout=vertical][data-sidebar-position=fixed][data-sidebartype=full] .topbar .top-navbar .navbar-collapse {
@@ -63,7 +63,7 @@ session_start();
             <!-- ============================================================== -->
             <!-- Logo -->
             <!-- ============================================================== -->
-            <a class="navbar-brand" href="index.html">
+            <a class="navbar-brand" href="index.php">
                 <!-- Logo icon -->
                 <b class="logo-icon ps-2">
                     <!--You can put here icon as well // <i class="wi wi-sunset"></i> //-->
@@ -72,9 +72,9 @@ session_start();
                 </b>
                 <!--End Logo icon -->
                 <!-- Logo text -->
-                <span class="logo-text ms-2">
+                <span class="logo-text mt-3 ms-2">
                     <!-- dark Logo text -->
-                   
+                   <h5>NITMAS</h5>
                 </span>
                 <!-- Logo icon -->
                 <!-- <b class="logo-icon"> -->
@@ -143,8 +143,7 @@ session_start();
                     <ul class="dropdown-menu dropdown-menu-end user-dd animated" aria-labelledby="navbarDropdown">
                         <a class="dropdown-item" href="javascript:void(0)"><i class="mdi mdi-account me-1 ms-1"></i> My
                             Profile</a>
-                        <a class="dropdown-item" href="javascript:void(0)"><i class="mdi mdi-wallet me-1 ms-1"></i> My
-                            Balance</a>
+                       
                         <a class="dropdown-item" href="javascript:void(0)"><i class="mdi mdi-email me-1 ms-1"></i>
                             Inbox</a>
                         <div class="dropdown-divider"></div>
@@ -152,13 +151,10 @@ session_start();
                             Account
                             Setting</a>
                         <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="javascript:void(0)"><i class="fa fa-power-off me-1 ms-1"></i>
+                        <a class="dropdown-item" href="partials/logout.php"><i class="fa fa-power-off me-1 ms-1"></i>
                             Logout</a>
                         <div class="dropdown-divider"></div>
-                        <div class="ps-4 p-10">
-                            <a href="javascript:void(0)" class="btn btn-sm btn-success btn-rounded text-white">View
-                                Profile</a>
-                        </div>
+                        
                     </ul>
                 </li>
                 <!-- ============================================================== -->

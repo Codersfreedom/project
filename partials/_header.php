@@ -25,11 +25,18 @@ session_start();
 
       <?php
 
-      if (isset($_SESSION['logedin'])) {
+      if (isset($_SESSION['admin'])) {
         echo '
  <li class="nav-item">
-        <a class="nav-link" href="teacher.php">Admin Panel</a>
+        <a class="nav-link" href="Admin_panel.php">Admin Panel</a>
       </li>';
+      }
+
+      if(isset($_SESSION['faculty'])){
+        echo '
+        <li class="nav-item">
+               <a class="nav-link" href="Faculty_panel.php">Faculty Panel</a>
+             </li>';
       }
       ?>
 
@@ -60,8 +67,8 @@ session_start();
     <span class="sr-only">Toggle Dropdown</span>
   </button>
   <div class="dropdown-menu">
-    <a class="dropdown-item" href="partials/studentLogin.php">Faculty</a>
-    <a class="dropdown-item" href="partials/teacherLogin.php">Admin</a>
+    <a class="dropdown-item" href="partials/Faculty_login.php">Faculty</a>
+    <a class="dropdown-item" href="partials/Admin_login.php">Admin</a>
     
   </div>
 </div>
@@ -90,8 +97,9 @@ session_start();
     </button>
   </div>';
   } else if (isset($_GET['error'])) {
+    $error = $_GET['error'];
     echo '<div class="alert alert-warning alert-dismissible fade show my-0" role="alert">
-  <strong>Login Failed!</strong> Invalid Credentials.
+  <strong>Login Failed! </strong> ' .$error.'
   <button type="button" class="close" data-dismiss="alert" aria-label="Close">
     <span aria-hidden="true">&times;</span>
   </button>

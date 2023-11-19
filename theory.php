@@ -11,17 +11,24 @@
     integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
   <link rel="stylesheet" href="//cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css">
 
+  <!-- Custom CSS -->
+  <link href="./assets/libs/flot/css/float-chart.css" rel="stylesheet" />
+  <!-- Custom CSS -->
+  <link href="./dist/css/style.min.css" rel="stylesheet" />
   <title>Theory-class</title>
 </head>
 
 <body>
+
+<div id="main-wrapper" data-layout="vertical" data-navbarbg="skin5" data-sidebartype="full"
+    data-sidebar-position="absolute" data-header-position="absolute" data-boxed-layout="full">
   <?php
 
-  include 'partials/_header.php';
+  include 'header.php';
   if (!isset($_SESSION['logedin'])) {
     header("location: index.php");
   }
-  include 'partials/_nav.php';
+  include 'aside.php';
   $delete = false;
 
 
@@ -177,6 +184,7 @@
       </thead>
       <tbody>
   </div>
+  </div>
   <?php
 
 
@@ -220,7 +228,30 @@
 
 <!-- Datatables -->
 <script src="//cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
-
+<!-- All Jquery -->
+  <!-- ============================================================== -->
+  <script src="./assets/libs/jquery/dist/jquery.min.js"></script>
+  <!-- Bootstrap tether Core JavaScript -->
+  <script src="./assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="./assets/libs/perfect-scrollbar/dist/perfect-scrollbar.jquery.min.js"></script>
+  <script src="./assets/extra-libs/sparkline/sparkline.js"></script>
+  <!--Wave Effects -->
+  <script src="./dist/js/waves.js"></script>
+  <!--Menu sidebar -->
+  <script src="./dist/js/sidebarmenu.js"></script>
+  <!--Custom JavaScript -->
+  <script src="./dist/js/custom.min.js"></script>
+  <!--This page JavaScript -->
+  <!-- <script src="./dist/js/pages/dashboards/dashboard1.js"></script> -->
+  <!-- Charts js Files -->
+  <script src="./assets/libs/flot/excanvas.js"></script>
+  <script src="./assets/libs/flot/jquery.flot.js"></script>
+  <script src="./assets/libs/flot/jquery.flot.pie.js"></script>
+  <script src="./assets/libs/flot/jquery.flot.time.js"></script>
+  <script src="./assets/libs/flot/jquery.flot.stack.js"></script>
+  <script src="./assets/libs/flot/jquery.flot.crosshair.js"></script>
+  <script src="./assets/libs/flot.tooltip/js/jquery.flot.tooltip.min.js"></script>
+  <script src="./dist/js/pages/chart/chart-page-init.js"></script>
 
 <!-- Initializint Data tables -->
 <script>

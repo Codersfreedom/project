@@ -83,7 +83,7 @@ $workload = $wlRow['totalWL'];
 <form action="fac_update.php" method="post">
   <div class="form-group">
     <label for="facid">Faculty id</label>
-    <input type="text" class="form-control" id="facid" name="facid" value="<?php echo $facid; ?>">
+    <input type="text" class="form-control"  id="facid" name="facid" value="<?php echo $facid; ?>">
 
   </div>
   <div class="form-group">
