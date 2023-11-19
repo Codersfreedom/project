@@ -1,3 +1,10 @@
+<?php
+session_start();
+if (!isset($_SESSION['logedin'])) {
+  header("location: index.php");
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -25,9 +32,6 @@
         <?php
         // session_start();
         include 'header.php';
-        if (!isset($_SESSION['logedin'])) {
-            header("location: index.php");
-        }
         include 'aside.php';
         require 'partials/dbconnect.php';
         ?>
@@ -40,12 +44,12 @@
 
         <!-- Table to display data -->
 
-        <div class="container p-5">
+        <div class="container col-7 p-5">
 
-            <table class="table" id="myTable">
-                <thead>
+            <table class="table table-striped" id="myTable">
+                <thead class="thead-dark">
                     <tr>
-                        <th scope="col">Faculty No.</th>
+                        <th scope="col" class='text-center'>Sr No.</th>
                         <th scope="col">Subject</th>
                         <th scope="col">Semester</th>
                         <th scope="col">Year</th>
@@ -59,12 +63,12 @@
 
                     $sql = "select * from sub_allot where fac_id = '$faculty_id'";
                     $result = mysqli_query($conn, $sql);
-
+                    $sr=0;
                     while ($row = mysqli_fetch_assoc($result)) {
+                      $sr++;
 
-
-                        echo "   <tr>
-            <th scope='row'>" . $row['fac_id'] . "</th>
+                        echo "   <tr >
+            <th scope='row' class='text-center'>" . $sr. "</th>
             <td>" . $row['assign'] . "</td>
             <td>" . $row['sem'] . "</td>
             <td>" . $row['year'] . "</td>

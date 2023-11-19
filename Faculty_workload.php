@@ -1,4 +1,5 @@
 <?php
+session_start();
     if (!isset($_SESSION['logedin'])) {
         header("location: index.php");
     }
@@ -28,7 +29,7 @@
 
         <?php
         // session_start();
-        
+        require 'header.php';
         include 'aside.php';
         require 'partials/dbconnect.php';
         ?>

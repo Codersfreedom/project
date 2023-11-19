@@ -1,3 +1,10 @@
+<?php
+session_start();
+    if (!isset($_SESSION['logedin'])) {
+        header("location: index.php");
+    }
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -25,9 +32,9 @@
         <?php
         // session_start();
         include 'header.php';
-        if (!isset($_SESSION['logedin'])) {
-            header("location: index.php");
-        }
+        // if (!isset($_SESSION['logedin'])) {
+        //     header("location: index.php");
+        // }
         include 'aside.php';
         require 'partials/dbconnect.php';
         ?>
@@ -40,10 +47,10 @@
 
         <!-- Table to display data -->
 
-        <div class="container p-5">
+        <div class="container col-9  p-5">
 
             <table class="table" id="myTable">
-                <thead>
+                <thead class="thead-light">
                     <tr>
                         <th scope="col">Day.</th>
                         <th scope="col">Faculty Id</th>

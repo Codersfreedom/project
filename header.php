@@ -1,5 +1,5 @@
-<?php require 'partials/dbconnect.php';
-session_start();
+<?php 
+require 'partials/dbconnect.php';
 
 ?>
 <style>
