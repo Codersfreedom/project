@@ -1,3 +1,10 @@
+<?php
+session_start();
+    if (!isset($_SESSION['logedin'])) {
+        header("location: index.php");
+    }
+?>
+
 <!doctype html>
 <html lang="en">
 
@@ -23,9 +30,7 @@
     data-sidebar-position="absolute" data-header-position="absolute" data-boxed-layout="full">
   <?php require 'partials/dbconnect.php';
   include 'header.php';
-  if (!isset($_SESSION['logedin'])) {
-    header("location: index.php");
-  }
+  
   include 'aside.php';
   // session_start();
   ?>

@@ -1,3 +1,9 @@
+<?php
+session_start();
+    if (!isset($_SESSION['logedin'])) {
+        header("location: index.php");
+    }
+?>
 <!doctype html>
 <html lang="en">
   <head>

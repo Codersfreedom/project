@@ -1,3 +1,10 @@
+<?php
+session_start();
+    if (!isset($_SESSION['logedin'])) {
+        header("location: index.php");
+    }
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -24,9 +31,9 @@
         data-sidebar-position="absolute" data-header-position="absolute" data-boxed-layout="full">
         <?php
         include 'header.php';
-        if (!isset($_SESSION['logedin'])) {
-            header("location: index.php");
-        }
+        // if (!isset($_SESSION['logedin'])) {
+        //     header("location: index.php");
+        // }
         include 'aside.php';
 
         ?>

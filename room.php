@@ -1,4 +1,11 @@
+<?php
+session_start();
+    if (!isset($_SESSION['logedin'])) {
+        header("location: index.php");
+    }
+?>
 <!doctype html>
+
 <html lang="en">
   <head>
     <!-- Required meta tags -->
@@ -20,17 +27,17 @@
     data-sidebar-position="absolute" data-header-position="absolute" data-boxed-layout="full">
 <?php
 include 'header.php';
-if(!isset($_SESSION['logedin'])){
-  header("location: index.php");
-}
+// if(!isset($_SESSION['logedin'])){
+//   header("location: index.php");
+// }
 require 'partials/dbconnect.php';
 
 $insert = false;
 $showError='false';
 
-if(!isset($_SESSION['logedin'])){
-  header("location: index.php");
-}
+// if(!isset($_SESSION['logedin'])){
+//   header("location: index.php");
+// }
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 $roomid = $_POST['room'];
