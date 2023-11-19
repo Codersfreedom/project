@@ -506,7 +506,7 @@ session_start();
                   <span> ' . $row['totalWL'] . '</span>
                 </div>
               </div>
-              <div class="progress ">
+              <div class="progress " style="height: 10px;">
                 <div  class="progress-bar progress-bar-striped bg-success" role="progressbar" style="width: ' . ((26 - $row['totalWL']) / 26) * 100 . '%"
                   aria-valuenow="10" aria-valuemin="0" aria-valuemax="100"></div>
               </div>
