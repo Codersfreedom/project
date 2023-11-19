@@ -1,4 +1,9 @@
 
+<?php
+    if (!isset($_SESSION['logedin'])) {
+        header("location: index.php");
+    }
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -139,14 +144,9 @@
 
 <body style = "background-color:#100e17;">
     <div id="main-wrapper"  data-layout="vertical" data-navbarbg="skin5" data-sidebartype="full" data-sidebar-position="absolute" data-header-position="absolute" data-boxed-layout="full">
-        <?php
-       
-        include 'header.php';
         
-        if (!isset($_SESSION['logedin'])) {
-
-            header("location: index.php");
-        }
+        <?php
+        include 'header.php';
         include 'aside.php';
 
         ?>
