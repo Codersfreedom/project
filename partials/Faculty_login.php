@@ -49,6 +49,7 @@
                                                     $facid = $row['fac_id'];
                                                 if ($password == $row['password']) {
                                                     $login = true;
+                                                    session_start();
                                                     $sql1 = "select name from faculty join faculty_login on faculty.fac_id = faculty_login.fac_id where faculty_login.fac_id='$id'";
                                                     $Faculty = mysqli_fetch_assoc(mysqli_query($conn,$sql1));
 

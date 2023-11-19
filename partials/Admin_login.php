@@ -30,7 +30,7 @@
 
                       if ($password==$row['password']) {
                         $login = true;
-                        
+                        session_start();
                         $_SESSION['logedin'] = true;
                         $_SESSION['admin']= true;
                         $_SESSION['neckname'] = $row['username'];

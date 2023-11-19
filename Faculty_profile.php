@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -138,14 +140,20 @@
 <body style = "background-color:#100e17;">
     <div id="main-wrapper"  data-layout="vertical" data-navbarbg="skin5" data-sidebartype="full" data-sidebar-position="absolute" data-header-position="absolute" data-boxed-layout="full">
         <?php
+       
         include 'header.php';
+        
         if (!isset($_SESSION['logedin'])) {
+
             header("location: index.php");
         }
         include 'aside.php';
 
         ?>
         <div class="container">
+            <?php
+        echo $_SESSION['logedin'];
+?>
             <div class="main-body">
                 <?php
                 $facid = $_SESSION['fac_id'];
