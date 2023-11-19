@@ -1,3 +1,11 @@
+<?php
+session_start();
+  if (!isset($_SESSION['logedin'])) {
+    header("location: index.php");
+  }
+  require 'partials/dbconnect.php';
+?>
+
 <!DOCTYPE html>
 <html dir="ltr" lang="en">
 
@@ -251,9 +259,16 @@
                 <img src="./assets/images/users/1.jpg" alt="user" class="rounded-circle" width="31" />
               </a>
               <ul class="dropdown-menu dropdown-menu-end user-dd animated" aria-labelledby="navbarDropdown">
-                <a class="dropdown-item" href="Faculty_profile.php"><i class="mdi mdi-account me-1 ms-1"></i> My
-                  Profile</a>
-              
+                <?php
+                if (isset($_SESSION['faculty'])) {
+                  echo '<a class="dropdown-item" href="Faculty_profile.php"><i class="mdi mdi-account me-1 ms-1"></i> My
+                  Profile</a>';
+                }
+
+
+                ?>
+
+
                 <a class="dropdown-item" href="javascript:void(0)"><i class="mdi mdi-email me-1 ms-1"></i> Inbox</a>
                 <div class="dropdown-divider"></div>
                 <a class="dropdown-item" href="javascript:void(0)"><i class="mdi mdi-settings me-1 ms-1"></i> Account
@@ -261,7 +276,7 @@
                 <div class="dropdown-divider"></div>
                 <a class="dropdown-item" href="partials/logout.php"><i class="fa fa-power-off me-1 ms-1"></i> Logout</a>
                 <div class="dropdown-divider"></div>
-               
+
               </ul>
             </li>
             <!-- ============================================================== -->
@@ -283,29 +298,31 @@
         <!-- Sidebar navigation-->
         <nav class="sidebar-nav">
           <ul id="sidebarnav" class="pt-4">
-          <li class="sidebar-item">
-          <a class="sidebar-link waves-effect waves-dark sidebar-link" href="Faculty_panel.php" aria-expanded="false"><i
-              class="mdi mdi-view-dashboard"></i><span class="hide-menu">Dashboard</span></a>
-        </li>
+            <li class="sidebar-item">
+              <a class="sidebar-link waves-effect waves-dark sidebar-link" href="Faculty_panel.php"
+                aria-expanded="false"><i class="mdi mdi-view-dashboard"></i><span class="hide-menu">Dashboard</span></a>
+            </li>
 
-       <li class="sidebar-item">
-          <a class="sidebar-link waves-effect waves-dark sidebar-link" href="Faculty_workload.php" aria-expanded="false"><i class="mdi mdi-border-inside"></i><span class="hide-menu">Workload</span></a>
-        </li>
+            <li class="sidebar-item">
+              <a class="sidebar-link waves-effect waves-dark sidebar-link" href="Faculty_workload.php"
+                aria-expanded="false"><i class="mdi mdi-border-inside"></i><span class="hide-menu">Workload</span></a>
+            </li>
 
-        <li class="sidebar-item">
-          <a class="sidebar-link waves-effect waves-dark sidebar-link" href="Faculty_sub.php" aria-expanded="false"><i class="mdi mdi-collage"></i><span class="hide-menu">Subjects</span></a>
-        </li>
+            <li class="sidebar-item">
+              <a class="sidebar-link waves-effect waves-dark sidebar-link" href="Faculty_sub.php"
+                aria-expanded="false"><i class="mdi mdi-collage"></i><span class="hide-menu">Subjects</span></a>
+            </li>
 
-        
 
-       
 
-        <li class="sidebar-item">
-          <a href="Faculty_status.php" class="sidebar-link"><i class="mdi mdi-calendar-check"></i><span
-              class="hide-menu"> Check Status </span></a>
-        </li>
 
-        
+
+            <li class="sidebar-item">
+              <a href="Faculty_status.php" class="sidebar-link"><i class="mdi mdi-calendar-check"></i><span
+                  class="hide-menu"> Check Status </span></a>
+            </li>
+
+
 
           </ul>
         </nav>
@@ -343,50 +360,56 @@
       <!-- ============================================================== -->
       <!-- End Bread crumb and right sidebar toggle -->
       <!-- ============================================================== -->
- 
+
       <div class="container-fluid">
-     
+
         <div class="row">
           <!-- Column -->
           <div class="col-md-6 col-lg-2 col-xlg-3">
-          <a href="Faculty_workload.php">  <div class="card card-hover">
-              <div class="box bg-cyan text-center">
-                <h1 class="font-light text-white">
-                  <i class="mdi mdi-view-dashboard"></i>
-                </h1>
-                <h6 class="text-white">Workload</h6>
+            <a href="Faculty_workload.php">
+              <div class="card card-hover">
+                <div class="box bg-cyan text-center">
+                  <h1 class="font-light text-white">
+                    <i class="mdi mdi-view-dashboard"></i>
+                  </h1>
+                  <h6 class="text-white">Workload</h6>
+                </div>
               </div>
-            </div></a>
+            </a>
           </div>
-         
-        
+
+
           <!-- Column -->
           <div class="col-md-6 col-lg-2 col-xlg-3">
-          <a href="Faculty_sub.php">  <div class="card card-hover">
-              <div class="box bg-warning text-center">
-                <h1 class="font-light text-white">
-                  <i class="mdi mdi-collage"></i>
-                </h1>
-                <h6 class="text-white">Subjects</h6>
+            <a href="Faculty_sub.php">
+              <div class="card card-hover">
+                <div class="box bg-warning text-center">
+                  <h1 class="font-light text-white">
+                    <i class="mdi mdi-collage"></i>
+                  </h1>
+                  <h6 class="text-white">Subjects</h6>
+                </div>
               </div>
-            </div></a>
+            </a>
           </div>
-          
- 
-          
+
+
+
           <div class="col-md-6 col-lg-2 col-xlg-3">
-          <a href="Faculty_status.php"> <div class="card card-hover">
-              <div class="box bg-success text-center">
-                <h1 class="font-light text-white">
-                  <i class="mdi mdi-calendar-check"></i>
-                </h1>
-                <h6 class="text-white">Check Status</h6>
+            <a href="Faculty_status.php">
+              <div class="card card-hover">
+                <div class="box bg-success text-center">
+                  <h1 class="font-light text-white">
+                    <i class="mdi mdi-calendar-check"></i>
+                  </h1>
+                  <h6 class="text-white">Check Status</h6>
+                </div>
               </div>
-            </div></a> 
+            </a>
           </div>
           <!-- Column -->
 
-            
+
         </div>
 
         <!-- Workloads -->
@@ -397,13 +420,13 @@
 
       </div>
 
-      
+
     </div>
   </div>
- 
 
 
-  
+
+
   <!-- ============================================================== -->
   <!-- End Container fluid  -->
   <!-- ============================================================== -->
@@ -412,7 +435,7 @@
   <!-- ============================================================== -->
   <footer class="footer text-center">
     All Rights Reserved by admin.
-  
+
   </footer>
   <!-- ============================================================== -->
   <!-- End footer -->

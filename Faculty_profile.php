@@ -124,11 +124,19 @@
             font-weight: 700;
             opacity: 1;
         }
+        .list-group>li{
+            background-color: #100e17;
+
+        }
+        .list-group{
+            background-color: #100e17;
+            
+        }
     </style>
 </head>
 
-<body>
-    <div id="main-wrapper" data-layout="vertical" data-navbarbg="skin5" data-sidebartype="full" data-sidebar-position="absolute" data-header-position="absolute" data-boxed-layout="full">
+<body style = "background-color:#100e17;">
+    <div id="main-wrapper"  data-layout="vertical" data-navbarbg="skin5" data-sidebartype="full" data-sidebar-position="absolute" data-header-position="absolute" data-boxed-layout="full">
         <?php
         include 'header.php';
         if (!isset($_SESSION['logedin'])) {
@@ -170,11 +178,11 @@
 
                 <div class="row gutters-sm">
                     <div class="col-md-4 mb-3">
-                        <div class="card">
+                        <div class="card" style = "background-color:#100e17;">
                             <div class="card-body">
                                 <div class="d-flex flex-column align-items-center text-center">
                                     <img src="./assets/images/users/avatar1.png" alt="Avatar
-                                        class=" rounded-circle" width="150">
+                                        class= " rounded-circle" width="150">
                                     <div class="mt-3">
                                         <h4>
                                             <?php echo $row['name']; ?>
@@ -182,15 +190,15 @@
                                         <p class="text-secondary mb-1">
                                             <?php echo $row['designation']; ?>
                                         </p>
-                                        <p class="text-muted font-size-sm">Address</p>
+                                        
                                         <h3><span class="badge bg-primary"><?php echo $row['designation']; ?></span></h3>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="card mt-3">
-                            <ul class="list-group list-group-flush">
-                                <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                        <div class="card mt-3 ">
+                            <ul class="list-group  list-group-flush"    >
+                                <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap" >
                                     <h6 class="mb-0"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-globe mr-2 icon-inline">
                                             <circle cx="12" cy="12" r="10"></circle>
                                             <line x1="2" y1="12" x2="22" y2="12"></line>
@@ -232,8 +240,8 @@
                             </ul>
                         </div>
                     </div>
-                    <div class="col-md-8">
-                        <div class="card mb-3">
+                    <div class="col-md-8" >
+                        <div class="card mb-3" style = "background-color:#100e17;">
                             <div class="card-body">
                                 <div class="row">
                                     <div class="col-sm-3">
@@ -275,7 +283,7 @@
                                 <hr>
                                 <div class="row">
                                     <div class="col-sm-12">
-                                        <a class="btn btn-info " target="__blank" href="https://www.bootdey.com/snippets/view/profile-edit-data-and-skills">Edit</a>
+                                        <a class="btn btn-info " target="__blank" href="#">Edit</a>
                                     </div>
                                 </div>
                             </div>
