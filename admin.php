@@ -369,17 +369,17 @@
 <!-- Initialize Data tables -->
 <script>
 
-    $(document).ready(function () {
-        $('#myTable').DataTable(
-            {
-                "aaSorting": [],
+    // $(document).ready(function () {
+    //     $('#myTable').DataTable(
+    //         {
+    //             "aaSorting": [],
 
-            }
+    //         }
 
-        );
+    //     );
 
 
-    });
+    // });
 
 </script>
 
