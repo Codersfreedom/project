@@ -75,8 +75,7 @@
                                             <?php echo $row['designation']; ?>
                                         </p>
                                         <p class="text-muted font-size-sm">Address</p>
-                                    
-
+                                        <h3><span class="badge bg-primary"><?php echo $row['designation']; ?></span></h3>
                                     </div>
                                 </div>
                             </div>

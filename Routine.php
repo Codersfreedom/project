@@ -393,7 +393,7 @@
               foreach ($semFac as $sf) {
                 if ($faculty_id == $sf) {
                   // echo $sf;
-                  if (checkLab($allotedLab, $lab[0]) && $workLoad[$faculty_id] > 5) {
+                  if (checkLab($allotedLab, $lab[0]) && $workLoad[$faculty_id] >3) {
                     $routine[$day]['slot1'] = $routine[$day]['slot2'] = $routine[$day]['slot3'] = $routine[$day]['slot4'] = $lab[0];
                     $facRoutine[$day]['slot1'] = $facRoutine[$day]['slot2'] = $facRoutine[$day]['slot3'] = $facRoutine[$day]['slot4'] = $faculty_id;
                     $workLoad[$faculty_id] = $workLoad[$faculty_id] - 4;
@@ -404,7 +404,7 @@
                 } elseif (isset($labFac[$sf]) && $status[$sf][$day]['slot1'] == 1 && $status[$sf][$day]['slot2'] == 1 && $status[$sf][$day]['slot3'] == 1 && $status[$sf][$day]['slot4'] == 1) {
                   $lbcount = count($labFac[$sf]);
                   for ($t = 0; $t < $lbcount; $t++) {
-                    if ($workLoad[$sf] > 5 && checkLab($allotedLab, $labFac[$sf][$t])) {
+                    if ($workLoad[$sf] >3 && checkLab($allotedLab, $labFac[$sf][$t])) {
                       $routine[$day]['slot1'] = $routine[$day]['slot2'] = $routine[$day]['slot3'] = $routine[$day]['slot4'] = $labFac[$sf][$t];
                       $facRoutine[$day]['slot1'] = $facRoutine[$day]['slot2'] = $facRoutine[$day]['slot3'] = $facRoutine[$day]['slot4'] = $sf;
                       $workLoad[$sf] = $workLoad[$sf] - 4;
@@ -420,7 +420,7 @@
               foreach ($semFac as $sf) {
                 if ($faculty_id == $sf) {
                   for ($j = 0; $j < $labCount; $j++) {
-                    if ($workLoad[$faculty_id] > 5 && checkLab($allotedLab, $lab[$j])) {
+                    if ($workLoad[$faculty_id] >3 && checkLab($allotedLab, $lab[$j])) {
                       $routine[$day]['slot1'] = $routine[$day]['slot2'] = $routine[$day]['slot3'] = $routine[$day]['slot4'] = $lab[$j];
                       $facRoutine[$day]['slot1'] = $facRoutine[$day]['slot2'] = $facRoutine[$day]['slot3'] = $facRoutine[$day]['slot4'] = $faculty_id;
                       $workLoad[$faculty_id] = $workLoad[$faculty_id] - 4;
@@ -431,7 +431,7 @@
                 } elseif (isset($labFac[$sf]) && $status[$sf][$day]['slot1'] == 1 && $status[$sf][$day]['slot2'] == 1 && $status[$sf][$day]['slot3'] == 1 && $status[$sf][$day]['slot4'] == 1) {
                   $lbcount = count($labFac[$sf]);
                   for ($t = 0; $t < $lbcount; $t++) {
-                    if ($workLoad[$sf] > 5 && checkLab($allotedLab, $labFac[$sf][$t])) {
+                    if ($workLoad[$sf] >3 && checkLab($allotedLab, $labFac[$sf][$t])) {
                       $routine[$day]['slot1'] = $routine[$day]['slot2'] = $routine[$day]['slot3'] = $routine[$day]['slot4'] = $labFac[$sf][$t];
                       $facRoutine[$day]['slot1'] = $facRoutine[$day]['slot2'] = $facRoutine[$day]['slot3'] = $facRoutine[$day]['slot4'] = $sf;
                       $workLoad[$sf] = $workLoad[$sf] - 4;
@@ -759,6 +759,7 @@
         buttons: [
           {
             extend: 'pdfHtml5',
+            orientation: 'landscape',
             download: 'open'
           }
         ]
