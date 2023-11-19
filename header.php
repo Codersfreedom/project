@@ -4,58 +4,58 @@ session_start();
 ?>
 <style>
     @media (min-width: 768px) {
-    #main-wrapper[data-layout=vertical] {
+        #main-wrapper[data-layout=vertical] {}
+
+        #main-wrapper[data-layout=vertical][data-sidebartype=full] .topbar .top-navbar .navbar-header {
+            width: 170px
+        }
+
+        #main-wrapper[data-layout=vertical][data-sidebar-position=fixed][data-sidebartype=full] .topbar .top-navbar .navbar-collapse {
+            margin-left: 250px
+        }
+
+        #main-wrapper[data-layout=vertical][data-sidebar-position=fixed][data-sidebartype=mini-sidebar] .topbar .top-navbar .navbar-collapse {
+            margin-left: 65px
+        }
+
+        #main-wrapper[data-layout=vertical][data-sidebartype=mini-sidebar] .topbar .top-navbar .navbar-header {
+            width: 65px
+        }
+
+        #main-wrapper[data-layout=vertical][data-sidebartype=mini-sidebar] .topbar .top-navbar .navbar-header .logo-text {
+            display: none
+        }
+
+        #main-wrapper[data-layout=vertical][data-sidebartype=mini-sidebar] .left-sidebar .upgrade-btn {
+            display: none
+        }
+
+        #main-wrapper[data-layout=vertical][data-sidebar-position=fixed][data-sidebartype=mini-sidebar] .topbar .top-navbar .navbar-collapse {
+            margin-left: 65px
+        }
+
+        #main-wrapper[data-layout=vertical][data-sidebartype=mini-sidebar] .page-wrapper {
+            margin-left: 65px
+        }
+
+        #main-wrapper[data-layout=vertical][data-sidebartype=mini-sidebar] .sidebar-nav .has-arrow:after,
+        #main-wrapper[data-layout=vertical][data-sidebartype=mini-sidebar] .sidebar-nav .hide-menu {
+            display: none
+        }
+
+        #main-wrapper[data-layout=vertical][data-sidebartype=mini-sidebar] .sidebar-nav .nav-small-cap {
+            justify-content: center
+        }
+
+        #main-wrapper[data-layout=vertical][data-sidebartype=mini-sidebar] .left-sidebar {
+            width: 65px
+        }
+
+
+
+
+
     }
-
-    #main-wrapper[data-layout=vertical][data-sidebartype=full] .topbar .top-navbar .navbar-header {
-        width: 170px
-    }
-
-    #main-wrapper[data-layout=vertical][data-sidebar-position=fixed][data-sidebartype=full] .topbar .top-navbar .navbar-collapse {
-        margin-left: 250px
-    }
-
-    #main-wrapper[data-layout=vertical][data-sidebar-position=fixed][data-sidebartype=mini-sidebar] .topbar .top-navbar .navbar-collapse {
-        margin-left: 65px
-    }
-
-    #main-wrapper[data-layout=vertical][data-sidebartype=mini-sidebar] .topbar .top-navbar .navbar-header {
-        width: 65px
-    }
-
-    #main-wrapper[data-layout=vertical][data-sidebartype=mini-sidebar] .topbar .top-navbar .navbar-header .logo-text {
-        display: none
-    }
-
-    #main-wrapper[data-layout=vertical][data-sidebartype=mini-sidebar] .left-sidebar .upgrade-btn {
-        display: none
-    }
-
-    #main-wrapper[data-layout=vertical][data-sidebar-position=fixed][data-sidebartype=mini-sidebar] .topbar .top-navbar .navbar-collapse {
-        margin-left: 65px
-    }
-
-    #main-wrapper[data-layout=vertical][data-sidebartype=mini-sidebar] .page-wrapper {
-        margin-left: 65px
-    }
-
-    #main-wrapper[data-layout=vertical][data-sidebartype=mini-sidebar] .sidebar-nav .has-arrow:after,#main-wrapper[data-layout=vertical][data-sidebartype=mini-sidebar] .sidebar-nav .hide-menu {
-        display: none
-    }
-
-    #main-wrapper[data-layout=vertical][data-sidebartype=mini-sidebar] .sidebar-nav .nav-small-cap {
-        justify-content: center
-    }
-
-    #main-wrapper[data-layout=vertical][data-sidebartype=mini-sidebar] .left-sidebar {
-        width: 65px
-    }
-
-
-
-
-
-}
 </style>
 <header class="topbar" data-navbarbg="skin5">
     <nav class="navbar top-navbar navbar-expand-md navbar-dark">
@@ -74,7 +74,7 @@ session_start();
                 <!-- Logo text -->
                 <span class="logo-text mt-3 ms-2">
                     <!-- dark Logo text -->
-                   <h5>NITMAS</h5>
+                    <h5>NITMAS</h5>
                 </span>
                 <!-- Logo icon -->
                 <!-- <b class="logo-icon"> -->
@@ -107,7 +107,7 @@ session_start();
                         data-sidebartype="mini-sidebar"><i class="mdi mdi-menu font-24"></i></a>
                 </li>
                 <!-- ============================================================== -->
-                
+
                 <!-- ============================================================== -->
                 <!-- Search -->
                 <!-- ============================================================== -->
@@ -124,9 +124,9 @@ session_start();
             <!-- Right side toggle and nav items -->
             <!-- ============================================================== -->
             <ul class="navbar-nav float-end">
-              
-            
-               
+
+
+
                 <!-- ============================================================== -->
                 <!-- User profile and search -->
                 <!-- ============================================================== -->
@@ -140,21 +140,27 @@ session_start();
                   " href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="true">
                         <img src="./assets/images/users/1.jpg" alt="user" class="rounded-circle" width="31" />
                     </a>
+
+
                     <ul class="dropdown-menu dropdown-menu-end user-dd animated" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="javascript:void(0)"><i class="mdi mdi-account me-1 ms-1"></i> My
-                            Profile</a>
-                       
+                        <?php
+                        if (isset($_SESSION['faculty'])) {
+                            echo ' <a class="dropdown-item" href="Faculty_profile.php"><i class="mdi mdi-account me-1 ms-1"></i> My
+                            Profile</a> ';
+                        } elseif (isset($_SESSION['admin'])) {
+                            echo ' <a class="dropdown-item" href="Admin_profile.php"><i class="mdi mdi-account me-1 ms-1"></i> My
+                            Profile</a> ';
+                        }
+                        ?>
+
+
                         <a class="dropdown-item" href="javascript:void(0)"><i class="mdi mdi-email me-1 ms-1"></i>
                             Inbox</a>
-                        <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="javascript:void(0)"><i class="mdi mdi-settings me-1 ms-1"></i>
-                            Account
-                            Setting</a>
-                        <div class="dropdown-divider"></div>
+
                         <a class="dropdown-item" href="partials/logout.php"><i class="fa fa-power-off me-1 ms-1"></i>
                             Logout</a>
                         <div class="dropdown-divider"></div>
-                        
+
                     </ul>
                 </li>
                 <!-- ============================================================== -->

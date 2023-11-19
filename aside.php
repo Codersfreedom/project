@@ -1,13 +1,8 @@
 <style>
   .left-sidebar {
-    position: absolute;
+   
     width: 170px;
-    height: 100%;
-    top: 0px;
-    z-index: 10;
-    padding-top: 64px;
-    background: #fff;
-    box-shadow: 1px 0px 20px rgba(0, 0, 0, 0.08)
+ 
   }
 </style>
 

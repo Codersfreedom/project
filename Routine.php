@@ -9,7 +9,9 @@
   <!-- Bootstrap CSS -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
     integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-  <link rel="stylesheet" href="//cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css">
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.min.css">
+  <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.4.2/css/buttons.dataTables.min.css">
+
   <!-- Custom CSS -->
   <link href="./assets/libs/flot/css/float-chart.css" rel="stylesheet" />
   <!-- Custom CSS -->
@@ -20,28 +22,28 @@
 
 <body>
 
-<div id="main-wrapper" data-layout="vertical" data-navbarbg="skin5" data-sidebartype="full"
+  <div id="main-wrapper" data-layout="vertical" data-navbarbg="skin5" data-sidebartype="full"
     data-sidebar-position="absolute" data-header-position="absolute" data-boxed-layout="full">
-  <?php
+    <?php
 
-  include 'header.php';
-  if (!isset($_SESSION['logedin'])) {
-    header("location: index.php");
-  }
-  include 'aside.php';
-  ?>
-
-  <!-- css for table -->
-  <style>
-    tbody tr:nth-child(odd) {
-      background-color: #fff;
+    include 'header.php';
+    if (!isset($_SESSION['logedin'])) {
+      header("location: index.php");
     }
+    include 'aside.php';
+    ?>
 
-    tbody tr:nth-child(even) {
-      background-color: #eee;
-    }
-  </style>
-  
+    <!-- css for table -->
+    <style>
+      tbody tr:nth-child(odd) {
+        background-color: #fff;
+      }
+
+      tbody tr:nth-child(even) {
+        background-color: #eee;
+      }
+    </style>
+
 
     <div class="container d-flex justify-content-center my-4 p-4">
       <form class="form-inline" action="Routine.php" method="post">
@@ -322,7 +324,7 @@
       // echo "<pre>";
       // print_r($hpw);
       // echo "</pre>";
-
+    
 
 
       //! -----------------------------------------
@@ -610,7 +612,7 @@
       // echo "<pre>";
       // print_r($labFac);
       // echo "</pre>";
-
+    
       // $fa=array_unique($fac);
       // print_r($sub);
       // print_r($fa);
@@ -713,24 +715,32 @@
 
 
   ?>
-</body>
-<!-- <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-  integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
-  integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
-  integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script> -->
 
-<!-- Datatables -->
-<script src="//cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+        <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 
-<!-- All Jquery -->
+    <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+
+
+
+    <!-- Datatables -->
+
+    <!-- Export as pdf js -->
+  <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
+  <script src="https://cdn.datatables.net/buttons/2.4.2/js/dataTables.buttons.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+  <script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.html5.min.js"></script>
+  <!-- All Jquery -->
   <!-- ============================================================== -->
-  <script src="./assets/libs/jquery/dist/jquery.min.js"></script>
+ 
   <!-- Bootstrap tether Core JavaScript -->
-  <script src="./assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+ <script src="./assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
   <script src="./assets/libs/perfect-scrollbar/dist/perfect-scrollbar.jquery.min.js"></script>
-  <script src="./assets/extra-libs/sparkline/sparkline.js"></script>
+  <script src="./assets/extra-libs/sparkline/sparkline.js"></script> 
   <!--Wave Effects -->
   <script src="./dist/js/waves.js"></script>
   <!--Menu sidebar -->
@@ -738,71 +748,72 @@
   <!--Custom JavaScript -->
   <script src="./dist/js/custom.min.js"></script>
   <!--This page JavaScript -->
-  <!-- <script src="./dist/js/pages/dashboards/dashboard1.js"></script> -->
-  <!-- Charts js Files -->
-  <script src="./assets/libs/flot/excanvas.js"></script>
-  <script src="./assets/libs/flot/jquery.flot.js"></script>
-  <script src="./assets/libs/flot/jquery.flot.pie.js"></script>
-  <script src="./assets/libs/flot/jquery.flot.time.js"></script>
-  <script src="./assets/libs/flot/jquery.flot.stack.js"></script>
-  <script src="./assets/libs/flot/jquery.flot.crosshair.js"></script>
-  <script src="./assets/libs/flot.tooltip/js/jquery.flot.tooltip.min.js"></script>
-  <script src="./dist/js/pages/chart/chart-page-init.js"></script>
+  <script src="./dist/js/pages/dashboards/dashboard1.js"></script>
 
-<!-- Initialize Data tables -->
-<script>
-  // $(document).ready(function () {
-  //   $('#myTable').DataTable();
-  //   "order": [];
-  // });
+  <!-- Initialize Data tables -->
+  <script>
+    $(document).ready(function () {
+      $('#myTable').DataTable({
+        "aaSorting":[],
+        dom: 'Bfrtip',
+        buttons: [
+          {
+            extend: 'pdfHtml5',
+            download: 'open'
+          }
+        ]
+      });
+    });
 
+    const year = document.querySelector('#year');
+    const sem = document.querySelector('#sem');
+    // if(year.value=='3'){
+    sem.getElementsByTagName('option')[0].style.display = "none";
+    sem.getElementsByTagName('option')[1].style.display = "none";
+    sem.getElementsByTagName('option')[2].setAttribute('selected', 'true');
 
-  const year = document.querySelector('#year');
-  const sem = document.querySelector('#sem');
-  // if(year.value=='3'){
-  sem.getElementsByTagName('option')[0].style.display = "none";
-  sem.getElementsByTagName('option')[1].style.display = "none";
-  sem.getElementsByTagName('option')[2].setAttribute('selected', 'true');
+    sem.getElementsByTagName('option')[6].style.display = "none";
+    sem.getElementsByTagName('option')[5].style.display = "none";
+    sem.getElementsByTagName('option')[7].style.display = "none";
+    sem.getElementsByTagName('option')[4].style.display = "none";
+    // }
+    year.addEventListener('change', () => {
+      if (year.value == '4') {
+        console.log(year.value);
+        sem.getElementsByTagName('option')[6].style.display = "inline";
+        sem.getElementsByTagName('option')[6].setAttribute('selected', 'true');
+        sem.getElementsByTagName('option')[7].style.display = "inline";
+        sem.getElementsByTagName('option')[2].style.display = "none";
+        sem.getElementsByTagName('option')[3].style.display = "none";
+        sem.getElementsByTagName('option')[4].style.display = "none";
+        sem.getElementsByTagName('option')[5].style.display = "none";
+        sem.getElementsByTagName('option')[4].removeAttribute('selected');
+        sem.getElementsByTagName('option')[2].removeAttribute('selected');
+      } else if (year.value == '3') {
+        console.log(year.value);
+        sem.getElementsByTagName('option')[4].style.display = "inline";
+        sem.getElementsByTagName('option')[4].setAttribute('selected', 'true');
+        sem.getElementsByTagName('option')[5].style.display = "inline";
+        sem.getElementsByTagName('option')[6].style.display = "none";
+        sem.getElementsByTagName('option')[7].style.display = "none";
+        sem.getElementsByTagName('option')[2].style.display = "none";
+        sem.getElementsByTagName('option')[3].style.display = "none";
+        sem.getElementsByTagName('option')[6].removeAttribute('selected');
+        sem.getElementsByTagName('option')[2].removeAttribute('selected');
+      } else if (year.value == '2') {
+        console.log(year.value);
+        sem.getElementsByTagName('option')[2].style.display = "inline";
+        sem.getElementsByTagName('option')[2].setAttribute('selected', 'true');
+        sem.getElementsByTagName('option')[3].style.display = "inline";
+        sem.getElementsByTagName('option')[4].style.display = "none";
+        sem.getElementsByTagName('option')[6].style.display = "none";
+        sem.getElementsByTagName('option')[7].style.display = "none";
+        sem.getElementsByTagName('option')[5].style.display = "none";
+        sem.getElementsByTagName('option')[4].removeAttribute('selected');
+        sem.getElementsByTagName('option')[6].removeAttribute('selected');
+      }
+    })
+  </script>
+</body>
 
-  sem.getElementsByTagName('option')[6].style.display = "none";
-  sem.getElementsByTagName('option')[5].style.display = "none";
-  sem.getElementsByTagName('option')[7].style.display = "none";
-  sem.getElementsByTagName('option')[4].style.display = "none";
-  // }
-  year.addEventListener('change', () => {
-    if (year.value == '4') {
-      console.log(year.value);
-      sem.getElementsByTagName('option')[6].style.display = "inline";
-      sem.getElementsByTagName('option')[6].setAttribute('selected', 'true');
-      sem.getElementsByTagName('option')[7].style.display = "inline";
-      sem.getElementsByTagName('option')[2].style.display = "none";
-      sem.getElementsByTagName('option')[3].style.display = "none";
-      sem.getElementsByTagName('option')[4].style.display = "none";
-      sem.getElementsByTagName('option')[5].style.display = "none";
-      sem.getElementsByTagName('option')[4].removeAttribute('selected');
-      sem.getElementsByTagName('option')[2].removeAttribute('selected');
-    } else if (year.value == '3') {
-      console.log(year.value);
-      sem.getElementsByTagName('option')[4].style.display = "inline";
-      sem.getElementsByTagName('option')[4].setAttribute('selected', 'true');
-      sem.getElementsByTagName('option')[5].style.display = "inline";
-      sem.getElementsByTagName('option')[6].style.display = "none";
-      sem.getElementsByTagName('option')[7].style.display = "none";
-      sem.getElementsByTagName('option')[2].style.display = "none";
-      sem.getElementsByTagName('option')[3].style.display = "none";
-      sem.getElementsByTagName('option')[6].removeAttribute('selected');
-      sem.getElementsByTagName('option')[2].removeAttribute('selected');
-    } else if (year.value == '2') {
-      console.log(year.value);
-      sem.getElementsByTagName('option')[2].style.display = "inline";
-      sem.getElementsByTagName('option')[2].setAttribute('selected', 'true');
-      sem.getElementsByTagName('option')[3].style.display = "inline";
-      sem.getElementsByTagName('option')[4].style.display = "none";
-      sem.getElementsByTagName('option')[6].style.display = "none";
-      sem.getElementsByTagName('option')[7].style.display = "none";
-      sem.getElementsByTagName('option')[5].style.display = "none";
-      sem.getElementsByTagName('option')[4].removeAttribute('selected');
-      sem.getElementsByTagName('option')[6].removeAttribute('selected');
-    }
-  })
-</script>
+</html>

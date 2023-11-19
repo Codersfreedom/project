@@ -46,14 +46,16 @@
 
                                         if (!$login) {
                                             while ($row = mysqli_fetch_assoc($result)) {
-
+                                                    $facid = $row['fac_id'];
                                                 if ($password == $row['password']) {
                                                     $login = true;
+                                                    $sql1 = "select name from faculty join faculty_login on faculty.fac_id = faculty_login.fac_id where faculty_login.fac_id='$id'";
+                                                    $Faculty = mysqli_fetch_assoc(mysqli_query($conn,$sql1));
 
                                                     $_SESSION['logedin'] = true;
                                                     $_SESSION['faculty'] = true;
                                                     $_SESSION['fac_id'] = $id;
-                                                    $_SESSION['neckname'] = 'Coming soon..';
+                                                    $_SESSION['neckname'] = $Faculty['name'];
                                                     header('location: /project/index.php?Loginsuccess=true');
 
                                                 } else {
