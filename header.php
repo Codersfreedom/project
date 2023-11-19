@@ -138,7 +138,7 @@ session_start();
                     waves-effect waves-dark
                     pro-pic
                   " href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="true">
-                        <img src="./assets/images/users/1.jpg" alt="user" class="rounded-circle" width="31" />
+                        <img src="./assets/images/users/user.png" alt="user" class="rounded-circle" width="31" />
                     </a>
 
 
