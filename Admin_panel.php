@@ -31,6 +31,34 @@
       <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
       <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
+    <style>
+.custom-tooltip {
+  position: relative;
+  /* Other styles you want for the element */
+  font-weight: 600;
+}
+
+.custom-tooltip::after {
+  content: attr(aria-label);
+  position: absolute;
+  background-color: #000;
+  color: #fff;
+  padding: 4px 8px;
+  border-radius: 4px;
+  /* Other styles for the tooltip */
+  /* Adjust positioning as needed */
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.custom-tooltip:hover::after {
+  opacity: 1;
+}
+
+</style>
 </head>
 
 <body>
@@ -468,19 +496,19 @@
               echo '
 
 
-           
-            <div class="mt-3">
+           <div class="custom-tooltip" aria-label="Current Workload '.(26-$row['totalWL']).'">
+            <div class="mt-3 ">
               <div class="d-flex no-block align-items-center">
                 <span>' . $row['fac_id'] . '</span>
                 <div class="ms-auto">
                   <span> ' . $row['totalWL'] . '</span>
                 </div>
               </div>
-              <div class="progress">
-                <div class="progress-bar progress-bar-striped bg-success" role="progressbar" style="width: ' . $row['totalWL'] . '%"
+              <div class="progress ">
+                <div  class="progress-bar progress-bar-striped bg-success" role="progressbar" style="width: ' . ((26-$row['totalWL'])/26)*100 . '%"
                   aria-valuenow="10" aria-valuemin="0" aria-valuemax="100"></div>
               </div>
-            </div>';
+            </div></div>';
             }
             ?>
 

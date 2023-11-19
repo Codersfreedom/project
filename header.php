@@ -137,7 +137,7 @@ session_start();
                     text-muted
                     waves-effect waves-dark
                     pro-pic
-                  " href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  " href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="true">
                         <img src="./assets/images/users/1.jpg" alt="user" class="rounded-circle" width="31" />
                     </a>
                     <ul class="dropdown-menu dropdown-menu-end user-dd animated" aria-labelledby="navbarDropdown">
