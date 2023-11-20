@@ -1,9 +1,8 @@
-
 <?php
 session_start();
-    if (!isset($_SESSION['logedin'])) {
-        header("location: index.php");
-    }
+if (!isset($_SESSION['logedin'])) {
+    header("location: index.php");
+}
 ?>
 
 <!DOCTYPE html>
@@ -132,33 +131,239 @@ session_start();
             font-weight: 700;
             opacity: 1;
         }
-        .list-group>li{
+
+        .list-group>li {
             background-color: #100e17;
 
         }
-        .list-group{
+
+        .list-group {
             background-color: #100e17;
-            
+
+        }
+
+        /* End of css  */
+
+        .container-2 {
+            background-color: #17141d;
+            color: #fff;
+            /* box-shadow: -1rem 0 3rem #000 !important; */
+            width: 100%;
+            padding: 1rem;
+        }
+
+        .title-2 {
+            font-size: 24px;
+            line-height: 28px;
+            font-weight: bold;
+            color: #fff;
+            padding-bottom: 11px;
+            border-bottom: 1px solid #d7dbdf;
+        }
+
+        .form-group {
+            margin-top: 25px;
+            display: flex;
+            flex-direction: column;
+        }
+
+
+
+        .textarea-group label,
+        .form-group label {
+            color: #fff;
+            font-size: 16px;
+            line-height: 19px;
+            margin-bottom: 10px;
+        }
+
+        .form-group [type],
+        .textarea-group textarea {
+            border: 1px solid #d2d6db;
+            border-radius: 6px;
+            padding: 15px;
+        }
+
+        .form-group [type]:hover,
+        .textarea-group textarea:hover {
+            border-color: #a8afb9;
+        }
+
+        input[type='text'],
+        input[type='email'],
+        input[type='tel'],
+        textarea {
+            background-color: #17141d !important;
+            font-size: 1.1rem;
+            color: #fff !important;
+
+        }
+
+        .form-group [type]:focus,
+        .textarea-group textarea:focus {
+            border-color: #5850eb;
+        }
+
+        .textarea-group {
+            margin-top: 24px;
+        }
+
+        .textarea-group textarea {
+            resize: none;
+            width: 100%;
+            margin-top: 10px;
+            height: calc(100% - 59px);
+        }
+
+
+
+        .button {
+            font-weight: bold;
+            line-height: 19px;
+            background: #5850eb;
+            border: none;
+            padding: 15px 25px;
+            border-radius: 6px;
+            color: white;
+            width: 100%;
+            margin-top: 24px;
+        }
+
+        .button:hover {
+            background: #6e67ee;
+        }
+
+        .button:focus {
+            background: #4239e8;
+        }
+
+        @media screen and (min-width: 768px) {
+            /* body {
+                align-items: center;
+                justify-content: center;
+            } */
+
+            .container-2 {
+                margin: 2rem;
+                box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.1);
+                border-radius: 4px;
+                max-width: 32rem;
+                padding: 2rem;
+            }
+        }
+
+        @media screen and (min-width: 1024px) {
+            .container-2 {
+                max-width: 100%;
+                width: 100%;
+            }
+
+
+
+            .grid {
+                display: grid;
+                grid-gap: 20px;
+                grid-template-columns: 1fr 1fr 1fr;
+                grid-auto-rows: 1fr;
+            }
+
+            .name-group {
+                grid-column: span 2;
+                grid-row: 1;
+            }
+
+            .email-group {
+                grid-column: span 2;
+                grid-row: 2;
+            }
+
+            .fac-group {
+                grid-column: 2;
+                grid-row: 3;
+            }
+
+            .phone-group {
+                grid-column: 1;
+                grid-row: 3;
+            }
+
+            .bt-group {
+                grid-column: 3;
+                grid-row: 3;
+            }
+
+            .textarea-group {
+                grid-column: 3;
+                grid-row: span 3;
+                margin-right: 2rem;
+            }
+
+            .button-container {
+                /* margin-top: 25px; */
+                text-align: right;
+            }
+
+            .button {
+                /* bon, bon, bon
+		c'est pas tout mais j'ai faim moi ^^
+		*/
+                width: auto;
+            }
+        }
+
+        hr {
+            border-top: 2px solid black !important;
+        }
+
+        .icon {
+            font-size: 1.2rem;
+            padding-right: 4px;
+        }
+
+        /* dashboard css */
+        #dash-bg {
+            display: grid;
+            grid-template-columns: auto auto;
+            grid-template-rows: auto auto;
+        }
+
+        .left-menu {
+            grid-row: span 2;
+        }
+
+        @media(max-width:768px) {
+            #dash-bg {
+                display: grid;
+                grid-template-columns: auto auto;
+                grid-template-rows: auto;
+            }
+
+            /* .left-menu{
+		display: none;
+        order: 1;
+    } */
+            .greet>strong,
+            p,
+            a {
+                font-size: 1rem;
+            }
         }
     </style>
 </head>
 
-<body style = "background-color:#100e17;">
-    <div id="main-wrapper"  data-layout="vertical" data-navbarbg="skin5" data-sidebartype="full" data-sidebar-position="absolute" data-header-position="absolute" data-boxed-layout="full">
-        
+<body style="background-color:#100e17;">
+    <div id="main-wrapper" data-layout="vertical" data-navbarbg="skin5" data-sidebartype="full" data-sidebar-position="absolute" data-header-position="absolute" data-boxed-layout="full">
+
         <?php
         include 'header.php';
         include 'aside.php';
 
         ?>
         <div class="container">
-            <?php
-        echo $_SESSION['logedin'];
-?>
             <div class="main-body">
                 <?php
                 $facid = $_SESSION['fac_id'];
-                $sql = "select *from faculty where fac_id = '$facid'";
+                $sql = "select * from faculty where fac_id = '$facid'";
                 $row = mysqli_fetch_assoc(mysqli_query($conn, $sql));
 
                 $totalSubSql = "select Subject_code from subject";
@@ -180,14 +385,25 @@ session_start();
                 $totalWlSql = "select totalWL from total_wl where fac_id = '$facid'";
                 $totalWL = mysqli_fetch_assoc(mysqli_query($conn, $totalWlSql));
 
+                if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+                    if (isset($_POST['name'])) {
+                        $name = $_POST['name'];
+                        $phone = $_POST['phone'];
+                        $email = $_POST['email'];
+                        $addr = $_POST['addr'];
+                        $fac_id = $_POST['fac_id'];
+                        $facUpSql="UPDATE faculty SET fac_id = '$fac_id',name='$name',phone=$phone,email='$email',addr='$addr' Where fac_id = '$fac_id'";
+                        $facUpRes=mysqli_query($conn, $facUpSql);
+                        echo "<meta http-equiv='refresh' content='0'>";
+                    }
+                }
 
                 ?>
 
 
-
                 <div class="row gutters-sm">
                     <div class="col-md-4 mb-3">
-                        <div class="card" style = "background-color:#100e17;">
+                        <div class="card" style="background-color:#100e17;">
                             <div class="card-body">
                                 <div class="d-flex flex-column align-items-center text-center">
                                     <img src="./assets/images/users/avatar1.png" alt="Avatar
@@ -199,15 +415,15 @@ session_start();
                                         <p class="text-secondary mb-1">
                                             <?php echo $row['designation']; ?>
                                         </p>
-                                        
+
                                         <h3><span class="badge bg-primary"><?php echo $row['designation']; ?></span></h3>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div class="card mt-3 ">
-                            <ul class="list-group  list-group-flush"    >
-                                <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap" >
+                            <ul class="list-group  list-group-flush">
+                                <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
                                     <h6 class="mb-0"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-globe mr-2 icon-inline">
                                             <circle cx="12" cy="12" r="10"></circle>
                                             <line x1="2" y1="12" x2="22" y2="12"></line>
@@ -249,52 +465,43 @@ session_start();
                             </ul>
                         </div>
                     </div>
-                    <div class="col-md-8" >
-                        <div class="card mb-3" style = "background-color:#100e17;">
-                            <div class="card-body">
-                                <div class="row">
-                                    <div class="col-sm-3">
-                                        <h6 class="mb-0">Name</h6>
-                                    </div>
-                                    <div class="col-sm-9 text-secondary">
-                                        <?php echo $row['name']; ?>
-                                    </div>
-                                </div>
-                                <hr>
-                                <div class="row">
-                                    <div class="col-sm-3">
-                                        <h6 class="mb-0">Email</h6>
-                                    </div>
-                                    <div class="col-sm-9 text-secondary">
-                                        <?php echo $row['email']; ?>
-                                    </div>
-                                </div>
-                                <hr>
-                                <div class="row">
-                                    <div class="col-sm-3">
-                                        <h6 class="mb-0">Phone</h6>
-                                    </div>
-                                    <div class="col-sm-9 text-secondary">
-                                        <?php echo $row['phone']; ?>
-                                    </div>
-                                </div>
+                    <div class="col-md-8">
+                        <div class=" d-flex align-items-center justify-content-center">
+                            <div class="container-2">
 
+                                <h1 class="title-2">Profile Details</h1>
 
-                                <hr>
-                                <div class="row">
-                                    <div class="col-sm-3">
-                                        <h6 class="mb-0">Address</h6>
+                                <form id="studentForm" action="<?php echo $_SERVER["PHP_SELF"]; ?>" method="POST">
+                                    <div class="grid">
+                                        <div class="form-group name-group">
+                                            <label for="fname">Full Name</label>
+                                            <input class="form-control name" id="fname" name="name" type="text" readonly  value="<?= $row['name'] ?? null ?>" required>
+                                        </div>
+
+                                        <div class="form-group email-group">
+                                            <label for="fname">Email</label>
+                                            <input class="form-control name" id="email" name="email" type="email" value="<?= $row['email'] ?? null ?>" required>
+                                        </div>
+                                        <div class="form-group fac-group">
+                                            <label for="fname">Faculty Id</label>
+                                            <input class="form-control name" id="fac_id" name="fac_id" type="text" readonly  value="<?= $row['fac_id'] ?? null ?>" required>
+                                        </div>
+
+                                        <div class="textarea-group ">
+                                            <label for="bio">Address</label>
+                                            <textarea id="bio" name="addr"><?= $row['addr'] ?? null ?></textarea>
+                                        </div>
+
+                                        <div class="form-group phone-group">
+                                            <label for="phone">Mobile No.</label>
+                                            <input class="form-control name" id="phone" name="phone" type="tel" value="<?= $row['phone'] ?? null ?>">
+                                        </div>
                                     </div>
-                                    <div class="col-sm-9 text-secondary">
-                                        Bay Area, San Francisco, CA
+                                    <div class="button-container ">
+                                        <input class="button" type="submit" value="Update">
                                     </div>
-                                </div>
-                                <hr>
-                                <div class="row">
-                                    <div class="col-sm-12">
-                                        <a class="btn btn-info " target="__blank" href="#">Edit</a>
-                                    </div>
-                                </div>
+                                </form>
+
                             </div>
                         </div>
 
@@ -309,7 +516,7 @@ session_start();
                                     <div class="circle">
                                         <svg version="1.1" xmlns="http://www.w3.org/2000/svg">
                                             <circle class="stroke" cx="60" cy="60" r="50" />
-                                            <text class="text" x="40" y="70" fill="#00d4ff"><?php echo $subCount>9 ? $subCount: "0".$subCount;?></text>
+                                            <text class="text" x="40" y="70" fill="#00d4ff"><?php echo $subCount > 9 ? $subCount : "0" . $subCount; ?></text>
                                         </svg>
                                     </div>
                                 </div>
@@ -322,7 +529,7 @@ session_start();
                                     <div class="circle">
                                         <svg version="1.1" xmlns="http://www.w3.org/2000/svg">
                                             <circle class="stroke" cx="60" cy="60" r="50" />
-                                            <text class="text" x="40" y="70" fill="#00d4ff"><?="0".$theoryCount;?></text>
+                                            <text class="text" x="40" y="70" fill="#00d4ff"><?= "0" . $theoryCount; ?></text>
                                         </svg>
                                     </div>
                                 </div>
@@ -335,7 +542,7 @@ session_start();
                                     <div class="circle">
                                         <svg version="1.1" xmlns="http://www.w3.org/2000/svg">
                                             <circle class="stroke" cx="60" cy="60" r="50" />
-                                            <text class="text" x="40" y="70" fill="#00d4ff"><?="0".$labCount;?></text>
+                                            <text class="text" x="40" y="70" fill="#00d4ff"><?= "0" . $labCount; ?></text>
                                         </svg>
                                     </div>
                                 </div>
@@ -348,7 +555,7 @@ session_start();
                                     <div class="circle">
                                         <svg version="1.1" xmlns="http://www.w3.org/2000/svg">
                                             <circle class="stroke" cx="60" cy="60" r="50" />
-                                            <text class="text" x="40" y="70" fill="#00d4ff"><?=26-$totalWL['totalWL'];?></text>
+                                            <text class="text" x="40" y="70" fill="#00d4ff"><?= 26 - $totalWL['totalWL']; ?></text>
                                         </svg>
 
                                     </div>
