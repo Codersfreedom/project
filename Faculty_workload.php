@@ -44,12 +44,12 @@ if (!isset($_SESSION['logedin'])) {
 
     <!-- Table to display data -->
 
-    <div class="container p-5 ">
+    <div class="container col-10 p-5 ">
 
-      <table class="table" id="myTable">
-        <thead>
+      <table class="table table-striped" id="myTable">
+        <thead class="thead-dark">
           <tr>
-            <th scope="col">Day</th>
+            <th scope="col" class="text-center">Day</th>
             <th scope="col">Slot1</th>
             <th scope="col">Slot2</th>
             <th scope="col">Slot3</th>
@@ -57,8 +57,6 @@ if (!isset($_SESSION['logedin'])) {
             <th scope="col">Slot5</th>
             <th scope="col">Slot6</th>
             <th scope="col">Slot7</th>
-
-
           </tr>
         </thead>
         <tbody>
@@ -74,30 +72,30 @@ if (!isset($_SESSION['logedin'])) {
           // Checking if the routine available for all years
           
           for ($i = 1; $i < 5; $i++) {
-            $existSql = "select *from " . $i . 'year_routine';
-            $num = mysqli_num_rows(mysqli_query($conn, $existSql));
+            $existSql = "select * from " . $i . 'year_routine';
+            $res=mysqli_query($conn, $existSql);
+            $num = mysqli_num_rows($res);
             if ($num > 0) {
-
+              echo "<tr class='text-center table-info text-success'><td colspan=\"8\"><h2>Year ".$i."</h2></td></tr>";
               foreach ($days as $day) {
 
                 echo " <tr>  
-                <th scope='row'>" . $day . " </th>";
+                <th scope='row' class='align-middle bg-success text-center text-light font-weight-bold '><h4>" . $day . "</h4></th>";
 
 
                 for ($j = 1; $j < 8; $j++) {
                   $sql = "select slot$j from " . $i . "year_routine where day='$day' and slot$j like '%$alias%'";
                   $result = mysqli_query($conn, $sql);
                   $row = mysqli_fetch_assoc($result);
+                  
+                  if(isset($row['slot'.$j])){
+                    echo "<td>".$row['slot'.$j]."</td>";
+                  }else{
+                    echo "<td> Empty</td>";
 
-                  if (isset($row['slot' . $j . ''])) {
-
-
-
-                    echo " <td>" . $row['slot' . $j . ''] ?? null . "  <td>";
-                  } else {
-                    echo " <td>" . " " . " <td>";
                   }
-
+                  
+                  
 
                 }
                 echo "</tr>";
