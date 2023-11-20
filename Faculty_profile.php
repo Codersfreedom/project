@@ -14,7 +14,8 @@ if (!isset($_SESSION['logedin'])) {
     <title>Profile</title>
 
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.4.2/css/buttons.dataTables.min.css">
     <!-- Custom CSS -->
@@ -305,8 +306,8 @@ if (!isset($_SESSION['logedin'])) {
 
             .button {
                 /* bon, bon, bon
-		c'est pas tout mais j'ai faim moi ^^
-		*/
+        c'est pas tout mais j'ai faim moi ^^
+        */
                 width: auto;
             }
         }
@@ -339,7 +340,7 @@ if (!isset($_SESSION['logedin'])) {
             }
 
             /* .left-menu{
-		display: none;
+        display: none;
         order: 1;
     } */
             .greet>strong,
@@ -352,7 +353,8 @@ if (!isset($_SESSION['logedin'])) {
 </head>
 
 <body style="background-color:#100e17;">
-    <div id="main-wrapper" data-layout="vertical" data-navbarbg="skin5" data-sidebartype="full" data-sidebar-position="absolute" data-header-position="absolute" data-boxed-layout="full">
+    <div id="main-wrapper" data-layout="vertical" data-navbarbg="skin5" data-sidebartype="full"
+        data-sidebar-position="absolute" data-header-position="absolute" data-boxed-layout="full">
 
         <?php
         include 'header.php';
@@ -392,8 +394,8 @@ if (!isset($_SESSION['logedin'])) {
                         $email = $_POST['email'];
                         $addr = $_POST['addr'];
                         $fac_id = $_POST['fac_id'];
-                        $facUpSql="UPDATE faculty SET fac_id = '$fac_id',name='$name',phone=$phone,email='$email',addr='$addr' Where fac_id = '$fac_id'";
-                        $facUpRes=mysqli_query($conn, $facUpSql);
+                        $facUpSql = "UPDATE faculty SET fac_id = '$fac_id',name='$name',phone=$phone,email='$email',addr='$addr' Where fac_id = '$fac_id'";
+                        $facUpRes = mysqli_query($conn, $facUpSql);
                         echo "<meta http-equiv='refresh' content='0'>";
                     }
                 }
@@ -409,14 +411,14 @@ if (!isset($_SESSION['logedin'])) {
                                     <img src="./assets/images/users/avatar1.png" alt="Avatar
                                         class= " rounded-circle" width="150">
                                     <div class="mt-3">
-                                        <h4>
+                                        <h4 class="text-light">
                                             <?php echo $row['name']; ?>
                                         </h4>
-                                        <p class="text-secondary mb-1">
-                                            <?php echo $row['designation']; ?>
-                                        </p>
+                                       
 
-                                        <h3><span class="badge bg-primary"><?php echo $row['designation']; ?></span></h3>
+                                        <h3><span class="badge bg-primary">
+                                                <?php echo $row['designation']; ?>
+                                            </span></h3>
                                     </div>
                                 </div>
                             </div>
@@ -424,31 +426,46 @@ if (!isset($_SESSION['logedin'])) {
                         <div class="card mt-3 ">
                             <ul class="list-group  list-group-flush">
                                 <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
-                                    <h6 class="mb-0"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-globe mr-2 icon-inline">
+                                    <h6 class="mb-0"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                            stroke-linecap="round" stroke-linejoin="round"
+                                            class="feather feather-globe mr-2 icon-inline">
                                             <circle cx="12" cy="12" r="10"></circle>
                                             <line x1="2" y1="12" x2="22" y2="12"></line>
-                                            <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z">
+                                            <path
+                                                d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z">
                                             </path>
                                         </svg>Website</h6>
                                     <span class="text-secondary">Your website</span>
 
                                 </li>
                                 <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
-                                    <h6 class="mb-0"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-github mr-2 icon-inline">
-                                            <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22">
+                                    <h6 class="mb-0"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                            stroke-linecap="round" stroke-linejoin="round"
+                                            class="feather feather-github mr-2 icon-inline">
+                                            <path
+                                                d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22">
                                             </path>
                                         </svg>Github</h6>
                                     <span class="text-secondary">Your Github</span>
                                 </li>
                                 <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
-                                    <h6 class="mb-0"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-twitter mr-2 icon-inline text-info">
-                                            <path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z">
+                                    <h6 class="mb-0"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                            stroke-linecap="round" stroke-linejoin="round"
+                                            class="feather feather-twitter mr-2 icon-inline text-info">
+                                            <path
+                                                d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z">
                                             </path>
                                         </svg>Twitter</h6>
                                     <span class="text-secondary">@yourid</span>
                                 </li>
                                 <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
-                                    <h6 class="mb-0"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-instagram mr-2 icon-inline text-danger">
+                                    <h6 class="mb-0"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                            stroke-linecap="round" stroke-linejoin="round"
+                                            class="feather feather-instagram mr-2 icon-inline text-danger">
                                             <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
                                             <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
                                             <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
@@ -456,7 +473,10 @@ if (!isset($_SESSION['logedin'])) {
                                     <span class="text-secondary">Your Instagram</span>
                                 </li>
                                 <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
-                                    <h6 class="mb-0"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-facebook mr-2 icon-inline text-primary">
+                                    <h6 class="mb-0"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                            stroke-linecap="round" stroke-linejoin="round"
+                                            class="feather feather-facebook mr-2 icon-inline text-primary">
                                             <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z">
                                             </path>
                                         </svg>Facebook</h6>
@@ -475,16 +495,19 @@ if (!isset($_SESSION['logedin'])) {
                                     <div class="grid">
                                         <div class="form-group name-group">
                                             <label for="fname">Full Name</label>
-                                            <input class="form-control name" id="fname" name="name" type="text" readonly  value="<?= $row['name'] ?? null ?>" required>
+                                            <input class="form-control name" id="fname" name="name" type="text" readonly
+                                                value="<?= $row['name'] ?? null ?>" required>
                                         </div>
 
                                         <div class="form-group email-group">
                                             <label for="fname">Email</label>
-                                            <input class="form-control name" id="email" name="email" type="email" value="<?= $row['email'] ?? null ?>" required>
+                                            <input class="form-control name" id="email" name="email" type="email"
+                                                value="<?= $row['email'] ?? null ?>" required>
                                         </div>
                                         <div class="form-group fac-group">
                                             <label for="fname">Faculty Id</label>
-                                            <input class="form-control name" id="fac_id" name="fac_id" type="text" readonly  value="<?= $row['fac_id'] ?? null ?>" required>
+                                            <input class="form-control name" id="fac_id" name="fac_id" type="text"
+                                                readonly value="<?= $row['fac_id'] ?? null ?>" required>
                                         </div>
 
                                         <div class="textarea-group ">
@@ -494,7 +517,8 @@ if (!isset($_SESSION['logedin'])) {
 
                                         <div class="form-group phone-group">
                                             <label for="phone">Mobile No.</label>
-                                            <input class="form-control name" id="phone" name="phone" type="tel" value="<?= $row['phone'] ?? null ?>">
+                                            <input class="form-control name" id="phone" name="phone" type="tel"
+                                                value="<?= $row['phone'] ?? null ?>">
                                         </div>
                                     </div>
                                     <div class="button-container ">
@@ -516,7 +540,9 @@ if (!isset($_SESSION['logedin'])) {
                                     <div class="circle">
                                         <svg version="1.1" xmlns="http://www.w3.org/2000/svg">
                                             <circle class="stroke" cx="60" cy="60" r="50" />
-                                            <text class="text" x="40" y="70" fill="#00d4ff"><?php echo $subCount > 9 ? $subCount : "0" . $subCount; ?></text>
+                                            <text class="text" x="40" y="70" fill="#00d4ff">
+                                                <?php echo $subCount > 9 ? $subCount : "0" . $subCount; ?>
+                                            </text>
                                         </svg>
                                     </div>
                                 </div>
@@ -529,7 +555,9 @@ if (!isset($_SESSION['logedin'])) {
                                     <div class="circle">
                                         <svg version="1.1" xmlns="http://www.w3.org/2000/svg">
                                             <circle class="stroke" cx="60" cy="60" r="50" />
-                                            <text class="text" x="40" y="70" fill="#00d4ff"><?= "0" . $theoryCount; ?></text>
+                                            <text class="text" x="40" y="70" fill="#00d4ff">
+                                                <?= "0" . $theoryCount; ?>
+                                            </text>
                                         </svg>
                                     </div>
                                 </div>
@@ -542,7 +570,9 @@ if (!isset($_SESSION['logedin'])) {
                                     <div class="circle">
                                         <svg version="1.1" xmlns="http://www.w3.org/2000/svg">
                                             <circle class="stroke" cx="60" cy="60" r="50" />
-                                            <text class="text" x="40" y="70" fill="#00d4ff"><?= "0" . $labCount; ?></text>
+                                            <text class="text" x="40" y="70" fill="#00d4ff">
+                                                <?= "0" . $labCount; ?>
+                                            </text>
                                         </svg>
                                     </div>
                                 </div>
@@ -555,7 +585,9 @@ if (!isset($_SESSION['logedin'])) {
                                     <div class="circle">
                                         <svg version="1.1" xmlns="http://www.w3.org/2000/svg">
                                             <circle class="stroke" cx="60" cy="60" r="50" />
-                                            <text class="text" x="40" y="70" fill="#00d4ff"><?= 26 - $totalWL['totalWL']; ?></text>
+                                            <text class="text" x="40" y="70" fill="#00d4ff">
+                                                <?= 26 - $totalWL['totalWL']; ?>
+                                            </text>
                                         </svg>
 
                                     </div>

@@ -8,7 +8,8 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link rel="stylesheet" href="\project\assets\css\style.css">
-
+<!-- favicon -->
+<link rel="icon" type="image/png" sizes="16x16" href="./assets/images/favicon.png" />
 
     <title>NITMAS-TTMS PROJECT</title>
   </head>
@@ -27,13 +28,13 @@
     </ol>
     <div class="carousel-inner">
       <div class="carousel-item active">
-        <img class="d-block w-100" style="width:2400px; height: 600px; " src="assets/img/Nitmas_banner-bg.jpg" alt="First slide">
+        <img class="d-block w-100" style="width:2400px; height: 600px; " src="assets/img/Nitmas_banner.jpg" alt="First slide">
       </div>
       <div class="carousel-item">
-        <img class="d-block w-100" style="width:2400px; height: 600px; " src="assets/img/Scholastic_building_3.jpg" alt="Second slide">
+        <img class="d-block w-100" style="width:2400px; height: 600px; " src="assets/img/Banner2.jpg" alt="Second slide">
       </div>
       <div class="carousel-item">
-        <img class="d-block w-100"  style="width:2400px; height: 600px; "src="assets/img/CSE_DEPT.jpg" alt="Third slide">
+        <img class="d-block w-100"  style="width:2400px; height: 600px; "src="assets/img/Banner3.jpg" alt="Third slide">
       </div>
       <div class="carousel-item">
         <img class="d-block w-100"  style="width:2400px; height: 600px; "src="assets/img/Library.jpg" alt="Third slide">

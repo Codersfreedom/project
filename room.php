@@ -20,6 +20,8 @@ session_start();
   <link href="./assets/libs/flot/css/float-chart.css" rel="stylesheet" />
   <!-- Custom CSS -->
   <link href="./dist/css/style.min.css" rel="stylesheet" />
+  <!-- favicon -->
+  <link rel="icon" type="image/png" sizes="16x16" href="./assets/images/favicon.png" />
     <title>Rooms</title>
   </head>
   <body>

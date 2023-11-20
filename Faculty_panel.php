@@ -1,9 +1,9 @@
 <?php
 session_start();
-  if (!isset($_SESSION['logedin'])) {
-    header("location: index.php");
-  }
-  require 'partials/dbconnect.php';
+if (!isset($_SESSION['logedin'])) {
+  header("location: index.php");
+}
+require 'partials/dbconnect.php';
 ?>
 
 <!DOCTYPE html>
@@ -104,7 +104,7 @@ session_start();
             <!-- ============================================================== -->
             <!-- create new -->
             <!-- ============================================================== -->
-            <li class="nav-item dropdown">
+            <!-- <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
                 aria-expanded="false">
                 <span class="d-none d-md-block">Create New <i class="fa fa-angle-down"></i></span>
@@ -120,7 +120,7 @@ session_start();
                   <a class="dropdown-item" href="#">Something else here</a>
                 </li>
               </ul>
-            </li>
+            </li> -->
             <!-- ============================================================== -->
             <!-- Search -->
             <!-- ============================================================== -->
@@ -140,7 +140,7 @@ session_start();
             <!-- ============================================================== -->
             <!-- Comment -->
             <!-- ============================================================== -->
-            <li class="nav-item dropdown">
+            <!-- <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
                 aria-expanded="false">
                 <i class="mdi mdi-bell font-24"></i>
@@ -155,14 +155,14 @@ session_start();
                   <a class="dropdown-item" href="#">Something else here</a>
                 </li>
               </ul>
-            </li>
+            </li> -->
             <!-- ============================================================== -->
             <!-- End Comment -->
             <!-- ============================================================== -->
             <!-- ============================================================== -->
             <!-- Messages -->
             <!-- ============================================================== -->
-            <li class="nav-item dropdown">
+            <!-- <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle waves-effect waves-dark" href="#" id="2" role="button"
                 data-bs-toggle="dropdown" aria-expanded="false">
                 <i class="font-24 mdi mdi-comment-processing"></i>
@@ -175,9 +175,9 @@ session_start();
                   " aria-labelledby="2">
                 <ul class="list-style-none">
                   <li>
-                    <div class="">
-                      <!-- Message -->
-                      <a href="javascript:void(0)" class="link border-top">
+                    <div class=""> -->
+            <!-- Message -->
+            <!-- <a href="javascript:void(0)" class="link border-top">
                         <div class="d-flex no-block align-items-center p-10">
                           <span class="
                                 btn btn-success btn-circle
@@ -190,9 +190,9 @@ session_start();
                             <span class="mail-desc">Just a reminder that event</span>
                           </div>
                         </div>
-                      </a>
-                      <!-- Message -->
-                      <a href="javascript:void(0)" class="link border-top">
+                      </a> -->
+            <!-- Message -->
+            <!-- <a href="javascript:void(0)" class="link border-top">
                         <div class="d-flex no-block align-items-center p-10">
                           <span class="
                                 btn btn-info btn-circle
@@ -205,9 +205,10 @@ session_start();
                             <span class="mail-desc">You can customize this template</span>
                           </div>
                         </div>
-                      </a>
-                      <!-- Message -->
-                      <a href="javascript:void(0)" class="link border-top">
+                      </a> -->
+
+            <!-- Message -->
+            <!-- <a href="javascript:void(0)" class="link border-top">
                         <div class="d-flex no-block align-items-center p-10">
                           <span class="
                                 btn btn-primary btn-circle
@@ -220,9 +221,9 @@ session_start();
                             <span class="mail-desc">Just see the my admin!</span>
                           </div>
                         </div>
-                      </a>
-                      <!-- Message -->
-                      <a href="javascript:void(0)" class="link border-top">
+                      </a> -->
+            <!-- Message -->
+            <!-- <a href="javascript:void(0)" class="link border-top">
                         <div class="d-flex no-block align-items-center p-10">
                           <span class="
                                 btn btn-danger btn-circle
@@ -235,15 +236,13 @@ session_start();
                             <span class="mail-desc">Just see the my new admin!</span>
                           </div>
                         </div>
-                      </a>
-                    </div>
-                  </li>
+                      </a> -->
+            <!-- </div> -->
+            <!-- </li>
                 </ul>
               </ul>
-            </li>
-            <!-- ============================================================== -->
-            <!-- End Messages -->
-            <!-- ============================================================== -->
+            </li> -->
+
 
             <!-- ============================================================== -->
             <!-- User profile and search -->
@@ -256,7 +255,7 @@ session_start();
                     waves-effect waves-dark
                     pro-pic
                   " href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                <img src="./assets/images/users/1.jpg" alt="user" class="rounded-circle" width="31" />
+                <img src="./assets/images/users/user.png" alt="user" class="rounded-circle" width="31" />
               </a>
               <ul class="dropdown-menu dropdown-menu-end user-dd animated" aria-labelledby="navbarDropdown">
                 <?php
@@ -269,11 +268,8 @@ session_start();
                 ?>
 
 
-                <a class="dropdown-item" href="javascript:void(0)"><i class="mdi mdi-email me-1 ms-1"></i> Inbox</a>
-                <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="javascript:void(0)"><i class="mdi mdi-settings me-1 ms-1"></i> Account
-                  Setting</a>
-                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="javascript:void(0)"><i class="mdi mdi-email me-1 ms-1"></i>
+                  Inbox</a>
                 <a class="dropdown-item" href="partials/logout.php"><i class="fa fa-power-off me-1 ms-1"></i> Logout</a>
                 <div class="dropdown-divider"></div>
 
@@ -340,23 +336,7 @@ session_start();
       <!-- ============================================================== -->
       <!-- Bread crumb and right sidebar toggle -->
       <!-- ============================================================== -->
-      <div class="page-breadcrumb">
-        <div class="row">
-          <div class="col-12 d-flex no-block align-items-center">
-            <h4 class="page-title">Dashboard</h4>
-            <div class="ms-auto text-end">
-              <nav aria-label="breadcrumb">
-                <ol class="breadcrumb">
-                  <li class="breadcrumb-item"><a href="#">Home</a></li>
-                  <li class="breadcrumb-item active" aria-current="page">
-                    Library
-                  </li>
-                </ol>
-              </nav>
-            </div>
-          </div>
-        </div>
-      </div>
+
       <!-- ============================================================== -->
       <!-- End Bread crumb and right sidebar toggle -->
       <!-- ============================================================== -->

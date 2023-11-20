@@ -18,7 +18,8 @@ session_start();
     integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
   <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.min.css">
 <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.4.2/css/buttons.dataTables.min.css">
-  
+  <!-- favicon -->
+  <link rel="icon" type="image/png" sizes="16x16" href="./assets/images/favicon.png" />
   <!-- Custom CSS -->
   <link href="./dist/css/style.min.css" rel="stylesheet" />
   <title>Subjects</title>

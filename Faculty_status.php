@@ -21,7 +21,8 @@ session_start();
     <link href="./assets/libs/flot/css/float-chart.css" rel="stylesheet" />
     <!-- Custom CSS -->
     <link href="./dist/css/style.min.css" rel="stylesheet" />
-
+<!-- favicon -->
+<link rel="icon" type="image/png" sizes="16x16" href="./assets/images/favicon.png" />
 </head>
 
 <body>
@@ -47,10 +48,10 @@ session_start();
 
         <!-- Table to display data -->
 
-        <div class="container col-9  p-5">
+        <div class="container col-7  p-5">
 
-            <table class="table" id="myTable">
-                <thead class="thead-light">
+            <table class="table table-striped" id="myTable">
+                <thead class="thead-dark">
                     <tr>
                         <th scope="col">Day.</th>
                         <th scope="col">Faculty Id</th>
