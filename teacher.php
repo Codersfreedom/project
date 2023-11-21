@@ -85,6 +85,16 @@ session_start();
         $eachWlRes = mysqli_query($conn, $eachWlSql);
       }
 
+      // insert into fac_status table
+      $days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"];
+
+      foreach ($days as $day ) {
+
+        $sql = "insert into fac_status (day,fac_id,slot1,slot2,slot3,slot4,slot5,slot6,slot7) values('$day','$facid',1,1,1,1,1,1,1)";
+        mysqli_query($conn,$sql );
+        
+       
+      }
       
 
 
