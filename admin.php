@@ -96,7 +96,7 @@ session_start();
 
             </div>
         </div>
-        <div class="container" style="margin-left:200px">
+        <div class="container col-10" style="margin-left:200px">
             <h1 class="text-center my-3">Faculty Status</h1>
 
             <table class="table" id="myTable">
@@ -104,8 +104,8 @@ session_start();
                     <tr>
 
                         <th scope="col">Days</th>
-                        <th scope="col">Year</th>
                         <th scope="col">Faculty</th>
+                        <th scope="col">FacultyId</th>
                         <th scope="col">Period 1</th>
                         <th scope="col">Period 2</th>
                         <th scope="col">Period 3</th>
@@ -143,80 +143,21 @@ session_start();
             while ($row = mysqli_fetch_assoc($result)) {
 
 
-                echo "<div class='container'><form method='post' action='";
-                echo htmlspecialchars($_SERVER["PHP_SELF"]);
-                echo "'>  <tr>
-            <input type='hidden'  name='fac_id' value='" . $row['fac_id'] . "'>
-          
-            <input type='hidden'  name='day' value='" . $row['day'] . "'>
-            
+                echo " <tr>
             <td>" . $row['day'] . "</td> 
            
             
-        <td>" . $row['name'] . "</td>
-        
-        <td><select class=\"form-select\" name='slot1'>
-        <option value='1' ";
-                echo $row['slot1'] == 1 ? 'selected' : '';
-                echo ">Available</option>
-        <option value='0' ";
-                echo $row['slot1'] == 0 ? 'selected' : '';
-                echo ">Not Available</option>
-        </select></td>
+            <td>" . $row['name'] . "</td>
+            <td>" . $row['fac_id'] . "</td>
+            <td>";echo $row['slot1'] == 1 ? '<span class="font-weight-bold badge badge-success">Available</span>' : '<span class="font-weight-bold badge badge-danger">Not Available</span>';echo "</td>
+            <td>";echo $row['slot2'] == 1 ? '<span class="font-weight-bold badge badge-success">Available</span>' : '<span class="font-weight-bold badge badge-danger">Not Available</span>';echo "</td>
+            <td>";echo $row['slot3'] == 1 ? '<span class="font-weight-bold badge badge-success">Available</span>' : '<span class="font-weight-bold badge badge-danger">Not Available</span>';echo "</td>
+            <td>";echo $row['slot4'] == 1 ? '<span class="font-weight-bold badge badge-success">Available</span>' : '<span class="font-weight-bold badge badge-danger">Not Available</span>';echo "</td>
+            <td>";echo $row['slot5'] == 1 ? '<span class="font-weight-bold badge badge-success">Available</span>' : '<span class="font-weight-bold badge badge-danger">Not Available</span>';echo "</td>
+            <td>";echo $row['slot6'] == 1 ? '<span class="font-weight-bold badge badge-success">Available</span>' : '<span class="font-weight-bold badge badge-danger">Not Available</span>';echo "</td>
+            <td>";echo $row['slot7'] == 1 ? '<span class="font-weight-bold badge badge-success">Available</span>' : '<span class="font-weight-bold badge badge-danger">Not Available</span>';echo "</td>
+            
 
-        <td><select class=\"form-select\" name='slot2'>
-        <option value='1' ";
-                echo $row['slot2'] == 1 ? 'selected' : '';
-                echo ">Available</option>
-        <option value='0' ";
-                echo $row['slot2'] == 0 ? 'selected' : '';
-                echo ">Not Available</option>
-        </select></td>
-
-        <td><select class=\"form-select\" name='slot3'>
-        <option value='1' ";
-                echo $row['slot3'] == 1 ? 'selected' : '';
-                echo ">Available</option>
-        <option value='0' ";
-                echo $row['slot3'] == 0 ? 'selected' : '';
-                echo ">Not Available</option>
-        </select></td>
-
-        <td><select class=\"form-select\" name='slot4'>
-        <option value='1' ";
-                echo $row['slot4'] == 1 ? 'selected' : '';
-                echo ">Available</option>
-        <option value='0' ";
-                echo $row['slot4'] == 0 ? 'selected' : '';
-                echo ">Not Available</option>
-        </select></td>
-
-        <td><select class=\"form-select\" name='slot5'>
-        <option value='1' ";
-                echo $row['slot5'] == 1 ? 'selected' : '';
-                echo ">Available</option>
-        <option value='0' ";
-                echo $row['slot5'] == 0 ? 'selected' : '';
-                echo ">Not Available</option>
-        </select></td>
-
-        <td><select class=\"form-select\" name='slot6'>
-        <option value='1' ";
-                echo $row['slot6'] == 1 ? 'selected' : '';
-                echo ">Available</option>
-        <option value='0' ";
-                echo $row['slot6'] == 0 ? 'selected' : '';
-                echo ">Not Available</option>
-        </select></td>
-
-        <td><select class=\"form-select\" name='slot7'>
-        <option value='1' ";
-                echo $row['slot7'] == 1 ? 'selected' : '';
-                echo ">Available</option>
-        <option value='0' ";
-                echo $row['slot7'] == 0 ? 'selected' : '';
-                echo ">Not Available</option>
-        </select></td>
 
         <td><button  type=\"submit\" class=\"btn btn-primary\">Update</button></td>
         </tr>
