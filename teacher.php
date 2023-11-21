@@ -85,6 +85,8 @@ session_start();
         $eachWlRes = mysqli_query($conn, $eachWlSql);
       }
 
+      
+
 
 
       if ($result && $totalWlRes) {

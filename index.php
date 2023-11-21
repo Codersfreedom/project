@@ -252,16 +252,6 @@
   <!-- Footer -->
 
 
-
-  <!-- CONTACT SECTION END-->
-  <!-- <div id="footer">
-      &copy 2023 yourdomain.com | All Rights Reserved |  <a href="http://binarytheme.com" style="color: #fff" target="_blank">Design by : binarytheme.com</a>
-</div> -->
-
-
-
-
-
   <!-- Optional JavaScript -->
   <!-- jQuery first, then Popper.js, then Bootstrap JS -->
   <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"

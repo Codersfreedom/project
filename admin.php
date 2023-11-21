@@ -41,9 +41,6 @@ session_start();
         ?>
 
 
-
-
-
         <h2 class="text-center py-3">Check availability</h2>
         <div class="container  my-5">
 
@@ -130,14 +127,14 @@ session_start();
             require 'partials/dbconnect.php';
 
             if ($day == 'All Day' && $faculty == 'All') {
-                $sql = "SELECT  faculty.name, status.* from `faculty` INNER JOIN status on faculty.fac_id = status.fac_id order by `id` asc,`year` asc";
+                $sql = "SELECT faculty.name, fac_status.* from `faculty` INNER JOIN fac_status on faculty.fac_id = fac_status.fac_id order by `id` asc";
 
             } else if ($day == 'All Day' && $faculty != 'All') {
-                $sql = "SELECT faculty.name, status.* from `faculty` INNER JOIN status on faculty.fac_id = status.fac_id WHERE  status.fac_id='$faculty' order by `year` and `day` ASC";
+                $sql = "SELECT faculty.name, fac_status.* from faculty INNER JOIN fac_status on faculty.fac_id = fac_status.fac_id where fac_status.fac_id = '$faculty' order by id asc;";
             } else if ($faculty == 'All' && $day != 'All Day') {
-                $sql = "SELECT faculty.name, status.* from `faculty` INNER JOIN status on faculty.fac_id = status.fac_id WHERE  `day`='$day' order by `year` and `day` ASC";
+                $sql = "SELECT faculty.name, fac_status.* from `faculty` INNER JOIN fac_status on faculty.fac_id = fac_status.fac_id where fac_status.day='$day' order by `id` asc";
             } elseif ($faculty != 'All' && $day != 'All Day') {
-                $sql = "SELECT faculty.name, status.* from `faculty` INNER JOIN status on faculty.fac_id = status.fac_id WHERE status.fac_id='$faculty' and `day`='$day' order by `year` and `day` ASC";
+                $sql = "SELECT faculty.name, fac_status.* from `faculty` INNER JOIN fac_status on faculty.fac_id = fac_status.fac_id where fac_status.day='$day' and fac_status.fac_id='$faculty' order by `id` asc";
             }
 
             $result = mysqli_query($conn, $sql);
