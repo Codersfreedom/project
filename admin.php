@@ -121,6 +121,7 @@ session_start();
         </div>
         <?php
         require 'partials/dbconnect.php';
+        include 'partials/Fac_status_modal.php';
 
         function Show_status($day, $faculty)
         {
@@ -159,7 +160,9 @@ session_start();
             
 
 
-        <td><button  type=\"submit\" class=\"btn btn-primary\">Update</button></td>
+        <td> <button type='button' class='btn btn-success'   data-toggle='modal' data-target='#exampleModalCenter'>
+        Update
+      </button> </td>
         </tr>
         </form>
         </div>";
@@ -327,6 +330,35 @@ session_start();
 
 
     // });
+
+</script>
+
+<script>
+
+$(document).ready(function () {
+  $('#myTable').DataTable();
+});
+</script>
+
+
+<script>
+
+// update = document.getElementsByClassName('btn');
+// Array.from(deletes).forEach((element) => {
+//   element.addEventListener("click", (e) => {
+//     console.log("update");
+//     sno = e.target.id.substr(1);
+//     console.log(sno);
+//     if (confirm("Are you sure you want to delete this note!")) {
+//       console.log("yes");
+//       window.location = `teacher.php?delete=${sno}`;
+//       // TODO: Create a form and use post request to submit a form
+//     }
+//     else {
+//       console.log("no");
+//     }
+//   })
+// })
 
 </script>
 
