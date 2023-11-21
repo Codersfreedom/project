@@ -14,45 +14,36 @@
           </button>
         </div>
         <div class="modal-body">
-          <form action="teacher.php" method="post">
+          <form  method="post">
+            <div class="form-group">
+              <label for="days">Day</label>
+              <input type="text" class="form-control" readonly id="days"  name="day" placeholder="Enter the Faculty id">
+            </div>
             <div class="form-group">
               <label for="facid">Faculty id</label>
-              <input type="text" class="form-control" id="facid" name="facid" placeholder="Enter the Faculty id">
-
-            </div>
-            <div class="form-group">
-              <label for="name">Name</label>
-              <input type="text" class="form-control" id="name" name="name" placeholder="Enter the full name">
+              <input type="text" class="form-control" id="facid" name="facid" readonly  placeholder="Enter the Faculty id">
             </div>
 
             <div class="form-group">
-              <label for="alias">Alias</label>
-              <input type="text" class="form-control" id="alias" name="alias" placeholder="Enter the Alias name">
-            </div>
-
-            <div class="form-group">
-              <label for="select">Designation</label>
-              <select class="form-control" id="select" name="designation">
-                <option>Professor</option>
-                <option>Asst. Professor</option>
+              <label for="select">Slot</label>
+              <select class="form-control" id="select" name="slot">
+                <option>slot1</option>
+                <option>slot2</option>
+                <option>slot3</option>
+                <option>slot4</option>
+                <option>slot5</option>
+                <option>slot6</option>
+                <option>slot7</option>
               </select>
-            </div>
-
+            </div>   
             <div class="form-group">
-              <label for="workload">Workload</label>
-              <input type="number" class="form-control" id="workload" name="workload" placeholder="Enter the Workload">
-            </div>
-
-            <div class="form-group">
-              <label for="ph">Phone No.</label>
-              <input type="number" class="form-control" id="ph" name="ph" placeholder="Enter the phone number">
-            </div>
-
-            <div class="form-group">
-              <label for="email">Email</label>
-              <input type="email" class="form-control" id="email" name="email" placeholder="Enter the email address">
-            </div>
-
+              <label for="select">Status</label>
+              <select class="form-control" id="select" name="status">
+                <option value='1'>Available</option>
+                <option value='0'>Not Available</option>
+              </select>
+            </div>   
+            
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
