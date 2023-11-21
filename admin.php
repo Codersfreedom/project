@@ -147,12 +147,12 @@ session_start();
                 echo htmlspecialchars($_SERVER["PHP_SELF"]);
                 echo "'>  <tr>
             <input type='hidden'  name='fac_id' value='" . $row['fac_id'] . "'>
-            <input type='hidden'  name='year' value='" . $row['year'] . "'>
+          
             <input type='hidden'  name='day' value='" . $row['day'] . "'>
             
             <td>" . $row['day'] . "</td> 
            
-            <td>" . $row['year'] . "</td>
+            
         <td>" . $row['name'] . "</td>
         
         <td><select class=\"form-select\" name='slot1'>
@@ -253,7 +253,7 @@ session_start();
                 $slot7 = $_POST['slot7'];
                 $day = $_POST['day'];
                 $fac_id = $_POST['fac_id'];
-                $year = $_POST['year'];
+                
 
 
 
@@ -262,19 +262,19 @@ session_start();
                 // echo $day;
         
                 //update query fuction
-                Update_Status($slot1, $slot2, $slot3, $slot4, $slot5, $slot6, $slot7, $day, $year, $fac_id);
+                Update_Status($slot1, $slot2, $slot3, $slot4, $slot5, $slot6, $slot7, $day, $fac_id);
                 Show_status($dropdown_day, $faculty);
 
 
             }
         }
 
-        function Update_Status($slot1, $slot2, $slot3, $slot4, $slot5, $slot6, $slot7, $day, $year, $fac_id)
+        function Update_Status($slot1, $slot2, $slot3, $slot4, $slot5, $slot6, $slot7, $day, $fac_id)
         {
             require 'partials/dbconnect.php';
 
 
-            $sql1 = "UPDATE `status` SET `slot1`=$slot1,`slot2`=$slot2,`slot3`=$slot3,`slot4`=$slot4,`slot5`=$slot5,`slot6`=$slot6,`slot7`=$slot7 WHERE `day`='$day' and `fac_id`='$fac_id' and `year`=$year";
+            $sql1 = "UPDATE `status` SET `slot1`=$slot1,`slot2`=$slot2,`slot3`=$slot3,`slot4`=$slot4,`slot5`=$slot5,`slot6`=$slot6,`slot7`=$slot7 WHERE `day`='$day' and `fac_id`='$fac_id'";
             $result = mysqli_query($conn, $sql1);
 
             // if ($year % 2 == 0) {
@@ -325,8 +325,8 @@ session_start();
             // }
         
 
-            // $sql2 = "UPDATE `status` SET `slot1`=$new_slot1,`slot2`=$new_slot2,`slot3`=$new_slot3,`slot4`=$new_slot4,`slot5`=$new_slot5,`slot6`=$new_slot6,`slot7`=$new_slot7 WHERE `day`='$day' and `fac_id`='$fac_id' and `year`=$other_year";
-            // $result = mysqli_query($conn, $sql2);
+            $sql2 = "UPDATE `fac_status` SET `slot1`=$slot1,`slot2`=$slot2,`slot3`=$slot3,`slot4`=$slot4,`slot5`=$slot5,`slot6`=$slot6,`slot7`=$slot7 WHERE `day`='$day' and `fac_id`='$fac_id'";
+            $result = mysqli_query($conn, $sql2);
         }
         ?>
     </div>
