@@ -31,6 +31,16 @@ if (!isset($_SESSION['logedin'])) {
 
 <body>
 
+  <style>
+    .alert {
+      width: 400px;
+      /* margin-left: 150px; */
+      left: 520px;
+
+
+
+    }
+  </style>
   <div id="main-wrapper" data-layout="vertical" data-navbarbg="skin5" data-sidebartype="full"
     data-sidebar-position="absolute" data-header-position="absolute" data-boxed-layout="full">
     <?php
@@ -41,12 +51,130 @@ if (!isset($_SESSION['logedin'])) {
     // }
     include 'aside.php';
     $delete = false;
+    $insert = false;
+
+
+
+  
+
+require 'partials/dbconnect.php';
 
 
 
 
-    ?>
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
+
+  if (isset($_POST['subname']) && isset($_POST['allotTeacher']) && isset($_POST['sem'])) {
+
+    $allotSubject = $_POST['subname'];
+    $allotTeacher = $_POST['allotTeacher'];
+    $sem = $_POST['sem'];
+
+    //getting subject code from subject table
+
+    $sql1 = "SELECT * FROM `subject` where `subject_name` = '$allotSubject'";
+    $result = mysqli_query($conn, $sql1);
+    $row = mysqli_fetch_assoc($result);
+    $sub_code = $row['subject_code'];
+    $sub_name = $row['subject_name'];
+
+    //getting fac_id from faculty table 
+
+    $sql2 = "SELECT * FROM `faculty` where `name` = '$allotTeacher'";
+    $result = mysqli_query($conn, $sql2);
+    $row = mysqli_fetch_assoc($result);
+    $fac_id = $row['fac_id'];
+    $fac_name = $row['alias'];
+
+    $data = "$sub_name($fac_name)";
+
+    // getting year from semester 
+
+    if ($sem == 1 || $sem == 2) {
+      $year = 1;
+    } elseif ($sem == 3 || $sem == 4) {
+      $year = 2;
+    } elseif ($sem == 5 || $sem == 6) {
+      $year = 3;
+    } elseif ($sem == 7 || $sem == 8) {
+      $year = 4;
+    }
+
+    // insert query on subject_allot table
+
+    $sql = "INSERT INTO `sub_allot`( `fac_id`, `sub_code`,`assign`,`sem`,`year`) VALUES ('$fac_id','$sub_code','$data',$sem,$year)";
+    $result = mysqli_query($conn, $sql);
+
+    if ($result) {
+      $insert = true;
+
+    }
+
+    //  whenever new faculty arrives
+    // check if  the faculty id already exists in status table
+
+    $exists = "SELECT * FROM `status` where `fac_id` = '$fac_id' and `year`='$year'";
+    $exists_result = mysqli_query($conn, $exists);
+    $num = mysqli_num_rows($exists_result);
+    if ($num <= 0) {
+      Add_faculty($fac_id, $year);
+    }
+
+  }
+
+
+  // Delete from sub_allot table
+  if (isset($_POST['facid']) && isset($_POST['subcode'])) {
+
+    $facultyId = $_POST['facid'];
+    $subjectCode = $_POST['subcode'];
+
+    // Delete query
+
+    $sql = "Delete from  sub_allot where fac_id = '$facultyId' and sub_code ='$subjectCode'";
+    $delRes = mysqli_query($conn, $sql);
+
+    if ($delRes) {
+      $delete = true;
+    }
+
+  }
+
+
+
+}
+?>
+
+
+ <div class="alert">
+
+<?php
+
+if ($delete) {
+  echo '<div class="alert alert-success alert-dismissible fade show my-0" role="alert">
+<strong>successfully deleted the data.</strong>
+<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+<span aria-hidden="true">&times;</span>
+</button>
+</div>';
+
+}
+if ($insert) {
+  echo '<div class="alert alert-success alert-dismissible fade show my-0" role="alert">
+<strong>successfully inserted the data.</strong>
+<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+<span aria-hidden="true">&times;</span>
+</button>
+</div>';
+
+}
+
+?>
+
+
+
+</div>
 
     <div class="container d-flex justify-content-center mt-5 p-5">
 
@@ -59,83 +187,7 @@ if (!isset($_SESSION['logedin'])) {
 
 
     <?php
-    require 'partials/dbconnect.php';
-
-
-
-
-    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-
-
-      if (isset($_POST['subname']) && isset($_POST['allotTeacher']) && isset($_POST['sem'])) {
-
-        $allotSubject = $_POST['subname'];
-        $allotTeacher = $_POST['allotTeacher'];
-        $sem = $_POST['sem'];
-
-        //getting subject code from subject table
-    
-        $sql1 = "SELECT * FROM `subject` where `subject_name` = '$allotSubject'";
-        $result = mysqli_query($conn, $sql1);
-        $row = mysqli_fetch_assoc($result);
-        $sub_code = $row['subject_code'];
-        $sub_name = $row['subject_name'];
-
-        //getting fac_id from faculty table 
-    
-        $sql2 = "SELECT * FROM `faculty` where `name` = '$allotTeacher'";
-        $result = mysqli_query($conn, $sql2);
-        $row = mysqli_fetch_assoc($result);
-        $fac_id = $row['fac_id'];
-        $fac_name = $row['alias'];
-
-        $data = "$sub_name($fac_name)";
-
-        // getting year from semester 
-    
-        if ($sem == 1 || $sem == 2) {
-          $year = 1;
-        } elseif ($sem == 3 || $sem == 4) {
-          $year = 2;
-        } elseif ($sem == 5 || $sem == 6) {
-          $year = 3;
-        } elseif ($sem == 7 || $sem == 8) {
-          $year = 4;
-        }
-
-        // insert query on subject_allot table
-    
-        $sql = "INSERT INTO `sub_allot`( `fac_id`, `sub_code`,`assign`,`sem`,`year`) VALUES ('$fac_id','$sub_code','$data',$sem,$year)";
-        $result = mysqli_query($conn, $sql);
-
-        //  whenever new faculty arrives
-        // check if  the faculty id already exists in status table
-    
-        $exists = "SELECT * FROM `status` where `fac_id` = '$fac_id' and `year`='$year'";
-        $exists_result = mysqli_query($conn, $exists);
-        $num = mysqli_num_rows($exists_result);
-        if ($num <= 0) {
-          Add_faculty($fac_id, $year);
-        }
-
-      }
-
-
-      // Delete from sub_allot table
-      if (isset($_POST['facid']) && isset($_POST['subcode'])) {
-
-        $facultyId = $_POST['facid'];
-        $subjectCode = $_POST['subcode'];
-
-        // Delete query
-    
-        $sql = "Delete from  sub_allot where fac_id = '$facultyId' and sub_code ='$subjectCode'";
-        mysqli_query($conn, $sql);
-      }
-
-
-
-    }
+  
 
 
 
@@ -182,19 +234,14 @@ if (!isset($_SESSION['logedin'])) {
 
     }
 
-    //   if ($delete) {
-    //     echo '<div class="alert alert-success alert-dismissible fade show my-0" role="alert">
-    //   <strong>successfully deleted</strong>
-    //   <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-    //   <span aria-hidden="true">&times;</span>
-    //   </button>
-    // </div>';
-    
-    //   }
-    
-
-
     ?>
+   
+
+
+
+
+
+
 
     <!-- Table to display data -->
 

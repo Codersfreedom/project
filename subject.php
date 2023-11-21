@@ -26,7 +26,18 @@ session_start();
 </head>
 
 <body>
+<style>
+ 
+.alert{
+  width: 400px;
+  /* margin-left: 150px; */
+  left: 520px;
+  
 
+  
+}
+
+</style>
 <div id="main-wrapper" data-layout="vertical" data-navbarbg="skin5" data-sidebartype="full"
     data-sidebar-position="absolute" data-header-position="absolute" data-boxed-layout="full">
   <?php require 'partials/dbconnect.php';
@@ -130,6 +141,9 @@ session_start();
 
 
   ?>
+<div class="alert">
+
+
 
   <?php
 
@@ -150,7 +164,30 @@ session_start();
     <span aria-hidden="true">&times;</span>
   </button>
 </div>';
-  } else if ($delete) {
+  }
+  
+  else if (isset($_GET['updatelog']) && $_GET['updatelog']==1) {
+    
+    echo '<div class="alert alert-success alert-dismissible fade show my-0" role="alert">
+  <strong> Successfully updated! </strong> 
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>';
+
+  }
+  else if (isset($_GET['updatelog']) && $_GET['updatelog'] !=1) {
+    $updatelog = $_GET['updatelog'];
+    echo '<div class="alert alert-warning alert-dismissible fade show my-0" role="alert">
+  <strong> ' . $updatelog . '. </strong> 
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>';
+  }
+
+  
+  else if ($delete) {
     echo '<div class="alert alert-success alert-dismissible fade show my-0" role="alert">
   <strong> successfully deleted.</strong>
   <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -162,6 +199,8 @@ session_start();
 
 
   ?>
+  
+</div>
   <div class="container d-flex justify-content-center mt-5 p-5">
     <?php include 'partials/subject_modal.php' ?>
 

@@ -136,7 +136,7 @@ session_start();
             <!-- ============================================================== -->
             <!-- create new -->
             <!-- ============================================================== -->
-            <li class="nav-item dropdown">
+            <!-- <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
                 aria-expanded="false">
                 <span class="d-none d-md-block">Create New <i class="fa fa-angle-down"></i></span>
@@ -152,7 +152,7 @@ session_start();
                   <a class="dropdown-item" href="#">Something else here</a>
                 </li>
               </ul>
-            </li>
+            </li> -->
             <!-- ============================================================== -->
             <!-- Search -->
             <!-- ============================================================== -->
@@ -169,28 +169,7 @@ session_start();
           <!-- Right side toggle and nav items -->
           <!-- ============================================================== -->
           <ul class="navbar-nav float-end">
-            <!-- ============================================================== -->
-            <!-- Comment -->
-            <!-- ============================================================== -->
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
-                aria-expanded="false">
-                <i class="mdi mdi-bell font-24"></i>
-              </a>
-              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <li><a class="dropdown-item" href="#">Action</a></li>
-                <li><a class="dropdown-item" href="#">Another action</a></li>
-                <li>
-                  <hr class="dropdown-divider" />
-                </li>
-                <li>
-                  <a class="dropdown-item" href="#">Something else here</a>
-                </li>
-              </ul>
-            </li>
-            <!-- ============================================================== -->
-            <!-- End Comment -->
-            <!-- ============================================================== -->
+           
             <!-- ============================================================== -->
             <!-- Messages -->
             <!-- ============================================================== -->
@@ -481,7 +460,7 @@ session_start();
               <div class="d-flex no-block align-items-center">
                 <span>' . $row['name'] . '</span>
                 <div class="ms-auto">
-                  <span> ' . $row['totalWL'] . '</span>
+                 <span> Remaining </span>  <span> ' . $row['totalWL'] . '</span>
                 </div>
               </div>
               <div class="progress " style="height: 10px;">

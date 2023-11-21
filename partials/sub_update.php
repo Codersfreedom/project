@@ -53,11 +53,14 @@ $row = mysqli_fetch_assoc($result);
     $result = mysqli_query($conn,$sql);
     if($result){
         $update = true;
+      
  
       header('location:/project/subject.php?updatelog='.$update.'');
     }
     else{
-      echo "We could not updated the data";
+
+      $ShowError= "We could not update the data";
+      header('location:/project/subject.php?updatelog='.$ShowError.'');
     }
   }
 

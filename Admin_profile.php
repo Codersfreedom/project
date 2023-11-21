@@ -1,3 +1,12 @@
+<?php
+session_start();
+if (!isset($_SESSION['logedin'])) {
+    header("location: index.php");
+}
+
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -21,10 +30,8 @@
     <div id="main-wrapper" data-layout="vertical" data-navbarbg="skin5" data-sidebartype="full"
         data-sidebar-position="absolute" data-header-position="absolute" data-boxed-layout="full">
         <?php
+
         include 'header.php';
-        if (!isset($_SESSION['logedin'])) {
-            header("location: index.php");
-        }
         include 'aside.php';
 
         ?>
@@ -33,8 +40,8 @@
                 <?php
                 $username = $_SESSION['neckname'];
                 $sql = "select * from admin where username = '$username'";
-                $row = mysqli_fetch_assoc(mysqli_query($conn,$sql));
-                
+                $row = mysqli_fetch_assoc(mysqli_query($conn, $sql));
+
 
                 ?>
 
@@ -54,7 +61,7 @@
                                         <p class="text-secondary mb-1">
                                             <?php echo $row['Timestamp']; ?>
                                         </p>
-                                        
+
                                     </div>
                                 </div>
                             </div>
@@ -179,7 +186,7 @@
 
             </div>
         </div>
-    </div>
+    
     </div>
 
     <!-- All Jquery -->

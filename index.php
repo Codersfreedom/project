@@ -85,7 +85,7 @@
         <h6>Assistant Professor</h6>
         <p class="card-text">E-Commerce, Database Management System, Software Engineering, Object Oriented Programming,
           Introduction to Computing.</p>
-        <a href="#" class="btn btn-primary">Learn more</a>
+        <a href="Fac_profile_userview.php?fac_id=C1" class="btn btn-primary">Learn more</a>
       </div>
     </div>
 
@@ -97,7 +97,7 @@
         <h6>Assistant Professor</h6>
         <p class="card-text">Introduction to Computing, Compiler Design, Numerical Methods, Data Structure, Design and
           Analysis of Algorithm, E-Commerce.</p>
-        <a href="#" class="btn btn-primary">Learn more</a>
+        <a href="Fac_profile_userview.php?fac_id=C2" class="btn btn-primary">Learn more</a>
       </div>
     </div>
 

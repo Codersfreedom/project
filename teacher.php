@@ -37,8 +37,21 @@ if (!isset($_SESSION['logedin'])) {
 
 <body>
 
+<style>
+ 
+.alert{
+  width: 400px;
+  /* margin-left: 150px; */
+  left: 520px;
+  
+
+  
+}
+
+</style>
+
   <!-- Inserting Data into faculty table from modal -->
-  <div id="main-wrapper" data-layout="vertical" data-navbarbg="skin5" data-sidebartype="full"
+  <div class="wrapper" id="main-wrapper" data-layout="vertical" data-navbarbg="skin5" data-sidebartype="full"
     data-sidebar-position="absolute" data-header-position="absolute" data-boxed-layout="full">
     <?php
     // session_start();
@@ -179,10 +192,14 @@ if (!isset($_SESSION['logedin'])) {
       }
 
     }
+    
+
     ?>
 
 
 
+
+<div class="alert ">
 
 
 
@@ -240,7 +257,7 @@ if (!isset($_SESSION['logedin'])) {
 
 
     ?>
-
+</div>
     <div class="container d-flex justify-content-center mt-5 p-5">
       <?php include 'partials/faculty_modal.php' ?>
 

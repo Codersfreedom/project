@@ -26,12 +26,7 @@ require 'partials/dbconnect.php';
   <link href="./assets/libs/flot/css/float-chart.css" rel="stylesheet" />
   <!-- Custom CSS -->
   <link href="./dist/css/style.min.css" rel="stylesheet" />
-  <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-  <!--[if lt IE 9]>
-      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
+
 </head>
 
 <body>
@@ -162,7 +157,7 @@ require 'partials/dbconnect.php';
             <!-- ============================================================== -->
             <!-- Messages -->
             <!-- ============================================================== -->
-            <!-- <li class="nav-item dropdown">
+            <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle waves-effect waves-dark" href="#" id="2" role="button"
                 data-bs-toggle="dropdown" aria-expanded="false">
                 <i class="font-24 mdi mdi-comment-processing"></i>
@@ -175,9 +170,9 @@ require 'partials/dbconnect.php';
                   " aria-labelledby="2">
                 <ul class="list-style-none">
                   <li>
-                    <div class=""> -->
-            <!-- Message -->
-            <!-- <a href="javascript:void(0)" class="link border-top">
+                    <div class="">
+                      <!-- Message -->
+                      <a href="javascript:void(0)" class="link border-top">
                         <div class="d-flex no-block align-items-center p-10">
                           <span class="
                                 btn btn-success btn-circle
@@ -190,9 +185,9 @@ require 'partials/dbconnect.php';
                             <span class="mail-desc">Just a reminder that event</span>
                           </div>
                         </div>
-                      </a> -->
-            <!-- Message -->
-            <!-- <a href="javascript:void(0)" class="link border-top">
+                      </a>
+                      <!-- Message -->
+                      <a href="javascript:void(0)" class="link border-top">
                         <div class="d-flex no-block align-items-center p-10">
                           <span class="
                                 btn btn-info btn-circle
@@ -205,10 +200,9 @@ require 'partials/dbconnect.php';
                             <span class="mail-desc">You can customize this template</span>
                           </div>
                         </div>
-                      </a> -->
-
-            <!-- Message -->
-            <!-- <a href="javascript:void(0)" class="link border-top">
+                      </a>
+                      <!-- Message -->
+                      <a href="javascript:void(0)" class="link border-top">
                         <div class="d-flex no-block align-items-center p-10">
                           <span class="
                                 btn btn-primary btn-circle
@@ -221,9 +215,9 @@ require 'partials/dbconnect.php';
                             <span class="mail-desc">Just see the my admin!</span>
                           </div>
                         </div>
-                      </a> -->
-            <!-- Message -->
-            <!-- <a href="javascript:void(0)" class="link border-top">
+                      </a>
+                      <!-- Message -->
+                      <a href="javascript:void(0)" class="link border-top">
                         <div class="d-flex no-block align-items-center p-10">
                           <span class="
                                 btn btn-danger btn-circle
@@ -236,13 +230,16 @@ require 'partials/dbconnect.php';
                             <span class="mail-desc">Just see the my new admin!</span>
                           </div>
                         </div>
-                      </a> -->
-            <!-- </div> -->
-            <!-- </li>
+                      </a>
+                    </div>
+                  </li>
                 </ul>
               </ul>
-            </li> -->
+            </li>
 
+            <!-- ============================================================== -->
+            <!-- End Messages -->
+            <!-- ============================================================== -->
 
             <!-- ============================================================== -->
             <!-- User profile and search -->
