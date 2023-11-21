@@ -111,18 +111,9 @@ if (!isset($_SESSION['logedin'])) {
 
 
 
-
-
     function updateStatus($facRoutine, $year, $conn)
     {
-
-      // foreach ($days as $day) {
-      //   for ($i = 1; $i < 8; $i++) {
-      //     $data = $facRoutine[$day]['slot' . $i];
-      //     $updateSql = "UPDATE status SET slot$i=0 WHERE year=$year AND day='$day' AND fac_id='$data'";
-      //     $updateRes = mysqli_query($conn, $updateSql);
-      //   }
-      // }
+      
       foreach ($facRoutine as $days => $slots) {
         foreach ($slots as $slot => $fa) {
           $updateSql = "UPDATE status SET $slot=0 WHERE day='$days' AND fac_id='$fa' AND year=$year";
@@ -131,6 +122,19 @@ if (!isset($_SESSION['logedin'])) {
         }
       }
     }
+    
+    function updateFacStatus($facRoutine,$conn)
+    {
+      
+      foreach ($facRoutine as $days => $slots) {
+        foreach ($slots as $slot => $fa) {
+          $updateSql = "UPDATE fac_status SET $slot=0 WHERE day='$days' AND fac_id='$fa'";
+          $updateRes = mysqli_query($conn, $updateSql);
+
+        }
+      }
+    }
+
 
     function checkLab($allotedLab, $lab)
     {
@@ -638,11 +642,17 @@ if (!isset($_SESSION['logedin'])) {
       // print_r($workLoad);
       // echo "</pre>";
       updateWorkload($workLoad, $year, $conn);
-      if ($year == '3') {
-        updateStatus($facRoutine, 4, $conn);
-      } elseif ($year == '4') {
-        updateStatus($facRoutine, 3, $conn);
+      updateFacStatus($facRoutine,$conn);
+      for($y=1;$y<5;$y++){
+        if($year!=$y){
+          updateStatus($facRoutine, 4, $conn);
+        }
       }
+      // if ($year == '3') {
+      //   updateStatus($facRoutine, 4, $conn);
+      // } elseif ($year == '4') {
+      //   updateStatus($facRoutine, 3, $conn);
+      // }
     }
 
 
