@@ -1,8 +1,8 @@
 <?php
 session_start();
-    if (!isset($_SESSION['logedin'])) {
-        header("location: index.php");
-    }
+if (!isset($_SESSION['logedin'])) {
+  header("location: index.php");
+}
 ?>
 
 <!doctype html>
@@ -25,7 +25,7 @@ session_start();
   <link href="./dist/css/style.min.css" rel="stylesheet" />
   <!-- favicon -->
   <link rel="icon" type="image/png" sizes="16x16" href="./assets/images/favicon.png" />
-  
+
   <title>Theory-class</title>
 </head>
 
@@ -51,8 +51,9 @@ session_start();
     <div class="container d-flex justify-content-center mt-5 p-5">
 
       <?php
-      include 'partials/Sub_allot_modal.php'
-        ?>
+      include 'partials/Sub_allot_modal.php';
+
+      ?>
     </div>
 
 
@@ -66,65 +67,83 @@ session_start();
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 
+      if (isset($_POST['subname']) && isset($_POST['allotTeacher']) && isset($_POST['sem'])) {
 
+        $allotSubject = $_POST['subname'];
+        $allotTeacher = $_POST['allotTeacher'];
+        $sem = $_POST['sem'];
 
-      $allotSubject = $_POST['subname'];
-      $allotTeacher = $_POST['allotTeacher'];
-      $sem = $_POST['sem'];
-
-
-
-
-      //getting subject code from subject table
+        //getting subject code from subject table
     
-      $sql1 = "SELECT * FROM `subject` where `subject_name` = '$allotSubject'";
-      $result = mysqli_query($conn, $sql1);
-      $row = mysqli_fetch_assoc($result);
-      $sub_code = $row['subject_code'];
-      $sub_name = $row['subject_name'];
+        $sql1 = "SELECT * FROM `subject` where `subject_name` = '$allotSubject'";
+        $result = mysqli_query($conn, $sql1);
+        $row = mysqli_fetch_assoc($result);
+        $sub_code = $row['subject_code'];
+        $sub_name = $row['subject_name'];
 
-      //getting fac_id from faculty table 
+        //getting fac_id from faculty table 
     
-      $sql2 = "SELECT * FROM `faculty` where `name` = '$allotTeacher'";
-      $result = mysqli_query($conn, $sql2);
-      $row = mysqli_fetch_assoc($result);
-      $fac_id = $row['fac_id'];
-      $fac_name = $row['alias'];
+        $sql2 = "SELECT * FROM `faculty` where `name` = '$allotTeacher'";
+        $result = mysqli_query($conn, $sql2);
+        $row = mysqli_fetch_assoc($result);
+        $fac_id = $row['fac_id'];
+        $fac_name = $row['alias'];
 
-      $data = "$sub_name($fac_name)";
+        $data = "$sub_name($fac_name)";
 
-      // getting year from semester 
+        // getting year from semester 
     
-      if ($sem == 1 || $sem == 2) {
-        $year = 1;
-      } elseif ($sem == 3 || $sem == 4) {
-        $year = 2;
-      } elseif ($sem == 5 || $sem == 6) {
-        $year = 3;
-      } elseif ($sem == 7 || $sem == 8) {
-        $year = 4;
+        if ($sem == 1 || $sem == 2) {
+          $year = 1;
+        } elseif ($sem == 3 || $sem == 4) {
+          $year = 2;
+        } elseif ($sem == 5 || $sem == 6) {
+          $year = 3;
+        } elseif ($sem == 7 || $sem == 8) {
+          $year = 4;
+        }
+
+        // insert query on subject_allot table
+    
+        $sql = "INSERT INTO `sub_allot`( `fac_id`, `sub_code`,`assign`,`sem`,`year`) VALUES ('$fac_id','$sub_code','$data',$sem,$year)";
+        $result = mysqli_query($conn, $sql);
+
+        //  whenever new faculty arrives
+        // check if  the faculty id already exists in status table
+    
+        $exists = "SELECT * FROM `status` where `fac_id` = '$fac_id' and `year`='$year'";
+        $exists_result = mysqli_query($conn, $exists);
+        $num = mysqli_num_rows($exists_result);
+        if ($num <= 0) {
+          Add_faculty($fac_id, $year);
+        }
+
       }
 
-      // insert query on subject_allot table
-    
-      $sql = "INSERT INTO `sub_allot`( `fac_id`, `sub_code`,`assign`,`sem`,`year`) VALUES ('$fac_id','$sub_code','$data',$sem,$year)";
-      $result = mysqli_query($conn, $sql);
 
-      //  whenever new faculty arrives
-      // check if  the faculty id already exists in status table
+      // Delete from sub_allot table
+      if (isset($_POST['facid']) && isset($_POST['subcode'])) {
+
+        $facultyId = $_POST['facid'];
+        $subjectCode = $_POST['subcode'];
+
+        // Delete query
     
-      $exists = "SELECT * FROM `status` where `fac_id` = '$fac_id' and `year`='$year'";
-      $exists_result = mysqli_query($conn, $exists);
-      $num = mysqli_num_rows($exists_result);
-      if ($num <= 0) {
-        Add_faculty($fac_id, $year);
+        $sql = "Delete from  sub_allot where fac_id = '$facultyId' and sub_code ='$subjectCode'";
+        mysqli_query($conn, $sql);
       }
 
 
 
     }
+
+
+
+
+
     function Add_faculty($fac_id, $year)
     {
+
 
       require 'partials/dbconnect.php';
 
@@ -163,15 +182,15 @@ session_start();
 
     }
 
-          //   if ($delete) {
-      //     echo '<div class="alert alert-success alert-dismissible fade show my-0" role="alert">
-      //   <strong>successfully deleted</strong>
-      //   <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-      //   <span aria-hidden="true">&times;</span>
-      //   </button>
-      // </div>';
-          
-          //   }
+    //   if ($delete) {
+    //     echo '<div class="alert alert-success alert-dismissible fade show my-0" role="alert">
+    //   <strong>successfully deleted</strong>
+    //   <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    //   <span aria-hidden="true">&times;</span>
+    //   </button>
+    // </div>';
+    
+    //   }
     
 
 
@@ -197,7 +216,7 @@ session_start();
 
           <?php
 
-
+          include 'partials/theory_modal.php';
 
 
 
@@ -209,11 +228,13 @@ session_start();
 
 
             echo "  <tr>
-            <th scope='row'>" . $row['fac_id'] . "</th>
+            <td scope='row'>" . $row['fac_id'] . "</td>
             <td>" . $row['sub_code'] . "</td>
             <td>" . $row['assign'] . "</td>
             <td>" . $row['sem'] . "</td>
-            <td><button class='delete btn btn-sm btn-primary' id=d" . $row['sub_code'] . ">Delete</button>  </td>
+            <td><button type='button' class='update btn btn-success'   data-toggle='modal' data-target='#DeleteModal'>
+            Delete
+          </button>   </td>
 
             </tr>";
           }
@@ -275,7 +296,7 @@ session_start();
     });
   </script>
 
-  <script>
+  <!-- <script>
 
     deletes = document.getElementsByClassName('delete');
     Array.from(deletes).forEach((element) => {
@@ -295,6 +316,42 @@ session_start();
       })
     })
 
+  </script> -->
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      let table = document.getElementById('myTable');
+      table.addEventListener('click', function (event) {
+        let target = event.target;
+
+        if (target.classList.contains('update')) {
+
+          let tr = target.closest('tr');
+          if (tr) {
+            let cells = tr.querySelectorAll('td');
+            let rowData = [];
+            cells.forEach(function (cell) {
+              rowData.push(cell.textContent);
+            });
+
+            document.getElementById('facid').value = rowData[0];
+            document.getElementById('subcode').value = rowData[1];
+            document.getElementById('assign').value = rowData[2];
+            document.getElementById('semester').value = rowData[3];
+
+            //console.log('Row Data:', rowData);
+
+          }
+        }
+      });
+    });
+
+
   </script>
+
+
+
+
+
 
 </html>
