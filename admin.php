@@ -15,7 +15,8 @@ if (!isset($_SESSION['logedin'])) {
 
     <!-- Bootstrap css -->
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.4.2/css/buttons.dataTables.min.css">
     <!-- Custom CSS -->
@@ -28,7 +29,8 @@ if (!isset($_SESSION['logedin'])) {
 
 
 <body>
-    <div id="main-wrapper" data-layout="vertical" data-navbarbg="skin5" data-sidebartype="full" data-sidebar-position="absolute" data-header-position="absolute" data-boxed-layout="full">
+    <div id="main-wrapper" data-layout="vertical" data-navbarbg="skin5" data-sidebartype="full"
+        data-sidebar-position="absolute" data-header-position="absolute" data-boxed-layout="full">
         <?php
         include 'header.php';
         // if (!isset($_SESSION['logedin'])) {
@@ -196,26 +198,43 @@ if (!isset($_SESSION['logedin'])) {
                 $faculty = "All";
             }
             if (isset($_POST['facid'])) {
-                $slot=$_POST['slot'];
-                $status=$_POST['status'];
+                // $slot1 = $_POST['slot1'];
+                // $slot2 = $_POST['slot2'];
+                // $slot3 = $_POST['slot3'];
+                // $slot4 = $_POST['slot4'];
+                // $slot5 = $_POST['slot5'];
+                // $slot6 = $_POST['slot6'];
+                // $slot7 = $_POST['slot7'];
+                $status = $_POST['status'];
                 $day = $_POST['day'];
                 $fac_id = $_POST['facid'];
 
+                for ($i = 1; $i < 8; $i++) {
+                 
+                    if (isset($_POST['slot'.$i])) {
+
+                        //echo $_POST['slot'.$i];
+                        
+                        Update_Status($day,$fac_id,$_POST['slot'.$i],$status);
+
+                    }
 
 
+                }
 
-                echo $slot;
-                echo $status;
-                echo $fac_id;
-                echo $day;
-                Update_Status($day, $fac_id, $slot,$status);
+
+                
+                // echo 'Status: '. $status;
+                // echo 'fac id: '. $fac_id;
+                // echo 'day: '. $day;
+                // Update_Status($day, $fac_id, $slot,$status);
                 //update query fuction
                 // Update_Status($slot1, $slot2, $slot3, $slot4, $slot5, $slot6, $slot7, $day, $fac_id);
                 // Show_status($dropdown_day, $faculty);
             }
         }
 
-        function Update_Status($day, $fac_id, $slot,$status)
+        function Update_Status($day, $fac_id, $slot, $status)
         {
             require 'partials/dbconnect.php';
 
@@ -228,31 +247,31 @@ if (!isset($_SESSION['logedin'])) {
             // } else {
             //     $other_year = $year + 1;
             // }
-
+        
             // if ($slot1 == 1) {
             //     $new_slot1 = 0;
             // } else {
             //     $new_slot1 = 1;
             // }
-
+        
             // if ($slot2 == 1) {
             //     $new_slot2 = 0;
             // } else {
             //     $new_slot2 = 1;
             // }
-
+        
             // if ($slot3 == 1) {
             //     $new_slot3 = 0;
             // } else {
             //     $new_slot3 = 1;
             // }
-
+        
             // if ($slot4 == 1) {
             //     $new_slot4 = 0;
             // } else {
             //     $new_slot4 = 1;
             // }
-
+        
             // if ($slot5 == 1) {
             //     $new_slot5 = 0;
             // } else {
@@ -263,13 +282,13 @@ if (!isset($_SESSION['logedin'])) {
             // } else {
             //     $new_slot6 = 1;
             // }
-
+        
             // if ($slot7 == 1) {
             //     $new_slot7 = 0;
             // } else {
             //     $new_slot7 = 1;
             // }
-
+        
 
             $sql2 = "UPDATE `fac_status` SET $slot=$status WHERE `day`='$day' and `fac_id`='$fac_id'";
             $result = mysqli_query($conn, $sql2);
@@ -281,9 +300,15 @@ if (!isset($_SESSION['logedin'])) {
 
 <!-- Optional JavaScript -->
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+    integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+    crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
+    integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+    crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
+    integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+    crossorigin="anonymous"></script>
 
 <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
 
@@ -325,25 +350,25 @@ if (!isset($_SESSION['logedin'])) {
 
 
     // });
-    document.addEventListener('DOMContentLoaded', function() {
+    document.addEventListener('DOMContentLoaded', function () {
         let table = document.getElementById('myTable');
-        table.addEventListener('click', function(event) {
+        table.addEventListener('click', function (event) {
             let target = event.target;
 
             if (target.classList.contains('update')) {
-                
-                let tr = target.closest('tr'); 
+
+                let tr = target.closest('tr');
                 if (tr) {
-                    let cells = tr.querySelectorAll('td'); 
+                    let cells = tr.querySelectorAll('td');
                     let rowData = [];
-                    cells.forEach(function(cell) {
-                        rowData.push(cell.textContent); 
+                    cells.forEach(function (cell) {
+                        rowData.push(cell.textContent);
                     });
 
-                   document.getElementById('days').value=rowData[0];
-                   document.getElementById('facid').value=rowData[2];
+                    document.getElementById('days').value = rowData[0];
+                    document.getElementById('facid').value = rowData[2];
                     console.log('Row Data:', rowData);
-                   
+
                 }
             }
         });
