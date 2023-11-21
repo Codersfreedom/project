@@ -645,7 +645,7 @@ if (!isset($_SESSION['logedin'])) {
       updateFacStatus($facRoutine,$conn);
       for($y=1;$y<5;$y++){
         if($year!=$y){
-          updateStatus($facRoutine, 4, $conn);
+          updateStatus($facRoutine, $y, $conn);
         }
       }
       // if ($year == '3') {
