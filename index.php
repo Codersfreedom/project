@@ -201,10 +201,10 @@
           <!-- Grid column -->
           <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mt-3">
             <h6 class="text-uppercase mb-4 font-weight-bold">Contact</h6>
-            <p><i class="fas fa-home mr-3"></i> Jhinga, Diamond Harbour Road</p>
-            <p><i class="fas fa-envelope mr-3"></i> P.O. Amira, South 24 Parganas</p>
-            <p><i class="fas fa-phone mr-3"></i> info@nitmas.edu.in</p>
-            <p><i class="fas fa-print mr-3"></i> 03174 -245078/101</p>
+            <p><i class="fa fa-home mr-3"></i> Jhinga, Diamond Harbour Road</p>
+            <p><i class="fa fa-envelope mr-3"></i> P.O. Amira, South 24 Parganas</p>
+            <p><i class="fa fa-phone mr-3"></i> info@nitmas.edu.in</p>
+            <p><i class="fa fa-print mr-3"></i> 03174 -245078/101</p>
           </div>
           <!-- Grid column -->
 
@@ -214,26 +214,26 @@
 
             <!-- Facebook -->
             <a class="btn btn-primary btn-floating m-1" style="background-color: #3b5998" href="#!" role="button"><i
-                class="fab fa-facebook-f"></i></a>
+                class="fa fa-facebook-f"></i></a>
 
             <!-- Twitter -->
             <a class="btn btn-primary btn-floating m-1" style="background-color: #55acee" href="#!" role="button"><i
-                class="fab fa-twitter"></i></a>
+                class="fa fa-twitter"></i></a>
 
             <!-- Google -->
             <a class="btn btn-primary btn-floating m-1" style="background-color: #dd4b39" href="#!" role="button"><i
-                class="fab fa-google"></i></a>
+                class="fa fa-google"></i></a>
 
             <!-- Instagram -->
             <a class="btn btn-primary btn-floating m-1" style="background-color: #ac2bac" href="#!" role="button"><i
-                class="fab fa-instagram"></i></a>
+                class="fa fa-instagram"></i></a>
 
             <!-- Linkedin -->
             <a class="btn btn-primary btn-floating m-1" style="background-color: #0082ca" href="#!" role="button"><i
-                class="fab fa-linkedin-in"></i></a>
+                class="fa fa-linkedin"></i></a>
             <!-- Github -->
             <a class="btn btn-primary btn-floating m-1" style="background-color: #333333" href="#!" role="button"><i
-                class="fab fa-github"></i></a>
+                class="fa fa-github"></i></a>
           </div>
         </div>
         <!--Grid row-->
