@@ -67,7 +67,7 @@ if (!isset($_SESSION['logedin'])) {
 
                             <?php
 
-                            $sql = "SELECT DISTINCT faculty.fac_id,`name`  from `faculty` inner join  `status` on faculty.fac_id = status.fac_id;";
+                            $sql = "SELECT DISTINCT faculty.fac_id,`name`  from `faculty` inner join  `fac_status` on faculty.fac_id = fac_status.fac_id;";
                             $result = mysqli_query($conn, $sql);
 
 
