@@ -131,14 +131,22 @@ if (!isset($_SESSION['logedin'])) {
     if (isset($_GET['delete'])) {
       $sno = $_GET['delete'];
 
+      //? Getting number of rows from sub_allot table
       $FacExistsSql = "Select distinct year from sub_allot join faculty on sub_allot.fac_id= faculty.fac_id where sub_allot.fac_id = '$sno'";
       $FacExistsRes = mysqli_query($conn, $FacExistsSql);
       $FacNum = mysqli_num_rows($FacExistsRes);
+      
+      //? Getting number of row rows from faculty table
+      $FacSql = "SELECT * FROM faculty WHERE fac_id='$sno'";
+      $FacRes = mysqli_query($conn, $FacSql);
+      $FacNumRow = mysqli_num_rows($FacRes);
 
-      // if faculty exists in sub_allot table 
+
+
+      //? if faculty exists in sub_allot table 
       if ($FacNum > 0) {
 
-        // Deleting from status table
+        //? Deleting from status table
         $days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"];
 
         foreach ($days as $day) {
@@ -155,15 +163,15 @@ if (!isset($_SESSION['logedin'])) {
 
         }
 
-        // Deleting from totalWorkLoad table
+        //? Deleting from totalWorkLoad table
         $DelTwlSql = "Delete from total_wl where fac_id = '$sno'";
         mysqli_query($conn, $DelTwlSql);
 
-        // Deleting from Individual workload table
+        // ?Deleting from Individual workload table
         $DelInWlSql = "Delete from workload where facId = '$sno'";
         mysqli_query($conn, $DelInWlSql);
 
-        // Deleting from sub_allot table
+        //? Deleting from sub_allot table
         $FacExistsSql = "Select distinct year from sub_allot join faculty on sub_allot.fac_id= faculty.fac_id where sub_allot.fac_id = '$sno'";
         $FacExistsRes = mysqli_query($conn, $FacExistsSql);
         while ($FacRow = mysqli_fetch_assoc($FacExistsRes)) {
@@ -173,12 +181,39 @@ if (!isset($_SESSION['logedin'])) {
 
         }
 
-        // Deleting from fac_status
+        //? Deleting from fac_status
     
         $sql = " Delete from fac_status where fac_id = '$sno'";
         mysqli_query($conn, $sql);
 
-        // Deleting from faculty table
+        //? Deleting from faculty table
+        $DeleteSql = "DELETE FROM `faculty` WHERE `fac_id` = '$sno'";
+        $DeleteRes = mysqli_query($conn, $DeleteSql);
+
+        if ($DeleteRes) {
+          $delete = true;
+        } else {
+
+          $showError = "Can't delete";
+          header("location: teacher.php?deletelog='.$ShowError.'");
+        }
+      }elseif($FacNumRow>0){
+        
+
+        //? Deleting from totalWorkLoad table
+        $DelTwlSql = "Delete from total_wl where fac_id = '$sno'";
+        mysqli_query($conn, $DelTwlSql);
+
+        // ?Deleting from Individual workload table
+        $DelInWlSql = "Delete from workload where facId = '$sno'";
+        mysqli_query($conn, $DelInWlSql);
+
+        //? Deleting from fac_status
+    
+        $sql = " Delete from fac_status where fac_id = '$sno'";
+        mysqli_query($conn, $sql);
+
+        //? Deleting from faculty table
         $DeleteSql = "DELETE FROM `faculty` WHERE `fac_id` = '$sno'";
         $DeleteRes = mysqli_query($conn, $DeleteSql);
 
