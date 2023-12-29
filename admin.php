@@ -95,7 +95,7 @@ if (!isset($_SESSION['logedin'])) {
 
             </div>
         </div>
-        <div class="container col-10" style="margin-left:200px">
+        <div class="container col-10" style="margin-left:150px">
             <h1 class="text-center my-3">Faculty Status</h1>
 
             <table class="table" id="myTable">
