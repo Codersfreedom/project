@@ -102,8 +102,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 
     // insert query on subject_allot table
-
-    $sql = "INSERT INTO `sub_allot`( `fac_id`, `sub_code`,`assign`,`sem`,`year`) VALUES ('$fac_id','$sub_code','$data',$sem,$year)";
+    $p_day= $_POST['prefDay'] ?? NULL;
+    echo $p_day;
+    $sql = "INSERT INTO `sub_allot`( `fac_id`, `sub_code`,`assign`,`sem`,`p_day`,`year`) VALUES ('$fac_id','$sub_code','$data',$sem,'$p_day',$year)";
     $result = mysqli_query($conn, $sql);
 
     if ($result) {
