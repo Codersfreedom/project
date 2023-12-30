@@ -778,7 +778,7 @@ if (!isset($_SESSION['logedin'])) {
     <script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.html5.min.js"></script>
     <script src ="https://cdn.datatables.net/buttons/2.4.2/js/buttons.print.min.js"</script>
     <!-- All Jquery -->
-    <!-- ============================================================== -->
+    
 
     <!-- Bootstrap tether Core JavaScript -->
     <script src="./assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
