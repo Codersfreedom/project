@@ -28,7 +28,6 @@ require 'dbconnect.php';
           <div class="form-group">
             <label for="subname">Subject name</label>
             <select class="form-control" id="subname" name="subname">
-              <option value='none' hidden>Choose Subject</option>
               <?php
 
               $sql = "SELECT `subject_name` from `subject`";
@@ -39,7 +38,7 @@ require 'dbconnect.php';
 
                 echo "
        
-       <option class='sname'>
+       <option>
        " . $row['subject_name'] . "
        </option>
        ";
@@ -52,7 +51,7 @@ require 'dbconnect.php';
           <div class="form-group">
             <label for="allotTeacher">Allocate teacher</label>
             <select class="form-control" id="allotTeacher" name="allotTeacher">
-            <option value="none" hidden>Choose Teacher</option>
+
 
 
               <?php
@@ -65,7 +64,7 @@ require 'dbconnect.php';
 
                 echo "
        
-       <option >
+       <option>
        " . $row['name'] . "
        </option>
        ";
@@ -93,53 +92,30 @@ require 'dbconnect.php';
             </select>
           </div>
 
-          <div class="form-group" id='pday' style="display:none;">
+          <div class="form-group">
             <label for="prefDay">Preference Day</label>
             <select class="form-control" id="prefDay" name="prefDay">
-              <option value="false">No Preference</option>
-              <option value="Monday">Monday</option>
-              <option value="Tuesday">Tuesday</option>
-              <option value="Wednesday">Wednesday</option>
-              <option value="Thursday">Thursday</option>
-              <option value="Friday">Friday</option>
-              <option value="Saturday">Saturday</option>
+              <option>Monday</option>
+              <option>Tuesday</option>
+              <option>Wednesday</option>
+              <option>Thursday</option>
+              <option>Friday</option>
+              <option>Saturday</option>
+              <option>No Preference</option>
             </select>
           </div>
 
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="submit" class="btn btn-primary" id='sub-btn'>Submit</button>
+        <button type="submit" class="btn btn-primary">Submit</button>
       </div>
       </form>
 
     </div>
   </div>
 </div>
-<script>
-  const sub=document.querySelector("#subname");
-  const prefDays = document.querySelector('#pday')
-  sub.addEventListener('change',()=>{
-    if(sub.value.includes('Lab')){
-      prefDays.style.display="block";
-      console.log(sub.value);
-    }
-    else{
-      prefDays.style.display="none";
-    }
-  })
-  const btn=document.querySelector('#sub-btn');
-  const fac=document.querySelector('#allotTeacher')
-  const myinterval=setInterval(()=>{
-    if(sub.value=='none' || fac.value=='none'){
-      btn.disabled=true;
-    }
-    else{
-      btn.disabled=false;
-      clearInterval(myinterval);
-    }
-  },1000)
-</script>
+
 <!-- Optional JavaScript -->
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
