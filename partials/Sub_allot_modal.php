@@ -115,7 +115,30 @@ require 'dbconnect.php';
     </div>
   </div>
 </div>
-
+<script>
+  const sub=document.querySelector("#subname");
+  const prefDays = document.querySelector('#pday')
+  sub.addEventListener('change',()=>{
+    if(sub.value.includes('Lab')){
+      prefDays.style.display="block";
+      console.log(sub.value);
+    }
+    else{
+      prefDays.style.display="none";
+    }
+  })
+  const btn=document.querySelector('#sub-btn');
+  const fac=document.querySelector('#allotTeacher')
+  const myinterval=setInterval(()=>{
+    if(sub.value=='none' || fac.value=='none'){
+      btn.disabled=true;
+    }
+    else{
+      btn.disabled=false;
+      clearInterval(myinterval);
+    }
+  },1000)
+</script>
 <!-- Optional JavaScript -->
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
