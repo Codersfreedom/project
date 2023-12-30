@@ -14,8 +14,7 @@ if (!isset($_SESSION['logedin'])) {
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
   <!-- Bootstrap CSS -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
-    integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
   <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.min.css">
   <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.4.2/css/buttons.dataTables.min.css">
 
@@ -31,8 +30,7 @@ if (!isset($_SESSION['logedin'])) {
 
 <body>
 
-  <div id="main-wrapper" data-layout="vertical" data-navbarbg="skin5" data-sidebartype="full"
-    data-sidebar-position="absolute" data-header-position="absolute" data-boxed-layout="full">
+  <div id="main-wrapper" data-layout="vertical" data-navbarbg="skin5" data-sidebartype="full" data-sidebar-position="absolute" data-header-position="absolute" data-boxed-layout="full">
     <?php
 
     include 'header.php';
@@ -113,24 +111,22 @@ if (!isset($_SESSION['logedin'])) {
 
     function updateStatus($facRoutine, $year, $conn)
     {
-      
+
       foreach ($facRoutine as $days => $slots) {
         foreach ($slots as $slot => $fa) {
           $updateSql = "UPDATE status SET $slot=0 WHERE day='$days' AND fac_id='$fa' AND year=$year";
           $updateRes = mysqli_query($conn, $updateSql);
-
         }
       }
     }
-    
-    function updateFacStatus($facRoutine,$conn)
+
+    function updateFacStatus($facRoutine, $conn)
     {
-      
+
       foreach ($facRoutine as $days => $slots) {
         foreach ($slots as $slot => $fa) {
           $updateSql = "UPDATE fac_status SET $slot=0 WHERE day='$days' AND fac_id='$fa'";
           $updateRes = mysqli_query($conn, $updateSql);
-
         }
       }
     }
@@ -241,7 +237,7 @@ if (!isset($_SESSION['logedin'])) {
       // $allotLabDay = $totalLab * 4;
       // $allotTheoryDay = 35 - $allotLabDay;
       // $allotPerSub = round(($allotTheoryDay) / ($totalTheory));
-    
+
 
 
       //? Array for tracking alloted Subjects...
@@ -323,7 +319,6 @@ if (!isset($_SESSION['logedin'])) {
         $totalWlSql = "SELECT totalWL FROM total_wl WHERE fac_id='$sf'";
         $totalWlRow = mysqli_fetch_assoc(mysqli_query($conn, $totalWlSql));
         $workLoad[$sf] = $wlRow['workLoad'] + $totalWlRow['totalWL'];
-
       }
 
       //? calculate hours per subject
@@ -334,10 +329,29 @@ if (!isset($_SESSION['logedin'])) {
         $hpw[$hpwRow['assign']] = $hpwRow['h_per_w'];
       }
 
+      //!---------------------------------------------------------------------------------
+
+      $fixLabSql="SELECT assign,p_day,fac_id FROM sub_allot WHERE sem=$sem AND assign LIKE '%Lab%'";
+      $fixLabRes=mysqli_query($conn, $fixLabSql);
+      while ($fixLabRow=mysqli_fetch_assoc($fixLabRes)){
+        $day= $fixLabRow['p_day'];
+        $faculty_id=$fixLabRow['fac_id'];
+        $lab=$fixLabRow['assign'];
+        $routine[$day]['slot1'] = $routine[$day]['slot2'] = $routine[$day]['slot3'] = $routine[$day]['slot4'] = $lab;
+                    $facRoutine[$day]['slot1'] = $facRoutine[$day]['slot2'] = $facRoutine[$day]['slot3'] = $facRoutine[$day]['slot4'] = $faculty_id;
+                    $workLoad[$faculty_id] = $workLoad[$faculty_id] - 4;
+                    $status[$faculty_id][$day]['slot1'] =$status[$faculty_id][$day]['slot1'] =$status[$faculty_id][$day]['slot1'] =$status[$faculty_id][$day]['slot1'] =1;
+                    array_push($allotedLab, $lab);
+      }
+
+
+
+
+
       // echo "<pre>";
       // print_r($hpw);
       // echo "</pre>";
-    
+
 
 
       //! -----------------------------------------
@@ -366,7 +380,7 @@ if (!isset($_SESSION['logedin'])) {
             array_push($lab, $lab_row['assign']);
           }
           //? checking already lab assigned...
-    
+
           $labFlag = true;
           $labCount = count($lab);
           for ($r = 0; $r < $labCount; $r++) {
@@ -392,13 +406,12 @@ if (!isset($_SESSION['logedin'])) {
                     }
                   }
                 }
-
               }
             }
           }
 
           //? Condition for Lab allocation.
-    
+
           if ($i == 1 && $labFlag && $status[$faculty_id][$day]['slot1'] == 1 && $status[$faculty_id][$day]['slot2'] == 1 && $status[$faculty_id][$day]['slot3'] == 1 && $status[$faculty_id][$day]['slot4'] == 1) {
             $labCount = count($lab);
             if ($labCount == 1) {
@@ -454,7 +467,6 @@ if (!isset($_SESSION['logedin'])) {
                   }
                 }
               }
-
             } else {
               //? Don't have lab...
               $sCount = count($sub);
@@ -474,18 +486,21 @@ if (!isset($_SESSION['logedin'])) {
             if ($facRoutine[$day]['slot1'] == $faculty_id && $i != 7) {
               foreach ($semFac as $sf) {
                 if ($sf != $faculty_id && $status[$sf][$day]['slot' . $i] == 1) {
-                  $newSub = $FacSub[$sf];
-                  $sCnt = count($newSub);
-                  for ($m = 0; $m < $sCnt; $m++) {
-                    if ($workLoad[$sf] > 0 && checkSub($allotedSubjects, $newSub[$m], $hpw[$newSub[$m]])) {
-                      $routine[$day]['slot' . $i] = $newSub[$m];
-                      $facRoutine[$day]['slot' . $i] = $sf;
-                      $workLoad[$sf] = $workLoad[$sf] - 1;
-                      array_push($allotedSubjects, $newSub[$m]);
-                      break 2;
+                  if (isset($FacSub[$sf])) {
+
+                    $newSub = $FacSub[$sf];
+                    $sCnt = count($newSub);
+
+                    for ($m = 0; $m < $sCnt; $m++) {
+                      if ($workLoad[$sf] > 0 && checkSub($allotedSubjects, $newSub[$m], $hpw[$newSub[$m]])) {
+                        $routine[$day]['slot' . $i] = $newSub[$m];
+                        $facRoutine[$day]['slot' . $i] = $sf;
+                        $workLoad[$sf] = $workLoad[$sf] - 1;
+                        array_push($allotedSubjects, $newSub[$m]);
+                        break 2;
+                      }
                     }
                   }
-
                 }
               }
             } elseif ($i == 7) {
@@ -526,19 +541,22 @@ if (!isset($_SESSION['logedin'])) {
               } else {
                 foreach ($semFac as $sf) {
                   if ($facRoutine[$day]['slot1'] != $sf && $status[$sf][$day]['slot' . $i] == 1) {
-                    $newSub = $FacSub[$sf];
-                    $sCnt = count($newSub);
-                    for ($m = 0; $m < $sCnt; $m++) {
-                      if ($workLoad[$sf] > 0 && checkSub($allotedSubjects, $newSub[$m], $hpw[$newSub[$m]])) {
-                        if ($i > 2 && $routine[$day]['slot' . ($i - 2)] == $routine[$day]['slot' . ($i - 1)] && $routine[$day]['slot' . ($i - 1)] == $newSub[$m]) {
-                          continue;
-                        } else {
-                          // echo $day . " in the else part slot " . $i . "<br>";
-                          $routine[$day]['slot' . $i] = $newSub[$m];
-                          $facRoutine[$day]['slot' . $i] = $sf;
-                          $workLoad[$sf] = $workLoad[$sf] - 1;
-                          array_push($allotedSubjects, $newSub[$m]);
-                          break 2;
+                    if (isset($FacSub[$sf])) {
+
+                      $newSub = $FacSub[$sf];
+                      $sCnt = count($newSub);
+                      for ($m = 0; $m < $sCnt; $m++) {
+                        if ($workLoad[$sf] > 0 && checkSub($allotedSubjects, $newSub[$m], $hpw[$newSub[$m]])) {
+                          if ($i > 2 && $routine[$day]['slot' . ($i - 2)] == $routine[$day]['slot' . ($i - 1)] && $routine[$day]['slot' . ($i - 1)] == $newSub[$m]) {
+                            continue;
+                          } else {
+                            // echo $day . " in the else part slot " . $i . "<br>";
+                            $routine[$day]['slot' . $i] = $newSub[$m];
+                            $facRoutine[$day]['slot' . $i] = $sf;
+                            $workLoad[$sf] = $workLoad[$sf] - 1;
+                            array_push($allotedSubjects, $newSub[$m]);
+                            break 2;
+                          }
                         }
                       }
                     }
@@ -548,15 +566,17 @@ if (!isset($_SESSION['logedin'])) {
             } else {
               foreach ($semFac as $sf) {
                 if ($sf != $facRoutine[$day]['slot1'] && $status[$sf][$day]['slot' . $i] == 1) {
-                  $newSub = $FacSub[$sf];
-                  $sCnt = count($newSub);
-                  for ($m = 0; $m < $sCnt; $m++) {
-                    if ($workLoad[$sf] > 0 && checkSub($allotedSubjects, $newSub[$m], $hpw[$newSub[$m]])) {
-                      $routine[$day]['slot' . $i] = $newSub[$m];
-                      $facRoutine[$day]['slot' . $i] = $sf;
-                      $workLoad[$sf] = $workLoad[$sf] - 1;
-                      array_push($allotedSubjects, $newSub[$m]);
-                      break 2;
+                  if (isset($FacSub[$sf])) {
+                    $newSub = $FacSub[$sf];
+                    $sCnt = count($newSub);
+                    for ($m = 0; $m < $sCnt; $m++) {
+                      if ($workLoad[$sf] > 0 && checkSub($allotedSubjects, $newSub[$m], $hpw[$newSub[$m]])) {
+                        $routine[$day]['slot' . $i] = $newSub[$m];
+                        $facRoutine[$day]['slot' . $i] = $sf;
+                        $workLoad[$sf] = $workLoad[$sf] - 1;
+                        array_push($allotedSubjects, $newSub[$m]);
+                        break 2;
+                      }
                     }
                   }
                   // break;
@@ -567,26 +587,29 @@ if (!isset($_SESSION['logedin'])) {
 
             foreach ($semFac as $sf) {
               if ($status[$sf][$day]['slot' . $i] == 1) {
-                $newSub = $FacSub[$sf];
-                $sCnt = count($newSub);
-                for ($o = 0; $o < $sCnt; $o++) {
-                  if ($workLoad[$sf] > 0 && checkSub($allotedSubjects, $newSub[$o], $hpw[$newSub[$o]])) {
-                    if ($i > 2 && $routine[$day]['slot' . ($i - 2)] == $routine[$day]['slot' . ($i - 1)] && $routine[$day]['slot' . ($i - 1)] == $newSub[$o]) {
-                      if ($sCnt == 1 && $i == 6) {
+                if (isset($FacSub[$sf])) {
+
+                  $newSub = $FacSub[$sf];
+                  $sCnt = count($newSub);
+                  for ($o = 0; $o < $sCnt; $o++) {
+                    if ($workLoad[$sf] > 0 && checkSub($allotedSubjects, $newSub[$o], $hpw[$newSub[$o]])) {
+                      if ($i > 2 && $routine[$day]['slot' . ($i - 2)] == $routine[$day]['slot' . ($i - 1)] && $routine[$day]['slot' . ($i - 1)] == $newSub[$o]) {
+                        if ($sCnt == 1 && $i == 6) {
+                          $routine[$day]['slot' . $i] = $newSub[$o];
+                          $facRoutine[$day]['slot' . $i] = $sf;
+                          $workLoad[$sf] = $workLoad[$sf] - 1;
+                          array_push($allotedSubjects, $newSub[$o]);
+                          break 2;
+                        } else {
+                          continue;
+                        }
+                      } else {
                         $routine[$day]['slot' . $i] = $newSub[$o];
                         $facRoutine[$day]['slot' . $i] = $sf;
                         $workLoad[$sf] = $workLoad[$sf] - 1;
                         array_push($allotedSubjects, $newSub[$o]);
                         break 2;
-                      } else {
-                        continue;
                       }
-                    } else {
-                      $routine[$day]['slot' . $i] = $newSub[$o];
-                      $facRoutine[$day]['slot' . $i] = $sf;
-                      $workLoad[$sf] = $workLoad[$sf] - 1;
-                      array_push($allotedSubjects, $newSub[$o]);
-                      break 2;
                     }
                   }
                 }
@@ -594,13 +617,13 @@ if (!isset($_SESSION['logedin'])) {
               }
             }
           }
-
+       
           $data = $routine[$day]['slot' . $i];
-          $routineSql = "UPDATE " . $year . "year_routine SET slot$i ='$data' WHERE day='$day'";
+          echo $data;
+          $routineSql = "UPDATE " . $year . "year_routine SET `slot$i` ='$data' WHERE day='$day'";
           $routineRes = mysqli_query($conn, $routineSql);
         }
       }
-
 
 
 
@@ -625,7 +648,7 @@ if (!isset($_SESSION['logedin'])) {
       // echo "<pre>";
       // print_r($labFac);
       // echo "</pre>";
-    
+
       // $fa=array_unique($fac);
       // print_r($sub);
       // print_r($fa);
@@ -648,11 +671,7 @@ if (!isset($_SESSION['logedin'])) {
           updateStatus($facRoutine, $y, $conn);
         }
       }
-      // if ($year == '3') {
-      //   updateStatus($facRoutine, 4, $conn);
-      // } elseif ($year == '4') {
-      //   updateStatus($facRoutine, 3, $conn);
-      // }
+      
     }
 
 
@@ -738,15 +757,9 @@ if (!isset($_SESSION['logedin'])) {
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-      integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-      crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
-      integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-      crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
-      integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-      crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 
     <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
 
@@ -782,7 +795,7 @@ if (!isset($_SESSION['logedin'])) {
 
     <!-- Initialize Data tables -->
     <script>
-      $(document).ready(function () {
+      $(document).ready(function() {
         $('#myTable').DataTable({
           "aaSorting": [],
           dom: 'Bfrtip',
