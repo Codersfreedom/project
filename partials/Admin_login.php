@@ -78,7 +78,7 @@
                                 <div class="col-lg-6 login-btm login-text">
                                     <!-- Error Message -->
                                 </div>
-                                <div class="col-lg-6 login-btm login-button">
+                                <div class="col-lg-12 d-flex justify-content-center login-btm login-button">
                                     <button type="submit" class="btn btn-outline-primary">LOGIN</button>
                                 </div>
                             </div>
