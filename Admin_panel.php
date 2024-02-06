@@ -335,7 +335,10 @@ session_start();
               <a class="sidebar-link waves-effect waves-dark sidebar-link" href="Routine.php" aria-expanded="false"><i
                   class="mdi mdi-blur-linear"></i><span class="hide-menu">Generate Routine</span></a>
             </li>
-
+            <li class="sidebar-item">
+              <a class="sidebar-link waves-effect waves-dark sidebar-link" href="Payrole.php" aria-expanded="false"><i
+                  class="mdi mdi-blur-linear"></i><span class="hide-menu">Payrole</span></a>
+            </li>
           </ul>
         </nav>
         <!-- End Sidebar navigation -->
@@ -434,6 +437,18 @@ session_start();
                     <i class="mdi mdi-blur-linear"></i>
                   </h1>
                   <h6 class="text-white">Generate Routine</h6>
+                </div>
+              </div>
+            </a>
+          </div>
+          <div class="col-md-6 col-lg-2 col-xlg-3">
+            <a href="Routine.php">
+              <div class="card card-hover">
+                <div class="box bg-danger text-center">
+                  <h1 class="font-light text-white">
+                    <i class="mdi mdi-blur-linear"></i>
+                  </h1>
+                  <h6 class="text-white">Payrole</h6>
                 </div>
               </div>
             </a>

@@ -1,8 +1,8 @@
 <style>
   .left-sidebar {
-   
+
     width: 170px;
- 
+
   }
 </style>
 
@@ -76,8 +76,17 @@
           <a class="sidebar-link waves-effect waves-dark sidebar-link" href="Routine.php" aria-expanded="false"><i class="mdi mdi-blur-linear"></i
                   ><span class="hide-menu">Generate Routine</span></a>
         </li>
-  
-  ';
+        
+        <li class="sidebar-item">
+        <a class="sidebar-link waves-effect waves-dark sidebar-link" href="Payrole.php" aria-expanded="false"><i class="mdi mdi-blur-linear"></i
+                ><span class="hide-menu">Payrole</span></a>
+      </li>'
+
+
+          ;
+
+
+
         }
         ?>
 
