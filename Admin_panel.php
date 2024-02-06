@@ -336,8 +336,8 @@ session_start();
                   class="mdi mdi-blur-linear"></i><span class="hide-menu">Generate Routine</span></a>
             </li>
             <li class="sidebar-item">
-              <a class="sidebar-link waves-effect waves-dark sidebar-link" href="Payrole.php" aria-expanded="false"><i
-                  class="mdi mdi-blur-linear"></i><span class="hide-menu">Payrole</span></a>
+              <a class="sidebar-link waves-effect waves-dark sidebar-link" href="Payroll.php" aria-expanded="false"><i
+                  class="mdi mdi-blur-linear"></i><span class="hide-menu">Payroll</span></a>
             </li>
           </ul>
         </nav>

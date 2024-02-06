@@ -25,6 +25,19 @@ if (!isset($_SESSION['logedin'])) {
     <link rel="icon" type="image/png" sizes="16x16" href="./assets/images/favicon.png" />
 </head>
 
+<style>
+    select{
+        width: 70px;
+        height: 30px;
+        border-radius: 3px;
+        padding: 5px;
+    }
+   #year{
+    margin-left: 10px;
+   }
+    
+</style>
+
 <body>
     <div id="main-wrapper" data-layout="vertical" data-navbarbg="skin5" data-sidebartype="full"
         data-sidebar-position="absolute" data-header-position="absolute" data-boxed-layout="full">
@@ -33,6 +46,16 @@ if (!isset($_SESSION['logedin'])) {
         require 'partials/dbconnect.php';
         include 'aside.php';
         ?>
+    </div>
+    <div class="container d-flex my-5 pt-4 align-items-center justify-content-center">
+        <div class="year-box">
+            <label for="year">Year</label>
+        <select name="year" id="year">
+            <option value="2020">2021</option>
+            
+        </select> 
+        </div>
+       
     </div>
     <div class="container p-5 mt-5 ">
 
