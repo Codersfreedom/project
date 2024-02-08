@@ -1,4 +1,3 @@
-
 <body>
 
   <!-- Button trigger modal -->
@@ -35,16 +34,32 @@
             </div>
 
             <div class="form-group">
-              <label for="select">Designation</label>
-              <select class="form-control" id="select" name="designation">
+              <label for="designation">Designation</label>
+              <select class="form-control" id="designation" name="designation">
                 <option>Professor</option>
                 <option>Asst. Professor</option>
               </select>
             </div>
+            <div class="form-group">
+              <label for="experience">Experience</label>
+              <select class="form-control" id="experience" name="experience">
+                <option>0</option>
+                <option>1</option>
+                <option>2</option>
+                <option>3</option>
+                <option>4</option>
+                <option>5</option>
+              </select>
+            </div>
 
+            <div class="form-group d-flex flex-column">
+              <label for="basic">Basic Salary</label>
+              <input class="p-2" placeholder="Enter basic salary" type="number" name="basic" id="basic"
+                style="border: .5px solid #dadada;">
+            </div>
             <div class="form-group">
               <label for="workload">Workload</label>
-              <input type="number" class="form-control" id="workload" name="workload" placeholder="Enter the Workload">
+              <input type="number" class="form-control" id="workload" name="workload" placeholder="Enter Workload">
             </div>
 
             <div class="form-group">

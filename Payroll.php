@@ -62,11 +62,11 @@ if (!isset($_SESSION['logedin'])) {
         <table class="table" id="myTable">
             <thead>
                 <tr>
-                    <th scope="col">Teacher's Name</th>
-                    <th scope="col">Pay Date</th>
+                    <th scope="col">Sno.</th>
+                    <th scope="col">Name</th>
                     <th scope="col">Pay Month</th>
-                    <th scope="col">Groos </th>
-                    <th scope="col">Net</th>
+                    <th scope="col">Pay Ammount </th>
+                    <th scope="col">Year</th>
                     <th scope="col">Status</th>
 
                 </tr>

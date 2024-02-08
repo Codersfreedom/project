@@ -1,9 +1,9 @@
 <?php
 session_start();
-  if (!isset($_SESSION['logedin'])) {
-    header("location: index.php");
-  }
-  require 'partials/dbconnect.php';
+if (!isset($_SESSION['logedin'])) {
+  header("location: index.php");
+}
+require 'partials/dbconnect.php';
 ?>
 <!DOCTYPE html>
 <html dir="ltr" lang="en">
@@ -169,7 +169,7 @@ session_start();
           <!-- Right side toggle and nav items -->
           <!-- ============================================================== -->
           <ul class="navbar-nav float-end">
-           
+
             <!-- ============================================================== -->
             <!-- Messages -->
             <!-- ============================================================== -->
@@ -270,12 +270,12 @@ session_start();
                 <img src="./assets/images/users/user.png" alt="user" class="rounded-circle" width="31" />
               </a>
               <ul class="dropdown-menu dropdown-menu-end user-dd animated" aria-labelledby="navbarDropdown">
-                <?php if(isset($_SESSION['admin'])){
-                echo '  <a class="dropdown-item" href="Admin_profile.php"><i class="mdi mdi-account me-1 ms-1"></i> My
+                <?php if (isset($_SESSION['admin'])) {
+                  echo '  <a class="dropdown-item" href="Admin_profile.php"><i class="mdi mdi-account me-1 ms-1"></i> My
                   Profile</a>';
 
                 }
-?>
+                ?>
                 <a class="dropdown-item" href="javascript:void(0)"><i class="mdi mdi-email me-1 ms-1"></i> Inbox</a>
                 <a class="dropdown-item" href="partials/logout.php"><i class="fa fa-power-off me-1 ms-1"></i> Logout</a>
                 <div class="dropdown-divider"></div>
@@ -337,7 +337,12 @@ session_start();
             </li>
             <li class="sidebar-item">
               <a class="sidebar-link waves-effect waves-dark sidebar-link" href="Payroll.php" aria-expanded="false"><i
-                  class="mdi mdi-blur-linear"></i><span class="hide-menu">Payroll</span></a>
+                  class="mdi mdi-receipt"></i><span class="hide-menu">Payroll</span></a>
+            </li>
+            <li class="sidebar-item">
+              <a class="sidebar-link waves-effect waves-dark sidebar-link" href="Attendance.php"
+                aria-expanded="false"><i class="mdi mdi-chart-areaspline"></i><span
+                  class="hide-menu">Attendance</span></a>
             </li>
           </ul>
         </nav>
@@ -352,7 +357,7 @@ session_start();
     <!-- Page wrapper  -->
     <!-- ============================================================== -->
     <div class="page-wrapper">
-     
+
 
       <div class="container-fluid">
 
@@ -441,18 +446,33 @@ session_start();
               </div>
             </a>
           </div>
+
           <div class="col-md-6 col-lg-2 col-xlg-3">
-            <a href="Routine.php">
+            <a href="Payroll.php">
               <div class="card card-hover">
                 <div class="box bg-danger text-center">
                   <h1 class="font-light text-white">
-                    <i class="mdi mdi-blur-linear"></i>
+                    <i class="mdi mdi-receipt"></i>
                   </h1>
-                  <h6 class="text-white">Payrole</h6>
+                  <h6 class="text-white">Payroll</h6>
                 </div>
               </div>
             </a>
           </div>
+
+          <div class="col-md-6 col-lg-2 col-xlg-3">
+            <a href="Attendance.php">
+              <div class="card card-hover">
+                <div class="box bg-success text-center">
+                  <h1 class="font-light text-white">
+                    <i class="mdi mdi-chart-areaspline"></i>
+                  </h1>
+                  <h6 class="text-white">Attendance</h6>
+                </div>
+              </div>
+            </a>
+          </div>
+
           <!-- Column -->
         </div>
         <!-- card -->
