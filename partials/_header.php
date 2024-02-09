@@ -55,21 +55,20 @@ session_start();
 
 
 </div>
-</nav>';
+';
 
   } else {
     echo '
 
-
-<div class="btn-group">
-  <button type="button" class="btn btn-outline-success">Login</button>
-  <button type="button" class="btn btn-outline-success dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-    <span class="sr-only">Toggle Dropdown</span>
+    
+    
+<div class="btn-group dropleft">
+  <button type="button" class="btn btn-outline-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    Login
   </button>
-  <div class="dropdown-menu">
+  <div class="dropdown-menu" style="position: absolute; transform: translate3d(-165px, 0px, 0px); top: 0px; left: 0px; will-change: transform;">
     <a class="dropdown-item" href="partials/Faculty_login.php">Faculty</a>
     <a class="dropdown-item" href="partials/Admin_login.php">Admin</a>
-    
   </div>
 </div>
 
