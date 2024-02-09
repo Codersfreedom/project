@@ -55,6 +55,7 @@ session_start();
 
 
 </div>
+</nav>
 ';
 
   } else {
@@ -66,7 +67,7 @@ session_start();
   <button type="button" class="btn btn-outline-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
     Login
   </button>
-  <div class="dropdown-menu" style="position: absolute; transform: translate3d(-165px, 0px, 0px); top: 0px; left: 0px; will-change: transform;">
+  <div class="dropdown-menu" >
     <a class="dropdown-item" href="partials/Faculty_login.php">Faculty</a>
     <a class="dropdown-item" href="partials/Admin_login.php">Admin</a>
   </div>
