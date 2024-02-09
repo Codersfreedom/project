@@ -58,7 +58,87 @@ if (!isset($_SESSION['logedin'])) {
        
     </div>
     <div class="container p-5 mt-5 ">
+        <?php
+            //? Getting Basic salary from database
+            $facSalSql="SELECT fac_id, basic_salary FROM faculty";
+            $facSalResult=mysqli_query($conn,$facSalSql);
+            
+            //* Faculty and basic salary associative array
+            $facSal= array();
+            while($facSalRow=mysqli_fetch_assoc($facSalResult)){
+                $facSal[$facSalRow['fac_id']] = $facSalRow['basic_salary'];
+            }
+            function payroll($conn, $facSal){
 
+            
+
+            //* Current month taking
+            $currMonth=3;
+            
+            foreach($facSal as $fs){
+                
+                if($currMonth==1){
+                    $calMonth=12;
+                    $calYear=date('Y')-1;
+                    $salPerDay=$fs/31;
+                    echo $salPerDay."<br>";
+                }
+                else{
+                    $calMonth=$currMonth-1;
+                    $calYear=date('Y');
+                    // $calYear=2023;
+                    //?
+                    if($calMonth==2){
+                        if(year_check($calYear)){
+                            $salPerDay=$fs/29;
+                            echo $salPerDay."<br>";
+                        }else{
+                            $salPerDay=$fs/28;
+                            echo $salPerDay."<br>";
+                        }
+                    }
+                    elseif($calMonth==4 || $calMonth==6 || $calMonth==9 || $calMonth==11){
+                        $salPerDay=$fs/30;
+                        echo $salPerDay."<br>";
+                    }
+                    else{
+                        $salPerDay=$fs/31;
+                        echo $salPerDay."<br>";
+                    }
+                    
+                }
+            }
+
+
+
+
+        }
+        
+        //? Leap Year Check
+        function year_check($my_year){
+            if ($my_year % 400 == 0)
+               return true;
+            else if ($my_year % 100 == 0)
+               return false;
+            else if ($my_year % 4 == 0)
+              return true;
+            else
+               return false;
+         }
+
+        //? Salary Calculation Function
+        function SalaryCalculation($facSal){
+            print_r($facSal);
+        }
+
+        SalaryCalculation($facSal);
+        payroll($conn,$facSal);
+
+
+
+
+
+        ?>
         <table class="table" id="myTable">
             <thead>
                 <tr>
