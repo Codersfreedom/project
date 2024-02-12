@@ -59,6 +59,20 @@ if (!isset($_SESSION['logedin'])) {
     </div>
     <div class="container p-5 mt-5 ">
         <?php
+            //? Current Month
+             $currMonth=2;
+             //? Current Year
+            $currYear=date('Y');
+            //? getting fac_id from faculty table
+            $faculty=array();
+            $facSql="SELECT fac_id FROM faculty";
+            $facRes=mysqli_query($conn,$facSql);
+            while($facRow=mysqli_fetch_assoc($facRes)){
+                array_push($faculty,$facRow['fac_id']);
+            }
+
+            // print_r($faculty);
+
             //? Getting Basic salary from database
             $facSalSql="SELECT fac_id, basic_salary FROM faculty";
             $facSalResult=mysqli_query($conn,$facSalSql);
@@ -68,20 +82,36 @@ if (!isset($_SESSION['logedin'])) {
             while($facSalRow=mysqli_fetch_assoc($facSalResult)){
                 $facSal[$facSalRow['fac_id']] = $facSalRow['basic_salary'];
             }
-            function payroll($conn, $facSal){
 
-            
+            //? Getting Attendance from database
+            $calMonth=$currMonth-1;
+            $facAtt= array();
+            foreach($faculty as $fac){
+                $facAttSql="SELECT count(attendance) as att FROM attendance where fac_id='$fac' and month=$calMonth and year=$currYear and attendance=1";
+                $facAttResult=mysqli_query($conn,$facAttSql);
+                //* Faculty and attendance associative array
+                while($facAttRow=mysqli_fetch_assoc($facAttResult)){
+                    $facAtt[$fac] = $facAttRow['att'];
+                }
+            }
+
+            print_r($facAtt);
+
+
+            function payroll($conn, $facSal, $currMonth,$facAtt){
 
             //* Current month taking
-            $currMonth=3;
             
-            foreach($facSal as $fs){
+            
+            foreach($facSal as $fac=>$fs){
                 
                 if($currMonth==1){
                     $calMonth=12;
                     $calYear=date('Y')-1;
                     $salPerDay=$fs/31;
-                    echo $salPerDay."<br>";
+                    $Attendance=isset($facAtt[$fac])?$facAtt[$fac]:0;
+                    SalaryCalculation($fs,$salPerDay,$Attendance);
+                    echo "<br>";
                 }
                 else{
                     $calMonth=$currMonth-1;
@@ -91,26 +121,35 @@ if (!isset($_SESSION['logedin'])) {
                     if($calMonth==2){
                         if(year_check($calYear)){
                             $salPerDay=$fs/29;
-                            echo $salPerDay."<br>";
+                            echo "<br>". $salPerDay . "</br>";
+                            $Attendance=isset($facAtt[$fac])?$facAtt[$fac]:0;
+                            SalaryCalculation($fs,$salPerDay,$Attendance);
+                            echo "<br>";
                         }else{
                             $salPerDay=$fs/28;
-                            echo $salPerDay."<br>";
+                            echo "<br>". $salPerDay . "</br>";
+                            $Attendance=isset($facAtt[$fac])?$facAtt[$fac]:0;
+                            SalaryCalculation($fs,$salPerDay,$Attendance);
+                            echo "<br>";
                         }
                     }
                     elseif($calMonth==4 || $calMonth==6 || $calMonth==9 || $calMonth==11){
                         $salPerDay=$fs/30;
-                        echo $salPerDay."<br>";
+                        echo "<br>". $salPerDay . "</br>";
+                        $Attendance=isset($facAtt[$fac])?$facAtt[$fac]:0;
+                        SalaryCalculation($fs,$salPerDay,$Attendance);
+                        echo "<br>";
                     }
                     else{
                         $salPerDay=$fs/31;
-                        echo $salPerDay."<br>";
+                        echo "<br>". $salPerDay . "</br>";
+                        $Attendance=isset($facAtt[$fac])?$facAtt[$fac]:0;
+                        SalaryCalculation($fs,$salPerDay,$Attendance);
+                        echo "<br>";
                     }
                     
                 }
             }
-
-
-
 
         }
         
@@ -127,12 +166,23 @@ if (!isset($_SESSION['logedin'])) {
          }
 
         //? Salary Calculation Function
-        function SalaryCalculation($facSal){
-            print_r($facSal);
+        function SalaryCalculation($facSal,$salPerDay,$att){
+            
+            $monthlySal=$salPerDay*$att;
+            $da=46;
+            if($att==0){
+                echo "0";
+                return 0;
+            }
+            $grossSal=$monthlySal+($facSal*$da)/100;
+            $pf=($grossSal*12)/100;
+            $pt=200;
+            $newSal= ceil($grossSal-($pf+$pt));
+            echo ($newSal);
         }
 
-        SalaryCalculation($facSal);
-        payroll($conn,$facSal);
+        
+        payroll($conn,$facSal,$currMonth,$facAtt);
 
 
 
