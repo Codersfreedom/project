@@ -58,7 +58,7 @@ if (!isset($_SESSION['logedin'])) {
         </div>
 
     </div>
-    <div class="container p-5 mt-5 ">
+    <div class="container p-5 mt-5 col-12 text-nowrap text-center">
     <php
 
 
@@ -143,8 +143,9 @@ if (!isset($_SESSION['logedin'])) {
 
     $(document).ready(function () {
         $('#myTable').DataTable({
+            
             "aaSorting": [],
-            dom: 'Bfrtip',
+            dom: 'Blfrtip',
 
             buttons: [
                 'excel',
