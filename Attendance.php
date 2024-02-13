@@ -47,7 +47,7 @@ if (!isset($_SESSION['logedin'])) {
         require 'partials/dbconnect.php';
         include 'aside.php';
         ?>
-    </div>
+    
     <div class="container d-flex my-5 pt-4 align-items-center justify-content-center">
         <div class="year-box">
             <label for="year">Year</label>
@@ -100,6 +100,7 @@ if (!isset($_SESSION['logedin'])) {
 
             </tbody>
         </table>
+    </div>
     </div>
 </body>
 

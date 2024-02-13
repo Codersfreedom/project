@@ -14,7 +14,8 @@ if (!isset($_SESSION['logedin'])) {
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
   <!-- Bootstrap CSS -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+    integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
   <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.min.css">
   <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.4.2/css/buttons.dataTables.min.css">
 
@@ -30,7 +31,8 @@ if (!isset($_SESSION['logedin'])) {
 
 <body>
 
-  <div id="main-wrapper" data-layout="vertical" data-navbarbg="skin5" data-sidebartype="full" data-sidebar-position="absolute" data-header-position="absolute" data-boxed-layout="full">
+  <div id="main-wrapper" data-layout="vertical" data-navbarbg="skin5" data-sidebartype="full"
+    data-sidebar-position="absolute" data-header-position="absolute" data-boxed-layout="full">
     <?php
 
     include 'header.php';
@@ -237,7 +239,7 @@ if (!isset($_SESSION['logedin'])) {
       // $allotLabDay = $totalLab * 4;
       // $allotTheoryDay = 35 - $allotLabDay;
       // $allotPerSub = round(($allotTheoryDay) / ($totalTheory));
-
+    
 
 
       //? Array for tracking alloted Subjects...
@@ -330,18 +332,18 @@ if (!isset($_SESSION['logedin'])) {
       }
 
       //!---------------------------------------------------------------------------------
-
-      $fixLabSql="SELECT assign,p_day,fac_id FROM sub_allot WHERE sem=$sem AND assign LIKE '%Lab%'";
-      $fixLabRes=mysqli_query($conn, $fixLabSql);
-      while ($fixLabRow=mysqli_fetch_assoc($fixLabRes)){
-        $day= $fixLabRow['p_day'];
-        $faculty_id=$fixLabRow['fac_id'];
-        $lab=$fixLabRow['assign'];
+    
+      $fixLabSql = "SELECT assign,p_day,fac_id FROM sub_allot WHERE sem=$sem AND assign LIKE '%Lab%'";
+      $fixLabRes = mysqli_query($conn, $fixLabSql);
+      while ($fixLabRow = mysqli_fetch_assoc($fixLabRes)) {
+        $day = $fixLabRow['p_day'];
+        $faculty_id = $fixLabRow['fac_id'];
+        $lab = $fixLabRow['assign'];
         $routine[$day]['slot1'] = $routine[$day]['slot2'] = $routine[$day]['slot3'] = $routine[$day]['slot4'] = $lab;
-                    $facRoutine[$day]['slot1'] = $facRoutine[$day]['slot2'] = $facRoutine[$day]['slot3'] = $facRoutine[$day]['slot4'] = $faculty_id;
-                    $workLoad[$faculty_id] = $workLoad[$faculty_id] - 4;
-                    $status[$faculty_id][$day]['slot1'] =$status[$faculty_id][$day]['slot1'] =$status[$faculty_id][$day]['slot1'] =$status[$faculty_id][$day]['slot1'] =1;
-                    array_push($allotedLab, $lab);
+        $facRoutine[$day]['slot1'] = $facRoutine[$day]['slot2'] = $facRoutine[$day]['slot3'] = $facRoutine[$day]['slot4'] = $faculty_id;
+        $workLoad[$faculty_id] = $workLoad[$faculty_id] - 4;
+        $status[$faculty_id][$day]['slot1'] = $status[$faculty_id][$day]['slot1'] = $status[$faculty_id][$day]['slot1'] = $status[$faculty_id][$day]['slot1'] = 1;
+        array_push($allotedLab, $lab);
       }
 
 
@@ -351,7 +353,7 @@ if (!isset($_SESSION['logedin'])) {
       // echo "<pre>";
       // print_r($hpw);
       // echo "</pre>";
-
+    
 
 
       //! -----------------------------------------
@@ -380,7 +382,7 @@ if (!isset($_SESSION['logedin'])) {
             array_push($lab, $lab_row['assign']);
           }
           //? checking already lab assigned...
-
+    
           $labFlag = true;
           $labCount = count($lab);
           for ($r = 0; $r < $labCount; $r++) {
@@ -411,7 +413,7 @@ if (!isset($_SESSION['logedin'])) {
           }
 
           //? Condition for Lab allocation.
-
+    
           if ($i == 1 && $labFlag && $status[$faculty_id][$day]['slot1'] == 1 && $status[$faculty_id][$day]['slot2'] == 1 && $status[$faculty_id][$day]['slot3'] == 1 && $status[$faculty_id][$day]['slot4'] == 1) {
             $labCount = count($lab);
             if ($labCount == 1) {
@@ -617,7 +619,7 @@ if (!isset($_SESSION['logedin'])) {
               }
             }
           }
-       
+
           $data = $routine[$day]['slot' . $i];
           echo $data;
           $routineSql = "UPDATE " . $year . "year_routine SET `slot$i` ='$data' WHERE day='$day'";
@@ -648,7 +650,7 @@ if (!isset($_SESSION['logedin'])) {
       // echo "<pre>";
       // print_r($labFac);
       // echo "</pre>";
-
+    
       // $fa=array_unique($fac);
       // print_r($sub);
       // print_r($fa);
@@ -665,13 +667,13 @@ if (!isset($_SESSION['logedin'])) {
       // print_r($workLoad);
       // echo "</pre>";
       updateWorkload($workLoad, $year, $conn);
-      updateFacStatus($facRoutine,$conn);
-      for($y=1;$y<5;$y++){
-        if($year!=$y){
+      updateFacStatus($facRoutine, $conn);
+      for ($y = 1; $y < 5; $y++) {
+        if ($year != $y) {
           updateStatus($facRoutine, $y, $conn);
         }
       }
-      
+
     }
 
 
@@ -757,18 +759,24 @@ if (!isset($_SESSION['logedin'])) {
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-    
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+      integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+      crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
+      integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+      crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
+      integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+      crossorigin="anonymous"></script>
+
     <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
-    
-    
-    
-    
-    
+
+
+
+
+
     <!-- Datatables -->
-    
+
     <!-- Export as pdf js -->
     <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/buttons/2.4.2/js/dataTables.buttons.min.js"></script>
@@ -776,11 +784,11 @@ if (!isset($_SESSION['logedin'])) {
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js">  </script>
     <script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.html5.min.js"></script>
-    <script src ="https://cdn.datatables.net/buttons/2.4.2/js/buttons.print.min.js"</script>
+    <script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.print.min.js" </script>
     <!-- All Jquery -->
-    
-    <!-- Bootstrap tether Core JavaScript -->
-    <script src="./assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+
+    < !--Bootstrap tether Core JavaScript-- >
+        <script src="./assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="./assets/libs/perfect-scrollbar/dist/perfect-scrollbar.jquery.min.js"></script>
     <script src="./assets/extra-libs/sparkline/sparkline.js"></script>
     <!--Wave Effects -->
@@ -791,77 +799,78 @@ if (!isset($_SESSION['logedin'])) {
     <script src="./dist/js/custom.min.js"></script>
     <!--This page JavaScript -->
     <script src="./dist/js/pages/dashboards/dashboard1.js"></script>
-    
+
 
     <!-- Initialize Data tables -->
     <script>
-      $(document).ready(function() {
-        $('#myTable').DataTable({
-          "aaSorting": [],
-          dom: 'Bfrtip',
-         
-            buttons: [
-             'excel',  
+        $(document).ready(function() {
+          $('#myTable').DataTable({
+            "aaSorting": [],
+            dom: 'Bfrtip',
 
-             {
-              extend:'pdfHtml5',
-              orientation:"landscape",
-              downlode:'open'
-             },
-             'print'
-        ] 
-        });
+            buttons: [
+              'excel',
+
+              {
+                extend: 'pdfHtml5',
+                orientation: "landscape",
+                downlode: 'open'
+              },
+              'print'
+            ]
+          });
       });
 
-      const year = document.querySelector('#year');
-      const sem = document.querySelector('#sem');
+        const year = document.querySelector('#year');
+        const sem = document.querySelector('#sem');
       // if(year.value=='3'){
-      sem.getElementsByTagName('option')[0].style.display = "none";
-      sem.getElementsByTagName('option')[1].style.display = "none";
-      sem.getElementsByTagName('option')[2].setAttribute('selected', 'true');
+          sem.getElementsByTagName('option')[0].style.display = "none";
+        sem.getElementsByTagName('option')[1].style.display = "none";
+        sem.getElementsByTagName('option')[2].setAttribute('selected', 'true');
 
-      sem.getElementsByTagName('option')[6].style.display = "none";
-      sem.getElementsByTagName('option')[5].style.display = "none";
-      sem.getElementsByTagName('option')[7].style.display = "none";
-      sem.getElementsByTagName('option')[4].style.display = "none";
+        sem.getElementsByTagName('option')[6].style.display = "none";
+        sem.getElementsByTagName('option')[5].style.display = "none";
+        sem.getElementsByTagName('option')[7].style.display = "none";
+        sem.getElementsByTagName('option')[4].style.display = "none";
       // }
       year.addEventListener('change', () => {
         if (year.value == '4') {
           console.log(year.value);
-          sem.getElementsByTagName('option')[6].style.display = "inline";
-          sem.getElementsByTagName('option')[6].setAttribute('selected', 'true');
-          sem.getElementsByTagName('option')[7].style.display = "inline";
-          sem.getElementsByTagName('option')[2].style.display = "none";
-          sem.getElementsByTagName('option')[3].style.display = "none";
-          sem.getElementsByTagName('option')[4].style.display = "none";
-          sem.getElementsByTagName('option')[5].style.display = "none";
-          sem.getElementsByTagName('option')[4].removeAttribute('selected');
-          sem.getElementsByTagName('option')[2].removeAttribute('selected');
+        sem.getElementsByTagName('option')[6].style.display = "inline";
+        sem.getElementsByTagName('option')[6].setAttribute('selected', 'true');
+        sem.getElementsByTagName('option')[7].style.display = "inline";
+        sem.getElementsByTagName('option')[2].style.display = "none";
+        sem.getElementsByTagName('option')[3].style.display = "none";
+        sem.getElementsByTagName('option')[4].style.display = "none";
+        sem.getElementsByTagName('option')[5].style.display = "none";
+        sem.getElementsByTagName('option')[4].removeAttribute('selected');
+        sem.getElementsByTagName('option')[2].removeAttribute('selected');
         } else if (year.value == '3') {
           console.log(year.value);
-          sem.getElementsByTagName('option')[4].style.display = "inline";
-          sem.getElementsByTagName('option')[4].setAttribute('selected', 'true');
-          sem.getElementsByTagName('option')[5].style.display = "inline";
-          sem.getElementsByTagName('option')[6].style.display = "none";
-          sem.getElementsByTagName('option')[7].style.display = "none";
-          sem.getElementsByTagName('option')[2].style.display = "none";
-          sem.getElementsByTagName('option')[3].style.display = "none";
-          sem.getElementsByTagName('option')[6].removeAttribute('selected');
-          sem.getElementsByTagName('option')[2].removeAttribute('selected');
+        sem.getElementsByTagName('option')[4].style.display = "inline";
+        sem.getElementsByTagName('option')[4].setAttribute('selected', 'true');
+        sem.getElementsByTagName('option')[5].style.display = "inline";
+        sem.getElementsByTagName('option')[6].style.display = "none";
+        sem.getElementsByTagName('option')[7].style.display = "none";
+        sem.getElementsByTagName('option')[2].style.display = "none";
+        sem.getElementsByTagName('option')[3].style.display = "none";
+        sem.getElementsByTagName('option')[6].removeAttribute('selected');
+        sem.getElementsByTagName('option')[2].removeAttribute('selected');
         } else if (year.value == '2') {
           console.log(year.value);
-          sem.getElementsByTagName('option')[2].style.display = "inline";
-          sem.getElementsByTagName('option')[2].setAttribute('selected', 'true');
-          sem.getElementsByTagName('option')[3].style.display = "inline";
-          sem.getElementsByTagName('option')[4].style.display = "none";
-          sem.getElementsByTagName('option')[6].style.display = "none";
-          sem.getElementsByTagName('option')[7].style.display = "none";
-          sem.getElementsByTagName('option')[5].style.display = "none";
-          sem.getElementsByTagName('option')[4].removeAttribute('selected');
-          sem.getElementsByTagName('option')[6].removeAttribute('selected');
+        sem.getElementsByTagName('option')[2].style.display = "inline";
+        sem.getElementsByTagName('option')[2].setAttribute('selected', 'true');
+        sem.getElementsByTagName('option')[3].style.display = "inline";
+        sem.getElementsByTagName('option')[4].style.display = "none";
+        sem.getElementsByTagName('option')[6].style.display = "none";
+        sem.getElementsByTagName('option')[7].style.display = "none";
+        sem.getElementsByTagName('option')[5].style.display = "none";
+        sem.getElementsByTagName('option')[4].removeAttribute('selected');
+        sem.getElementsByTagName('option')[6].removeAttribute('selected');
         }
       })
     </script>
+  </div>
 </body>
 
 </html>

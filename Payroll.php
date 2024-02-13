@@ -36,6 +36,10 @@ if (!isset($_SESSION['logedin'])) {
     #year {
         margin-left: 10px;
     }
+
+    /* #date{
+        width: 150px;
+    } */
 </style>
 
 <body>
@@ -46,196 +50,244 @@ if (!isset($_SESSION['logedin'])) {
         require 'partials/dbconnect.php';
         include 'aside.php';
         ?>
-    </div>
-    <div class="container d-flex my-5 pt-4 align-items-center justify-content-center">
-        <div class="year-box">
-            <label for="year">Year</label>
-            <select name="year" id="year">
-                <option value="2020">2021</option>
 
-            </select>
+        <div class="container d-flex my-5 pt-4 align-items-center justify-content-center">
+            <div class="year-box">
+                <label for="year">Year</label>
+                <select name="year" id="year">
+                    <option value="2020">2021</option>
+
+                </select>
+            </div>
+
         </div>
-
-    </div>
-    <div class="container p-5 mt-5 ">
-        <?php
-        //? Current Month
-        $currMonth = 2;
-        //? Current Year
-        $currYear = date('Y');
-        //? getting fac_id from faculty table
-        $faculty = array();
-        $facSql = "SELECT fac_id FROM faculty";
-        $facRes = mysqli_query($conn, $facSql);
-        while ($facRow = mysqli_fetch_assoc($facRes)) {
-            array_push($faculty, $facRow['fac_id']);
-        }
-
-        // print_r($faculty);
-        
-        //? Getting Basic salary from database
-        $facSalSql = "SELECT fac_id, basic_salary FROM faculty";
-        $facSalResult = mysqli_query($conn, $facSalSql);
-
-        //* Faculty and basic salary associative array
-        $facSal = array();
-        while ($facSalRow = mysqli_fetch_assoc($facSalResult)) {
-            $facSal[$facSalRow['fac_id']] = $facSalRow['basic_salary'];
-        }
-
-        //? Getting Attendance from database
-        $calMonth = $currMonth - 1;
-        $facAtt = array();
-        foreach ($faculty as $fac) {
-            $facAttSql = "SELECT count(attendance) as att FROM attendance where fac_id='$fac' and month=$calMonth and year=$currYear and attendance=1";
-            $facAttResult = mysqli_query($conn, $facAttSql);
-            //* Faculty and attendance associative array
-            while ($facAttRow = mysqli_fetch_assoc($facAttResult)) {
-                $facAtt[$fac] = $facAttRow['att'];
+        <div class="container p-5 mt-5 text-nowrap text-center ">
+            <?php
+            //? Current Month
+            $currMonth = 2;
+            //? Current Year
+            $currYear = date('Y');
+            //? getting fac_id from faculty table
+            $faculty = array();
+            $facSql = "SELECT fac_id FROM faculty";
+            $facRes = mysqli_query($conn, $facSql);
+            while ($facRow = mysqli_fetch_assoc($facRes)) {
+                array_push($faculty, $facRow['fac_id']);
             }
-        }
 
-        //print_r($facAtt);
-        
+            // print_r($faculty);
+            
+            //? Getting Basic salary from database
+            $facSalSql = "SELECT fac_id, basic_salary FROM faculty";
+            $facSalResult = mysqli_query($conn, $facSalSql);
 
-        function payroll($conn, $facSal, $currMonth, $facAtt)
-        {
+            //* Faculty and basic salary associative array
+            $facSal = array();
+            while ($facSalRow = mysqli_fetch_assoc($facSalResult)) {
+                $facSal[$facSalRow['fac_id']] = $facSalRow['basic_salary'];
+            }
 
-            //* Current month taking
-        
-
-            foreach ($facSal as $fac => $fs) {
-
-                if ($currMonth == 1) {
-                    $calMonth = 12;
-                    $calYear = date('Y') - 1;
-                    $salPerDay = $fs / 31;
-                    $Attendance = isset($facAtt[$fac]) ? $facAtt[$fac] : 0;
-                    SalaryCalculation($conn,$fac,$fs, $salPerDay, $Attendance,$calMonth,$calYear);
-                    //echo "<br>";
-                } else {
-                    $calMonth = $currMonth - 1;
-                    $calYear = date('Y');
-                    // $calYear=2023;
-                    //?
-                    if ($calMonth == 2) {
-                        if (year_check($calYear)) {
-                            $salPerDay = $fs / 29;
-                            //echo "<br>". $salPerDay . "</br>";
-                            $Attendance = isset($facAtt[$fac]) ? $facAtt[$fac] : 0;
-                            SalaryCalculation($conn,$fac,$fs, $salPerDay, $Attendance,$calMonth,$calYear);
-                            //echo "<br>";
-                        } else {
-                            $salPerDay = $fs / 28;
-                            //echo "<br>". $salPerDay . "</br>";
-                            $Attendance = isset($facAtt[$fac]) ? $facAtt[$fac] : 0;
-                            SalaryCalculation($conn,$fac,$fs, $salPerDay, $Attendance,$calMonth,$calYear);
-                            //echo "<br>";
-                        }
-                    } elseif ($calMonth == 4 || $calMonth == 6 || $calMonth == 9 || $calMonth == 11) {
-                        $salPerDay = $fs / 30;
-                        //echo "<br>". $salPerDay . "</br>";
-                        $Attendance = isset($facAtt[$fac]) ? $facAtt[$fac] : 0;
-                        SalaryCalculation($conn,$fac,$fs, $salPerDay, $Attendance,$calMonth,$calYear);
-                        //echo "<br>";
-                    } else {
-                        $salPerDay = $fs / 31;
-                        // echo "<br>". $salPerDay . "</br>";
-                        $Attendance = isset($facAtt[$fac]) ? $facAtt[$fac] : 0;
-                        SalaryCalculation($conn,$fac,$fs, $salPerDay, $Attendance,$calMonth,$calYear);
-                        //echo "<br>";
-                    }
-
+            //? Getting Attendance from database
+            $calMonth = $currMonth - 1;
+            $facAtt = array();
+            foreach ($faculty as $fac) {
+                $facAttSql = "SELECT count(attendance) as att FROM attendance where fac_id='$fac' and month=$calMonth and year=$currYear and attendance=1";
+                $facAttResult = mysqli_query($conn, $facAttSql);
+                //* Faculty and attendance associative array
+                while ($facAttRow = mysqli_fetch_assoc($facAttResult)) {
+                    $facAtt[$fac] = $facAttRow['att'];
                 }
             }
 
-        }
+            //print_r($facAtt);
+            
 
-        //? Leap Year Check
-        function year_check($my_year)
-        {
-            if ($my_year % 400 == 0)
-                return true;
-            else if ($my_year % 100 == 0)
-                return false;
-            else if ($my_year % 4 == 0)
-                return true;
-            else
-                return false;
-        }
+            function payroll($conn, $facSal, $currMonth, $facAtt)
+            {
 
-        //? Salary Calculation Function
-        function SalaryCalculation($conn,$fac_id,$facSal, $salPerDay, $att,$calMonth,$calYear)
-        {
+                //* Current month taking
+            
 
-            $monthlySal = $salPerDay * $att;
-            $da = 46;
-            if ($att == 0) {
-                //echo "0";
-                return 0;
+                foreach ($facSal as $fac => $fs) {
+
+                    if ($currMonth == 1) {
+                        $calMonth = 12;
+                        $calYear = date('Y') - 1;
+                        $salPerDay = $fs / 31;
+                        $Attendance = isset($facAtt[$fac]) ? $facAtt[$fac] : 0;
+                        SalaryCalculation($conn, $fac, $fs, $salPerDay, $Attendance, $calMonth, $calYear);
+                        //echo "<br>";
+                    } else {
+                        $calMonth = $currMonth - 1;
+                        $calYear = date('Y');
+                        // $calYear=2023;
+                        //?
+                        if ($calMonth == 2) {
+                            if (year_check($calYear)) {
+                                $salPerDay = $fs / 29;
+                                //echo "<br>". $salPerDay . "</br>";
+                                $Attendance = isset($facAtt[$fac]) ? $facAtt[$fac] : 0;
+                                SalaryCalculation($conn, $fac, $fs, $salPerDay, $Attendance, $calMonth, $calYear);
+                                //echo "<br>";
+                            } else {
+                                $salPerDay = $fs / 28;
+                                //echo "<br>". $salPerDay . "</br>";
+                                $Attendance = isset($facAtt[$fac]) ? $facAtt[$fac] : 0;
+                                SalaryCalculation($conn, $fac, $fs, $salPerDay, $Attendance, $calMonth, $calYear);
+                                //echo "<br>";
+                            }
+                        } elseif ($calMonth == 4 || $calMonth == 6 || $calMonth == 9 || $calMonth == 11) {
+                            $salPerDay = $fs / 30;
+                            //echo "<br>". $salPerDay . "</br>";
+                            $Attendance = isset($facAtt[$fac]) ? $facAtt[$fac] : 0;
+                            SalaryCalculation($conn, $fac, $fs, $salPerDay, $Attendance, $calMonth, $calYear);
+                            //echo "<br>";
+                        } else {
+                            $salPerDay = $fs / 31;
+                            // echo "<br>". $salPerDay . "</br>";
+                            $Attendance = isset($facAtt[$fac]) ? $facAtt[$fac] : 0;
+                            SalaryCalculation($conn, $fac, $fs, $salPerDay, $Attendance, $calMonth, $calYear);
+                            //echo "<br>";
+                        }
+
+                    }
+                }
+
             }
-            $grossSal = $monthlySal + ($facSal * $da) / 100;
-            $pf = ($grossSal * 12) / 100;
-            $pt = 200;
-            $newSal = ceil($grossSal - ($pf + $pt));
-            $payrollSql = "INSERT INTO payroll (fac_id,payAmount,payMonth,year,status) VALUES ('$fac_id',$newSal,$calMonth,$calYear,0)";
-            $payrollResult=mysqli_query($conn,$payrollSql);
-            //echo ($newSal);
-        }
 
-        $calMonth = $currMonth-1;
-        $payrollExistSql = "SELECT * FROM payroll WHERE payMonth=$calMonth and year=$currYear";
-        $payrollExistResult = mysqli_query($conn, $payrollExistSql);
-        if (mysqli_num_rows($payrollExistResult) < 1) {
-            payroll($conn, $facSal, $currMonth, $facAtt);
-        }
-        // payroll($conn, $facSal, $currMonth, $facAtt);
+            //? Leap Year Check
+            function year_check($my_year)
+            {
+                if ($my_year % 400 == 0)
+                    return true;
+                else if ($my_year % 100 == 0)
+                    return false;
+                else if ($my_year % 4 == 0)
+                    return true;
+                else
+                    return false;
+            }
+
+            //? Salary Calculation Function
+            function SalaryCalculation($conn, $fac_id, $facSal, $salPerDay, $att, $calMonth, $calYear)
+            {
+
+                $monthlySal = $salPerDay * $att;
+                $da = 46;
+                if ($att == 0) {
+                    //echo "0";
+                    return 0;
+                }
+                $grossSal = $monthlySal + ($facSal * $da) / 100;
+                $pf = ($grossSal * 12) / 100;
+                $pt = 200;
+                $newSal = ceil($grossSal - ($pf + $pt));
+                $payrollSql = "INSERT INTO payroll (fac_id,payAmount,payMonth,year,status) VALUES ('$fac_id',$newSal,$calMonth,$calYear,0)";
+                $payrollResult = mysqli_query($conn, $payrollSql);
+                //echo ($newSal);
+            }
+
+            $calMonth = $currMonth - 1;
+            $payrollExistSql = "SELECT faculty.name , payroll.* from faculty inner join payroll on faculty.fac_id = payroll.fac_id WHERE payMonth=$calMonth and year=$currYear";
+            $payrollExistResult = mysqli_query($conn, $payrollExistSql);
+            if (mysqli_num_rows($payrollExistResult) < 1) {
+                payroll($conn, $facSal, $currMonth, $facAtt);
+            }
+            // payroll($conn, $facSal, $currMonth, $facAtt);
+            
 
 
 
 
+            ?>
+            <table class="table" id="myTable">
+                <thead>
+                    <tr>
+                        <th scope="col">Sno.</th>
+                        <th scope="col"> Id</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Pay Month</th>
+                        <th scope="col">Pay Date</th>
+                        <th scope="col">Pay Ammount</th>
+                        <th scope="col">Year</th>
+                        <th scope="col">Status</th>
+                        <th scope="col">Action</th>
 
-        ?>
-        <table class="table" id="myTable">
-            <thead>
-                <tr>
-                    <th scope="col">Sno.</th>
-                    <th scope="col">Pay Month</th>
-                    <th scope="col">Pay Date</th>
-                    <th scope="col">Pay Ammount</th>
-                    <th scope="col">Year</th>
-                    <th scope="col">Status</th>
-
-                </tr>
-            </thead>
-            <tbody>
-                <?php
-                $sql = 'select *from payroll order by slNo asc';
-                $result = mysqli_query($conn, $sql);
-                $sr=1;
-                while ($row = mysqli_fetch_assoc($result)) {
-                    $month=date_create_from_format("m",$row['payMonth']);
-                    echo "   <tr>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php
+                    $sql = 'select *from payroll order by slNo asc';
+                    $result = mysqli_query($conn, $sql);
+                    $sr = 1;
+                    while ($row = mysqli_fetch_assoc($result)) {
+                        $month = date_create_from_format("m", $row['payMonth']);
+                        echo "   <tr>
+                        
+                        <form action='Payroll.php' method='post'>
+                        
             <td>" . $sr . "</td>
-            <td>" . date_format($month,"F"). " </td>
-            <td>" . $row['pay_date'] . " </td>
+            <td>  " . $row['fac_id'] . " <input type='hidden' name='faculty'value='" . $row['fac_id'] . "'> </td>
+            <td>" . $row['name'] . " </td>
+            <td>" . date_format($month, "F") . " </td>
+            <td> <input type='datetime-local' name='date'value = '" . $row['pay_date'] . "' id='date'> </td>
             <td> &#8377; " . $row['payAmount'] . "</td>
             <td>" . $row['year'] . " </td>
-            <td><select name='status'>
+            <td><select id='status' name='status'>
             <option value ='0' >Pending</option>
             <option value ='1' >Paid</option>
             </select> </td>
+             
+        <td> <button type='submit' class = 'edit btn btn-sm btn-primary' name = 'edit'>Update</button>  </td>
+         </form>
+        </tr>";
+                        $sr++;
+                    }
+                    ?>
+
+
+                </tbody>
+            </table>
+        </div>
         
-          </tr>";
-          $sr++;
-                }
-                ?>
-
-
-            </tbody>
-        </table>
     </div>
+<?php
+if($_SERVER['REQUEST_METHOD']=='POST'){
+    $facId = $_POST['faculty'];
+    $date = $_POST['date'];
+    $status = $_POST['status'];
+   
+    $sql = "UPDATE `payroll` SET `pay_date`='$date',`status`='$status' WHERE `fac_id` ='$facId'" ;
+    mysqli_query($conn,$sql);
+
+}
+
+?>
 </body>
+<script>
+
+
+    // const editBtn = document.querySelectorAll('.edit');
+    // editBtn.forEach((eb) => {
+    //     eb.addEventListener('click', (e) => {
+    //         const date = document.querySelector('#date').value;
+    //         const status = document.querySelector('#status').value;
+    //         //updateData(date,status);
+           
+    //         var data = { 'date': date, 'status': status };
+    //         $.ajax({
+    //             type: "POST",
+    //             url: "Payroll.php",
+    //             data: data,
+    //             success: function (data) {
+    //                 console.log(data);
+    //             }
+    //         });
+    //     })
+
+    // })
+</script>
+
 
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
