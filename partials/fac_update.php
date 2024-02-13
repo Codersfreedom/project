@@ -57,7 +57,7 @@
     $Phone = $_POST['ph'];
     $workload = $_POST['workload'];
     $experience = $_POST['experience'];
-    $basic = $_POST['basic_salary'];
+    $basic = $_POST['basic'];
 
 
     echo $experience;
@@ -67,7 +67,7 @@
 
     // sql update
   
-    $sql = "UPDATE `faculty` SET `fac_id` = '$Facid' ,`name` = '$Name', `designation` = '$Designation' , `alias` = '$Alias', `email` = '$Email', `phone` ='$Phone'  WHERE `fac_id` = '$Facid'";
+    $sql = "UPDATE `faculty` SET  `name` = '$Name', `designation` = '$Designation' , `alias` = '$Alias', `email` = '$Email', `phone` ='$Phone', `experience` =$experience,`basic_salary`=$basic  WHERE `fac_id` = '$Facid'";
     $result = mysqli_query($conn, $sql);
     $WlUpdateSql = "UPDATE total_wl SET totalWL=$workload WHERE fac_id = '$Facid'";
     $WlupdateRes = mysqli_query($conn, $WlUpdateSql);
