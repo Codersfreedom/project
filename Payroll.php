@@ -111,7 +111,7 @@ if (!isset($_SESSION['logedin'])) {
                     $calYear = date('Y') - 1;
                     $salPerDay = $fs / 31;
                     $Attendance = isset($facAtt[$fac]) ? $facAtt[$fac] : 0;
-                    SalaryCalculation($fs, $salPerDay, $Attendance);
+                    SalaryCalculation($conn,$fac,$fs, $salPerDay, $Attendance,$calMonth,$calYear);
                     //echo "<br>";
                 } else {
                     $calMonth = $currMonth - 1;
@@ -123,26 +123,26 @@ if (!isset($_SESSION['logedin'])) {
                             $salPerDay = $fs / 29;
                             //echo "<br>". $salPerDay . "</br>";
                             $Attendance = isset($facAtt[$fac]) ? $facAtt[$fac] : 0;
-                            SalaryCalculation($fs, $salPerDay, $Attendance);
+                            SalaryCalculation($conn,$fac,$fs, $salPerDay, $Attendance,$calMonth,$calYear);
                             //echo "<br>";
                         } else {
                             $salPerDay = $fs / 28;
                             //echo "<br>". $salPerDay . "</br>";
                             $Attendance = isset($facAtt[$fac]) ? $facAtt[$fac] : 0;
-                            SalaryCalculation($fs, $salPerDay, $Attendance);
+                            SalaryCalculation($conn,$fac,$fs, $salPerDay, $Attendance,$calMonth,$calYear);
                             //echo "<br>";
                         }
                     } elseif ($calMonth == 4 || $calMonth == 6 || $calMonth == 9 || $calMonth == 11) {
                         $salPerDay = $fs / 30;
                         //echo "<br>". $salPerDay . "</br>";
                         $Attendance = isset($facAtt[$fac]) ? $facAtt[$fac] : 0;
-                        SalaryCalculation($fs, $salPerDay, $Attendance);
+                        SalaryCalculation($conn,$fac,$fs, $salPerDay, $Attendance,$calMonth,$calYear);
                         //echo "<br>";
                     } else {
                         $salPerDay = $fs / 31;
                         // echo "<br>". $salPerDay . "</br>";
                         $Attendance = isset($facAtt[$fac]) ? $facAtt[$fac] : 0;
-                        SalaryCalculation($fs, $salPerDay, $Attendance);
+                        SalaryCalculation($conn,$fac,$fs, $salPerDay, $Attendance,$calMonth,$calYear);
                         //echo "<br>";
                     }
 
@@ -165,7 +165,7 @@ if (!isset($_SESSION['logedin'])) {
         }
 
         //? Salary Calculation Function
-        function SalaryCalculation($facSal, $salPerDay, $att)
+        function SalaryCalculation($conn,$fac_id,$facSal, $salPerDay, $att,$calMonth,$calYear)
         {
 
             $monthlySal = $salPerDay * $att;
@@ -178,11 +178,18 @@ if (!isset($_SESSION['logedin'])) {
             $pf = ($grossSal * 12) / 100;
             $pt = 200;
             $newSal = ceil($grossSal - ($pf + $pt));
+            $payrollSql = "INSERT INTO payroll (fac_id,payAmount,payMonth,year,status) VALUES ('$fac_id',$newSal,$calMonth,$calYear,0)";
+            $payrollResult=mysqli_query($conn,$payrollSql);
             //echo ($newSal);
         }
 
-
-        payroll($conn, $facSal, $currMonth, $facAtt);
+        $calMonth = $currMonth-1;
+        $payrollExistSql = "SELECT * FROM payroll WHERE payMonth=$calMonth and year=$currYear";
+        $payrollExistResult = mysqli_query($conn, $payrollExistSql);
+        if (mysqli_num_rows($payrollExistResult) < 1) {
+            payroll($conn, $facSal, $currMonth, $facAtt);
+        }
+        // payroll($conn, $facSal, $currMonth, $facAtt);
 
 
 
@@ -193,10 +200,9 @@ if (!isset($_SESSION['logedin'])) {
             <thead>
                 <tr>
                     <th scope="col">Sno.</th>
-                    <th scope="col">Name</th>
                     <th scope="col">Pay Month</th>
                     <th scope="col">Pay Date</th>
-                    <th scope="col">Pay Ammount </th>
+                    <th scope="col">Pay Ammount</th>
                     <th scope="col">Year</th>
                     <th scope="col">Status</th>
 
@@ -204,15 +210,16 @@ if (!isset($_SESSION['logedin'])) {
             </thead>
             <tbody>
                 <?php
-                $sql = 'select *from payroll';
+                $sql = 'select *from payroll order by slNo asc';
                 $result = mysqli_query($conn, $sql);
+                $sr=1;
                 while ($row = mysqli_fetch_assoc($result)) {
+                    $month=date_create_from_format("m",$row['payMonth']);
                     echo "   <tr>
-            <td>" . $row['slNo'] . "</td>
-            <td>" . $row['name'] . "  </td>
-            <td>" . $row['payMonth'] . " </td>
-            <td>" . $row['payMonth'] . " </td>
-            <td> " . $row['payAmount'] . " </td>
+            <td>" . $sr . "</td>
+            <td>" . date_format($month,"F"). " </td>
+            <td>" . $row['pay_date'] . " </td>
+            <td> &#8377; " . $row['payAmount'] . "</td>
             <td>" . $row['year'] . " </td>
             <td><select name='status'>
             <option value ='0' >Pending</option>
@@ -220,6 +227,7 @@ if (!isset($_SESSION['logedin'])) {
             </select> </td>
         
           </tr>";
+          $sr++;
                 }
                 ?>
 
@@ -269,6 +277,7 @@ if (!isset($_SESSION['logedin'])) {
 
     $(document).ready(function () {
         $('#myTable').DataTable({
+            "lengthMenu": [[100, "All", 50, 25], [100, "All", 50, 25]],
             "aaSorting": [],
             dom: 'Bfrtip',
 
