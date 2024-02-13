@@ -311,12 +311,15 @@ if (!isset($_SESSION['logedin'])) {
       <table class="table" id="myTable">
         <thead>
           <tr>
-            <th scope="col">Faculty No.</th>
+            <th scope="col">Id</th>
             <th scope="col">Name</th>
             <th scope="col">Designation</th>
             <th scope="col">Alias</th>
             <th scope="col">Phone</th>
             <th scope="col">Email</th>
+            <th scope="col">Experience</th>
+            <th scope="col">JoinAt</th>
+            <th scope="col">Basic</th>
             <th scope="col">Action</th>
 
           </tr>
@@ -336,6 +339,9 @@ if (!isset($_SESSION['logedin'])) {
                 <td>" . $row['alias'] . "</td>
                 <td>" . $row['phone'] . "</td>
                 <td>" . $row['email'] . "</td>
+                <td>" . $row['experience'] . "</td>
+                <td>" . $row['joinAt'] . "</td>
+                <td>" . $row['basic_salary'] . "</td>
                 <td><button class = 'edit btn btn-sm btn-primary' name = 'edit'> <a class = 'text-light'href='partials/fac_update.php?updateid=" . $row['fac_id'] . "'>Update</a></button>  <button class='delete btn btn-sm btn-primary' id=d" . $row['fac_id'] . ">Delete</button>  </td>
             
               </tr>";

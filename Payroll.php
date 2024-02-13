@@ -26,16 +26,16 @@ if (!isset($_SESSION['logedin'])) {
 </head>
 
 <style>
-    select{
+    select {
         width: 70px;
         height: 30px;
         border-radius: 3px;
         padding: 5px;
     }
-   #year{
-    margin-left: 10px;
-   }
-    
+
+    #year {
+        margin-left: 10px;
+    }
 </style>
 
 <body>
@@ -50,139 +50,139 @@ if (!isset($_SESSION['logedin'])) {
     <div class="container d-flex my-5 pt-4 align-items-center justify-content-center">
         <div class="year-box">
             <label for="year">Year</label>
-        <select name="year" id="year">
-            <option value="2020">2021</option>
-            
-        </select> 
+            <select name="year" id="year">
+                <option value="2020">2021</option>
+
+            </select>
         </div>
-       
+
     </div>
     <div class="container p-5 mt-5 ">
         <?php
-            //? Current Month
-             $currMonth=2;
-             //? Current Year
-            $currYear=date('Y');
-            //? getting fac_id from faculty table
-            $faculty=array();
-            $facSql="SELECT fac_id FROM faculty";
-            $facRes=mysqli_query($conn,$facSql);
-            while($facRow=mysqli_fetch_assoc($facRes)){
-                array_push($faculty,$facRow['fac_id']);
+        //? Current Month
+        $currMonth = 2;
+        //? Current Year
+        $currYear = date('Y');
+        //? getting fac_id from faculty table
+        $faculty = array();
+        $facSql = "SELECT fac_id FROM faculty";
+        $facRes = mysqli_query($conn, $facSql);
+        while ($facRow = mysqli_fetch_assoc($facRes)) {
+            array_push($faculty, $facRow['fac_id']);
+        }
+
+        // print_r($faculty);
+        
+        //? Getting Basic salary from database
+        $facSalSql = "SELECT fac_id, basic_salary FROM faculty";
+        $facSalResult = mysqli_query($conn, $facSalSql);
+
+        //* Faculty and basic salary associative array
+        $facSal = array();
+        while ($facSalRow = mysqli_fetch_assoc($facSalResult)) {
+            $facSal[$facSalRow['fac_id']] = $facSalRow['basic_salary'];
+        }
+
+        //? Getting Attendance from database
+        $calMonth = $currMonth - 1;
+        $facAtt = array();
+        foreach ($faculty as $fac) {
+            $facAttSql = "SELECT count(attendance) as att FROM attendance where fac_id='$fac' and month=$calMonth and year=$currYear and attendance=1";
+            $facAttResult = mysqli_query($conn, $facAttSql);
+            //* Faculty and attendance associative array
+            while ($facAttRow = mysqli_fetch_assoc($facAttResult)) {
+                $facAtt[$fac] = $facAttRow['att'];
             }
+        }
 
-            // print_r($faculty);
+        //print_r($facAtt);
+        
 
-            //? Getting Basic salary from database
-            $facSalSql="SELECT fac_id, basic_salary FROM faculty";
-            $facSalResult=mysqli_query($conn,$facSalSql);
-            
-            //* Faculty and basic salary associative array
-            $facSal= array();
-            while($facSalRow=mysqli_fetch_assoc($facSalResult)){
-                $facSal[$facSalRow['fac_id']] = $facSalRow['basic_salary'];
-            }
-
-            //? Getting Attendance from database
-            $calMonth=$currMonth-1;
-            $facAtt= array();
-            foreach($faculty as $fac){
-                $facAttSql="SELECT count(attendance) as att FROM attendance where fac_id='$fac' and month=$calMonth and year=$currYear and attendance=1";
-                $facAttResult=mysqli_query($conn,$facAttSql);
-                //* Faculty and attendance associative array
-                while($facAttRow=mysqli_fetch_assoc($facAttResult)){
-                    $facAtt[$fac] = $facAttRow['att'];
-                }
-            }
-
-            print_r($facAtt);
-
-
-            function payroll($conn, $facSal, $currMonth,$facAtt){
+        function payroll($conn, $facSal, $currMonth, $facAtt)
+        {
 
             //* Current month taking
-            
-            
-            foreach($facSal as $fac=>$fs){
-                
-                if($currMonth==1){
-                    $calMonth=12;
-                    $calYear=date('Y')-1;
-                    $salPerDay=$fs/31;
-                    $Attendance=isset($facAtt[$fac])?$facAtt[$fac]:0;
-                    SalaryCalculation($fs,$salPerDay,$Attendance);
-                    echo "<br>";
-                }
-                else{
-                    $calMonth=$currMonth-1;
-                    $calYear=date('Y');
+        
+
+            foreach ($facSal as $fac => $fs) {
+
+                if ($currMonth == 1) {
+                    $calMonth = 12;
+                    $calYear = date('Y') - 1;
+                    $salPerDay = $fs / 31;
+                    $Attendance = isset($facAtt[$fac]) ? $facAtt[$fac] : 0;
+                    SalaryCalculation($fs, $salPerDay, $Attendance);
+                    //echo "<br>";
+                } else {
+                    $calMonth = $currMonth - 1;
+                    $calYear = date('Y');
                     // $calYear=2023;
                     //?
-                    if($calMonth==2){
-                        if(year_check($calYear)){
-                            $salPerDay=$fs/29;
-                            echo "<br>". $salPerDay . "</br>";
-                            $Attendance=isset($facAtt[$fac])?$facAtt[$fac]:0;
-                            SalaryCalculation($fs,$salPerDay,$Attendance);
-                            echo "<br>";
-                        }else{
-                            $salPerDay=$fs/28;
-                            echo "<br>". $salPerDay . "</br>";
-                            $Attendance=isset($facAtt[$fac])?$facAtt[$fac]:0;
-                            SalaryCalculation($fs,$salPerDay,$Attendance);
-                            echo "<br>";
+                    if ($calMonth == 2) {
+                        if (year_check($calYear)) {
+                            $salPerDay = $fs / 29;
+                            //echo "<br>". $salPerDay . "</br>";
+                            $Attendance = isset($facAtt[$fac]) ? $facAtt[$fac] : 0;
+                            SalaryCalculation($fs, $salPerDay, $Attendance);
+                            //echo "<br>";
+                        } else {
+                            $salPerDay = $fs / 28;
+                            //echo "<br>". $salPerDay . "</br>";
+                            $Attendance = isset($facAtt[$fac]) ? $facAtt[$fac] : 0;
+                            SalaryCalculation($fs, $salPerDay, $Attendance);
+                            //echo "<br>";
                         }
+                    } elseif ($calMonth == 4 || $calMonth == 6 || $calMonth == 9 || $calMonth == 11) {
+                        $salPerDay = $fs / 30;
+                        //echo "<br>". $salPerDay . "</br>";
+                        $Attendance = isset($facAtt[$fac]) ? $facAtt[$fac] : 0;
+                        SalaryCalculation($fs, $salPerDay, $Attendance);
+                        //echo "<br>";
+                    } else {
+                        $salPerDay = $fs / 31;
+                        // echo "<br>". $salPerDay . "</br>";
+                        $Attendance = isset($facAtt[$fac]) ? $facAtt[$fac] : 0;
+                        SalaryCalculation($fs, $salPerDay, $Attendance);
+                        //echo "<br>";
                     }
-                    elseif($calMonth==4 || $calMonth==6 || $calMonth==9 || $calMonth==11){
-                        $salPerDay=$fs/30;
-                        echo "<br>". $salPerDay . "</br>";
-                        $Attendance=isset($facAtt[$fac])?$facAtt[$fac]:0;
-                        SalaryCalculation($fs,$salPerDay,$Attendance);
-                        echo "<br>";
-                    }
-                    else{
-                        $salPerDay=$fs/31;
-                        echo "<br>". $salPerDay . "</br>";
-                        $Attendance=isset($facAtt[$fac])?$facAtt[$fac]:0;
-                        SalaryCalculation($fs,$salPerDay,$Attendance);
-                        echo "<br>";
-                    }
-                    
+
                 }
             }
 
         }
-        
-        //? Leap Year Check
-        function year_check($my_year){
-            if ($my_year % 400 == 0)
-               return true;
-            else if ($my_year % 100 == 0)
-               return false;
-            else if ($my_year % 4 == 0)
-              return true;
-            else
-               return false;
-         }
 
-        //? Salary Calculation Function
-        function SalaryCalculation($facSal,$salPerDay,$att){
-            
-            $monthlySal=$salPerDay*$att;
-            $da=46;
-            if($att==0){
-                echo "0";
-                return 0;
-            }
-            $grossSal=$monthlySal+($facSal*$da)/100;
-            $pf=($grossSal*12)/100;
-            $pt=200;
-            $newSal= ceil($grossSal-($pf+$pt));
-            echo ($newSal);
+        //? Leap Year Check
+        function year_check($my_year)
+        {
+            if ($my_year % 400 == 0)
+                return true;
+            else if ($my_year % 100 == 0)
+                return false;
+            else if ($my_year % 4 == 0)
+                return true;
+            else
+                return false;
         }
 
-        
-        payroll($conn,$facSal,$currMonth,$facAtt);
+        //? Salary Calculation Function
+        function SalaryCalculation($facSal, $salPerDay, $att)
+        {
+
+            $monthlySal = $salPerDay * $att;
+            $da = 46;
+            if ($att == 0) {
+                //echo "0";
+                return 0;
+            }
+            $grossSal = $monthlySal + ($facSal * $da) / 100;
+            $pf = ($grossSal * 12) / 100;
+            $pt = 200;
+            $newSal = ceil($grossSal - ($pf + $pt));
+            //echo ($newSal);
+        }
+
+
+        payroll($conn, $facSal, $currMonth, $facAtt);
 
 
 
@@ -195,6 +195,7 @@ if (!isset($_SESSION['logedin'])) {
                     <th scope="col">Sno.</th>
                     <th scope="col">Name</th>
                     <th scope="col">Pay Month</th>
+                    <th scope="col">Pay Date</th>
                     <th scope="col">Pay Ammount </th>
                     <th scope="col">Year</th>
                     <th scope="col">Status</th>
@@ -203,16 +204,20 @@ if (!isset($_SESSION['logedin'])) {
             </thead>
             <tbody>
                 <?php
-                $sql = 'select *from faculty';
+                $sql = 'select *from payroll';
                 $result = mysqli_query($conn, $sql);
                 while ($row = mysqli_fetch_assoc($result)) {
                     echo "   <tr>
-            <td>" . $row['name'] . "</td>
-            <td>  </td>
-            <td> </td>
-            <td>  </td>
-            <td> </td>
-            <td> </td>
+            <td>" . $row['slNo'] . "</td>
+            <td>" . $row['name'] . "  </td>
+            <td>" . $row['payMonth'] . " </td>
+            <td>" . $row['payMonth'] . " </td>
+            <td> " . $row['payAmount'] . " </td>
+            <td>" . $row['year'] . " </td>
+            <td><select name='status'>
+            <option value ='0' >Pending</option>
+            <option value ='1' >Paid</option>
+            </select> </td>
         
           </tr>";
                 }
