@@ -59,10 +59,14 @@ if (!isset($_SESSION['logedin'])) {
             <form action="Attendance.php" method="post" >
             <label for="year">Year</label>
             <select name="year" id="year">
-                <option value="2021">2021</option>
-                <option value="2022">2022</option>
-                <option value="2023">2023</option>
-                <option value="2024">2024</option>
+            <?php
+                            $sql = "select Distinct year from attendance";
+                            $result = mysqli_query($conn,$sql);
+                            
+                            while($row = mysqli_fetch_assoc($result)){
+                                echo "<option value=".$row['year'].">" .$row['year']."</option>";
+                            }
+                        ?>
 
             </select>
             <button type="submit" class='btn btn-primary '>Confirm</button>

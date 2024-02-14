@@ -68,7 +68,7 @@ if (!isset($_SESSION['logedin'])) {
                             $result = mysqli_query($conn,$sql);
                             
                             while($row = mysqli_fetch_assoc($result)){
-                                echo "<option value="."$row['year']".">" ." $row['year'] " ."</option>";
+                                echo "<option value=".$row['year'].">" .$row['year']."</option>";
                             }
                         ?>
                     </select>
