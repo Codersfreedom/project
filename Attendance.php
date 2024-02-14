@@ -28,13 +28,19 @@ if (!isset($_SESSION['logedin'])) {
 <style>
     select {
         width: 70px;
-        height: 30px;
+        height: 35px;
         border-radius: 3px;
         padding: 5px;
     }
 
     #year {
         margin-left: 10px;
+    }
+    form {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 15px;
     }
   
 </style>
@@ -53,7 +59,10 @@ if (!isset($_SESSION['logedin'])) {
             <form action="Attendance.php" method="post" >
             <label for="year">Year</label>
             <select name="year" id="year">
-                <option value="2020">2021</option>
+                <option value="2021">2021</option>
+                <option value="2022">2022</option>
+                <option value="2023">2023</option>
+                <option value="2024">2024</option>
 
             </select>
             <button type="submit" class='btn btn-primary '>Confirm</button>
@@ -62,9 +71,17 @@ if (!isset($_SESSION['logedin'])) {
 
     </div>
     <div class="container p-5 mt-5 col-12 text-nowrap text-center">
-    <php
+    <?php
+    
+            $year = date('Y');
+    
+            if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+                if (isset($_POST['year'])) {
+                    $year = $_POST['year'];
+                    
+                }
 
-
+            }
     ?>
         <table class="table" id="myTable">
             <thead>
@@ -82,7 +99,7 @@ if (!isset($_SESSION['logedin'])) {
             </thead>
             <tbody>
                 <?php
-                $sql = 'SELECT faculty.name , attendance.* from faculty INNER JOIN attendance ON faculty.fac_id=attendance.fac_id';
+                $sql = "SELECT faculty.name , attendance.* from faculty INNER JOIN attendance ON faculty.fac_id=attendance.fac_id where attendance.year= $year";
                 $result = mysqli_query($conn, $sql);
                 while ($row = mysqli_fetch_assoc($result)) {
                     echo "   <tr>
