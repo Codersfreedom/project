@@ -61,7 +61,7 @@ if (!isset($_SESSION['logedin'])) {
             </div>
 
         </div>
-        <div class="container p-5 mt-5 text-nowrap text-center ">
+        <div class="container p-5 mt-5  text-nowrap text-center ">
             <?php
             //? Current Month
             $currMonth = 2;
@@ -188,7 +188,7 @@ if (!isset($_SESSION['logedin'])) {
             }
 
             $calMonth = $currMonth - 1;
-            $payrollExistSql = "SELECT faculty.name , payroll.* from faculty inner join payroll on faculty.fac_id = payroll.fac_id WHERE payMonth=$calMonth and year=$currYear";
+            $payrollExistSql = "select *from payroll where payMonth = $calMonth";
             $payrollExistResult = mysqli_query($conn, $payrollExistSql);
             if (mysqli_num_rows($payrollExistResult) < 1) {
                 payroll($conn, $facSal, $currMonth, $facAtt);
@@ -217,7 +217,7 @@ if (!isset($_SESSION['logedin'])) {
                 </thead>
                 <tbody>
                     <?php
-                    $sql = 'select *from payroll order by slNo asc';
+                    $sql = "SELECT faculty.name as faculty , payroll.* from faculty inner join payroll on faculty.fac_id = payroll.fac_id WHERE payroll.payMonth= $calMonth and payroll.year=$currYear order by payroll.slNo asc";
                     $result = mysqli_query($conn, $sql);
                     $sr = 1;
                     while ($row = mysqli_fetch_assoc($result)) {
@@ -228,7 +228,7 @@ if (!isset($_SESSION['logedin'])) {
                         
             <td>" . $sr . "</td>
             <td>  " . $row['fac_id'] . " <input type='hidden' name='faculty'value='" . $row['fac_id'] . "'> </td>
-            <td>" . $row['name'] . " </td>
+            <td>" . $row['faculty'] . " </td>
             <td>" . date_format($month, "F") . " </td>
             <td> <input type='datetime-local' name='date'value = '" . $row['pay_date'] . "' id='date'> </td>
             <td> &#8377; " . $row['payAmount'] . "</td>
@@ -264,30 +264,6 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
 
 ?>
 </body>
-<script>
-
-
-    // const editBtn = document.querySelectorAll('.edit');
-    // editBtn.forEach((eb) => {
-    //     eb.addEventListener('click', (e) => {
-    //         const date = document.querySelector('#date').value;
-    //         const status = document.querySelector('#status').value;
-    //         //updateData(date,status);
-           
-    //         var data = { 'date': date, 'status': status };
-    //         $.ajax({
-    //             type: "POST",
-    //             url: "Payroll.php",
-    //             data: data,
-    //             success: function (data) {
-    //                 console.log(data);
-    //             }
-    //         });
-    //     })
-
-    // })
-</script>
-
 
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
