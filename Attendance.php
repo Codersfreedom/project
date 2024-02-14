@@ -50,11 +50,14 @@ if (!isset($_SESSION['logedin'])) {
     
     <div class="container d-flex my-5 pt-4 align-items-center justify-content-center">
         <div class="year-box">
+            <form action="Attendance.php" method="post" >
             <label for="year">Year</label>
             <select name="year" id="year">
                 <option value="2020">2021</option>
 
             </select>
+            <button type="submit" class='btn btn-primary '>Confirm</button>
+            </form>
         </div>
 
     </div>

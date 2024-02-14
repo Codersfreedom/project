@@ -28,13 +28,20 @@ if (!isset($_SESSION['logedin'])) {
 <style>
     select {
         width: 70px;
-        height: 30px;
+        height: 35px;
         border-radius: 3px;
         padding: 5px;
     }
 
     #year {
         margin-left: 10px;
+    }
+
+    form {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 15px;
     }
 
     /* #date{
@@ -53,11 +60,14 @@ if (!isset($_SESSION['logedin'])) {
 
         <div class="container d-flex my-5 pt-4 align-items-center justify-content-center">
             <div class="year-box">
-                <label for="year">Year</label>
-                <select name="year" id="year">
-                    <option value="2020">2021</option>
+                <form action="Payroll.php" method="post">
+                    <label for="year">Year</label>
+                    <select name="year" id="year">
+                        <option value="2021">2021</option>
 
-                </select>
+                    </select>
+                    <button type="submit" class='btn btn-primary '>Confirm</button>
+                </form>
             </div>
 
         </div>
@@ -195,9 +205,14 @@ if (!isset($_SESSION['logedin'])) {
             }
             // payroll($conn, $facSal, $currMonth, $facAtt);
             
+            $year = $currYear;
+            if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+                if (isset($_POST['year'])) {
+                    $year = $_POST['year'];
+                    
+                }
 
-
-
+            }
 
             ?>
             <table class="table" id="myTable">
@@ -217,7 +232,8 @@ if (!isset($_SESSION['logedin'])) {
                 </thead>
                 <tbody>
                     <?php
-                    $sql = "SELECT faculty.name as faculty , payroll.* from faculty inner join payroll on faculty.fac_id = payroll.fac_id WHERE payroll.payMonth= $calMonth and payroll.year=$currYear order by payroll.slNo asc";
+
+                    $sql = "SELECT faculty.name as faculty , payroll.* from faculty inner join payroll on faculty.fac_id = payroll.fac_id WHERE payroll.payMonth= $calMonth and payroll.year=$year order by payroll.slNo asc";
                     $result = mysqli_query($conn, $sql);
                     $sr = 1;
                     while ($row = mysqli_fetch_assoc($result)) {
@@ -249,20 +265,25 @@ if (!isset($_SESSION['logedin'])) {
                 </tbody>
             </table>
         </div>
-        
+
     </div>
-<?php
-if($_SERVER['REQUEST_METHOD']=='POST'){
-    $facId = $_POST['faculty'];
-    $date = $_POST['date'];
-    $status = $_POST['status'];
-   
-    $sql = "UPDATE `payroll` SET `pay_date`='$date',`status`='$status' WHERE `fac_id` ='$facId'" ;
-    mysqli_query($conn,$sql);
+    <?php
+    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+        if (isset($_POST['faculty']) && isset($_POST['date']) && isset($_POST['status'])) {
 
-}
+            $facId = $_POST['faculty'];
+            $date = $_POST['date'];
+            $status = $_POST['status'];
+            $sql = "UPDATE `payroll` SET `pay_date`='$date',`status`='$status' WHERE `fac_id` ='$facId'";
+            mysqli_query($conn, $sql);
+        }
 
-?>
+
+
+
+    }
+
+    ?>
 </body>
 
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
