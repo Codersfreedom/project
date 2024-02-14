@@ -238,6 +238,12 @@ if (!isset($_SESSION['logedin'])) {
                     $sr = 1;
                     while ($row = mysqli_fetch_assoc($result)) {
                         $month = date_create_from_format("m", $row['payMonth']);
+                        $date= date_parse($row['pay_date']);
+                        $monthNo=$date['month']<10 ? "0".$date['month'] : $date['month'];
+                        $day=$date['day']<10 ? "0".$date['day'] : $date['day'];
+                        $Date=$date['year']."-".$monthNo."-".$day;
+                        $time=$date['hour'].":".$date['minute'];
+                        echo $monthNo;
                         echo "   <tr>
                         
                         <form action='Payroll.php' method='post'>
@@ -246,12 +252,12 @@ if (!isset($_SESSION['logedin'])) {
             <td>  " . $row['fac_id'] . " <input type='hidden' name='faculty'value='" . $row['fac_id'] . "'> </td>
             <td>" . $row['faculty'] . " </td>
             <td>" . date_format($month, "F") . " </td>
-            <td> <input type='datetime-local' name='date'value = '" . $row['pay_date'] . "' id='date'> </td>
+            <td> <input type='datetime-local' name='date' value = '".$Date."T".$time."' id='date'> </td>
             <td> &#8377; " . $row['payAmount'] . "</td>
             <td>" . $row['year'] . " </td>
             <td><select id='status' name='status'>
             <option value ='0' >Pending</option>
-            <option value ='1' >Paid</option>
+            <option value ='1'";echo $row['status']==1? 'selected':''; echo" >Paid</option>
             </select> </td>
              
         <td> <button type='submit' class = 'edit btn btn-sm btn-primary' name = 'edit'>Update</button>  </td>
