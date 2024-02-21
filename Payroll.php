@@ -248,7 +248,9 @@ if (!isset($_SESSION['logedin'])) {
                         $monthNo = $date['month'] < 10 ? "0" . $date['month'] : $date['month'];
                         $day = $date['day'] < 10 ? "0" . $date['day'] : $date['day'];
                         $Date = $date['year'] . "-" . $monthNo . "-" . $day;
-                        $time = $date['hour'] . ":" . $date['minute'];
+                        $hour=$date['hour']<10?"0".$date['hour']:$date['hour'];
+                        $minute=$date['minute']<10?"0".$date['minute']:$date['minute'];
+                        $time = $hour.":" .$minute;
                         echo $monthNo;
                         echo "   <tr>
                         
