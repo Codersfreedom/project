@@ -128,7 +128,7 @@ if (!isset($_SESSION['logedin'])) {
     </div>
     <!-- Table to display data -->
 
-    <div class="container p-5">
+    <div class="container p-5 text-center text-nowrap">
 
       <table class="table" id="myTable">
         <thead>

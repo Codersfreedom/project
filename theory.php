@@ -176,7 +176,7 @@ if ($insert) {
 
 </div>
 
-    <div class="container d-flex justify-content-center mt-5 p-5">
+    <div class="container d-flex justify-content-center   mt-5 p-5">
 
       <?php
       include 'partials/Sub_allot_modal.php';
@@ -245,15 +245,15 @@ if ($insert) {
 
     <!-- Table to display data -->
 
-    <div class="container p-5">
+    <div class="container d-flex justify-content-center align-items-center p-5 text-center text-nowrap">
 
       <table class="table" id="myTable">
         <thead>
-          <tr>
+          <tr >
 
             <th scope="col">Faculty Id</th>
             <th scope="col">Subject Code</th>
-            <th scope="col">Assign</th>
+            <th class="text-center" scope="col">Assign</th>
             <th scope="col">Semester</th>
             <th scope="col">Action</th>
 

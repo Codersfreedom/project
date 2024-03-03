@@ -84,7 +84,14 @@
       <li class="sidebar-item">
         <a class="sidebar-link waves-effect waves-dark sidebar-link" href="Attendance.php" aria-expanded="false"><i class="mdi mdi-chart-areaspline"></i
                 ><span class="hide-menu">Attendance</span></a>
-      </li>'
+      </li>
+      
+      <li class="sidebar-item">
+      <a class="sidebar-link waves-effect waves-dark sidebar-link" href="Increament_status.php" aria-expanded="false"><i class="mdi mdi-relative-scale"></i
+              ><span class="hide-menu">Increament</span></a>
+    </li>
+      
+    '
 
 
           ;

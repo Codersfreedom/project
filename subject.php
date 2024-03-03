@@ -207,7 +207,7 @@ session_start();
   </div>
   <!-- Table to display data -->
 
-  <div class="container p-5">
+  <div class="container p-5 text-nowrap text-center">
 
     <table class="table" id="myTable">
       <thead>

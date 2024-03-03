@@ -293,7 +293,7 @@ if (!isset($_SESSION['logedin'])) {
 
     ?>
 </div>
-    <div class="container d-flex justify-content-center mt-5 p-5">
+    <div class="container d-flex justify-content-center mt-5  align-items-center">
       <?php include 'partials/faculty_modal.php' ?>
 
     </div>
@@ -306,7 +306,7 @@ if (!isset($_SESSION['logedin'])) {
 
     <!-- Table to display data -->
 
-    <div class="container p-5">
+    <div class="container d-flex justify-content-center align-items-center  pl-5 text-nowrap text-center">
 
       <table class="table" id="myTable">
         <thead>
@@ -320,6 +320,7 @@ if (!isset($_SESSION['logedin'])) {
             <th scope="col">Experience</th>
             <th scope="col">JoinAt</th>
             <th scope="col">Basic</th>
+            <th scope="col">Increament</th>
             <th scope="col">Action</th>
 
           </tr>
@@ -342,6 +343,7 @@ if (!isset($_SESSION['logedin'])) {
                 <td>" . $row['experience'] . "</td>
                 <td>" . $row['joinAt'] . "</td>
                 <td>" . $row['basic_salary'] . "</td>
+                <td>&#8377; " . $row['increament_ammount'] . "</td>
                 <td><button class = 'edit btn btn-sm btn-primary' name = 'edit'> <a class = 'text-light'href='partials/fac_update.php?updateid=" . $row['fac_id'] . "'>Update</a></button>  <button class='delete btn btn-sm btn-primary' id=d" . $row['fac_id'] . ">Delete</button>  </td>
             
               </tr>";
@@ -413,7 +415,7 @@ if (!isset($_SESSION['logedin'])) {
         if (confirm("Are you sure you want to delete this note!")) {
           console.log("yes");
           window.location = `teacher.php?delete=${sno}`;
-          // TODO: Create a form and use post request to submit a form
+          
         }
         else {
           console.log("no");
