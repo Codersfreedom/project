@@ -350,6 +350,12 @@ require 'partials/dbconnect.php';
                 aria-expanded="false"><i class="mdi mdi-relative-scale"></i><span
                   class="hide-menu">Increament</span></a>
             </li>
+
+            <li class="sidebar-item">
+              <a class="sidebar-link waves-effect waves-dark sidebar-link" href="Refund.php"
+                aria-expanded="false"><i class="mdi mdi-receipt"></i><span
+                  class="hide-menu">Refund</span></a>
+            </li>
           </ul>
         </nav>
         <!-- End Sidebar navigation -->
@@ -480,13 +486,26 @@ require 'partials/dbconnect.php';
           </div>
 
           <div class="col-md-6 col-lg-2 col-xlg-3">
-            <a href="Increament_status.php">
+            <a href="Increment_status.php">
               <div class="card card-hover">
                 <div class="box bg-info text-center">
                   <h1 class="font-light text-white">
                     <i class="mdi mdi-relative-scale"></i>
                   </h1>
-                  <h6 class="text-white">Increament </h6>
+                  <h6 class="text-white">Increment </h6>
+                </div>
+              </div>
+            </a>
+          </div>
+
+          <div class="col-md-6 col-lg-2 col-xlg-3">
+            <a href="Refund.php">
+              <div class="card card-hover">
+                <div class="box bg-cyan text-center">
+                  <h1 class="font-light text-white">
+                    <i class="mdi mdi-receipt"></i>
+                  </h1>
+                  <h6 class="text-white">Refund </h6>
                 </div>
               </div>
             </a>

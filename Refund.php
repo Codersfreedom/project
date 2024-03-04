@@ -11,7 +11,7 @@ if (!isset($_SESSION['logedin'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>increment Status</title>
+    <title>Refund</title>
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
         integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
@@ -33,6 +33,9 @@ if (!isset($_SESSION['logedin'])) {
         padding: 5px;
         text-align: center;
     }
+    select{
+        text-align: center;
+    }
 </style>
 
 <body>
@@ -48,38 +51,38 @@ if (!isset($_SESSION['logedin'])) {
 
             <table class="table" id="myTable">
                 <thead>
-                    <tr>
-                        <th scope="col">Sno.</th>
-                        <th scope="col">Id</th>
-                        <th scope="col">Name</th>
-                        <th scope="col">increment amount</th>
-                        <th scope="col">Status</th>
-                        <th scope="col">Active</th>
+                    <tr >
+                        <th class="text-center" scope="col">Sno.</th>
+                        <th class="text-center" scope="col">Id</th>
+                        <th class="text-center" scope="col">Name</th>
+                        <th class="text-center" scope="col">Refund amount</th>
+                        <th class="text-center" scope="col">Refund Status</th>
+                        <th class="text-center" scope="col">Action</th>
 
                     </tr>
                 </thead>
                 <tbody>
                     <?php
 
-                    $sql = "select fac_id, name, increment_amount,status from faculty where status=0 ";
+                    $sql = "select  faculty.name, tax.*  from faculty inner join  tax on faculty.fac_id = tax.fac_id  ";
                     $result = mysqli_query($conn, $sql);
                     $sr = 1;
                     while ($row = mysqli_fetch_assoc($result)) {
 
                         echo "   <tr>
                         
-                        <form action='increment_status.php' method='post'>
-                        
+                        <form action='Refund.php' method='post'>
+                        <input type ='hidden' name='status' value='".$row['refund_status']."' >
             <td>" . $sr . "</td>
             <td>  " . $row['fac_id'] . " <input type='hidden' name='faculty'value='" . $row['fac_id'] . "'> </td>
             <td>" . $row['name'] . " </td>
            
-            <td> &#8377; " . $row['increment_amount'] . " <input type='hidden' name='increment'value='" . $row['increment_amount'] . "'</td>
+            <td> &#8377; " . $row['refund_amount'] . " <input type='hidden' name='refund_amount'value='" . $row['refund_amount'] . "'</td>
             <td><select id='status' name='status'>
-            <option value ='0' >Not Approved</option>
+            <option value ='0' >Pending</option>
             <option value ='1'";
-                        echo $row['status'] == 1 ? 'selected' : '';
-                        echo " >Approved</option>
+                        echo $row['refund_status'] == 1 ? 'selected' : '';
+                        echo " >Paid</option>
             </select> </td>
              
         <td> <button type='submit' class = 'edit btn btn-sm btn-primary' name = 'edit'>Update</button>  </td>
@@ -99,12 +102,12 @@ if (!isset($_SESSION['logedin'])) {
         <?php
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
-            if (isset($_POST['faculty']) && isset($_POST['increment']) && isset($_POST['status'])) {
+            if (isset($_POST['faculty']) && isset($_POST['refund_amount']) && isset($_POST['status'])) {
 
                 $facId = $_POST['faculty'];
-                $amount = $_POST['increment'];
+                $amount = $_POST['refund_amount'];
                 $status = $_POST['status'];
-                $sql = "UPDATE `faculty` SET `increment_amount`=0,`status`=1 WHERE `fac_id` ='$facId'";
+                $sql = "UPDATE `tax` SET `refund_amount`=0,`refund_status`=$status WHERE `fac_id` ='$facId'";
                 mysqli_query($conn, $sql);
             }
 

@@ -87,9 +87,14 @@
       </li>
       
       <li class="sidebar-item">
-      <a class="sidebar-link waves-effect waves-dark sidebar-link" href="Increament_status.php" aria-expanded="false"><i class="mdi mdi-relative-scale"></i
-              ><span class="hide-menu">Increament</span></a>
+      <a class="sidebar-link waves-effect waves-dark sidebar-link" href="Increment_status.php" aria-expanded="false"><i class="mdi mdi-relative-scale"></i
+              ><span class="hide-menu">Increment</span></a>
     </li>
+
+    <li class="sidebar-item">
+    <a class="sidebar-link waves-effect waves-dark sidebar-link" href="Refund.php" aria-expanded="false"><i class="mdi mdi-receipt"></i
+            ><span class="hide-menu">Refund</span></a>
+  </li>
       
     '
 

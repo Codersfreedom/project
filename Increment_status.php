@@ -4,13 +4,14 @@ if (!isset($_SESSION['logedin'])) {
     header("location: index.php");
 }
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Attendance</title>
+    <title>increment Status</title>
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
         integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
@@ -24,25 +25,14 @@ if (!isset($_SESSION['logedin'])) {
 
     <link rel="icon" type="image/png" sizes="16x16" href="./assets/images/favicon.png" />
 </head>
-
 <style>
     select {
-        width: 70px;
+
         height: 35px;
         border-radius: 3px;
         padding: 5px;
+        text-align: center;
     }
-
-    #year {
-        margin-left: 10px;
-    }
-    form {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        gap: 15px;
-    }
-  
 </style>
 
 <body>
@@ -53,78 +43,78 @@ if (!isset($_SESSION['logedin'])) {
         require 'partials/dbconnect.php';
         include 'aside.php';
         ?>
-    
-    <div class="container d-flex my-5 pt-4 align-items-center justify-content-center">
-        <div class="year-box">
-            <form action="Attendance.php" method="post" >
-            <label for="year">Year</label>
-            <select name="year" id="year">
-            <?php
-                            $sql = "select Distinct year from attendance";
-                            $result = mysqli_query($conn,$sql);
-                            
-                            while($row = mysqli_fetch_assoc($result)){
-                                echo "<option value=".$row['year'].">" .$row['year']."</option>";
-                            }
-                        ?>
 
-            </select>
-            <button type="submit" class='btn btn-primary '>Confirm</button>
-            </form>
-        </div>
+        <div class="container p-5 mt-5 text-nowrap text-center ">
 
-    </div>
-    <div class="container p-5 mt-5 col-12 text-nowrap text-center">
-    <?php
-    
-            $year = date('Y');
-    
-            if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-                if (isset($_POST['year'])) {
-                    $year = $_POST['year'];
-                    
-                }
+            <table class="table" id="myTable">
+                <thead>
+                    <tr >
+                        <th class="text-center" scope="col">Sno.</th>
+                        <th class="text-center" scope="col">Id</th>
+                        <th class="text-center" scope="col">Name</th>
+                        <th class="text-center" scope="col">increment amount</th>
+                        <th class="text-center" scope="col">Status</th>
+                        <th class="text-center" scope="col">Action</th>
 
-            }
-    ?>
-        <table class="table" id="myTable">
-            <thead>
-                <tr>
-                    <th class="text-center" scope="col">Sno.</th>
-                    <th class="text-center" scope="col">Month</th>
-                    <th class="text-center" scope="col">Year</th>
-                    <th class="text-center" scope="col">Id</th>
-                    <th class="text-center" scope="col">Name</th>
-                    <th class="text-center" scope="col">In-Time</th>
-                    <th class="text-center" scope="col">Out-Time</th>
-                    <th class="text-center" scope="col">Attendance</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php
 
-                </tr>
-            </thead>
-            <tbody>
-                <?php
-                $sql = "SELECT faculty.name , attendance.* from faculty INNER JOIN attendance ON faculty.fac_id=attendance.fac_id where attendance.year= $year";
-                $result = mysqli_query($conn, $sql);
-                while ($row = mysqli_fetch_assoc($result)) {
-                    echo "   <tr>
-            <td>" . $row['sno'] . "</td>
-            <td>" . $row['month'] . "  </td>
-            <td>" . $row['year'] . " </td>
-            <td>" . $row['fac_id'] . " </td>
+                    $sql = "select fac_id, name, increment_amount,status from faculty where status=0 ";
+                    $result = mysqli_query($conn, $sql);
+                    $sr = 1;
+                    while ($row = mysqli_fetch_assoc($result)) {
+
+                        echo "   <tr>
+                        
+                        <form action='increment_status.php' method='post'>
+                        
+            <td>" . $sr . "</td>
+            <td>  " . $row['fac_id'] . " <input type='hidden' name='faculty'value='" . $row['fac_id'] . "'> </td>
             <td>" . $row['name'] . " </td>
-            <td> " . $row['inTime'] . " </td>
-            <td>" . $row['outTime'] . " </td>
-            <td>" . $row['attendance'] . " </td>
-        
-        
-          </tr>";
-                }
-                ?>
+           
+            <td> &#8377; " . $row['increment_amount'] . " <input type='hidden' name='increment'value='" . $row['increment_amount'] . "'</td>
+            <td><select id='status' name='status'>
+            <option value ='0' >Not Approved</option>
+            <option value ='1'";
+                        echo $row['status'] == 1 ? 'selected' : '';
+                        echo " >Approved</option>
+            </select> </td>
+             
+        <td> <button type='submit' class = 'edit btn btn-sm btn-primary' name = 'edit'>Update</button>  </td>
+         </form>
+        </tr>";
+                        $sr++;
+                    }
+                    ?>
 
 
-            </tbody>
-        </table>
-    </div>
+                </tbody>
+            </table>
+
+        </div>
+        <!-- update logic handle here -->
+
+        <?php
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+
+            if (isset($_POST['faculty']) && isset($_POST['increment']) && isset($_POST['status'])) {
+
+                $facId = $_POST['faculty'];
+                $amount = $_POST['increment'];
+                $status = $_POST['status'];
+                $sql = "UPDATE `faculty` SET `increment_amount`=0,`status`=1 WHERE `fac_id` ='$facId'";
+                mysqli_query($conn, $sql);
+            }
+
+
+
+
+        }
+
+        ?>
+
     </div>
 </body>
 
@@ -168,16 +158,16 @@ if (!isset($_SESSION['logedin'])) {
 
     $(document).ready(function () {
         $('#myTable').DataTable({
-            
+            "lengthMenu": [[100, "All", 50, 25], [100, "All", 50, 25]],
             "aaSorting": [],
-            dom: 'Blfrtip',
+            dom: 'Bfrtip',
 
             buttons: [
                 'excel',
 
                 {
                     extend: 'pdfHtml5',
-                    orientation: "landscape",
+                    orientation: "potrait",
                     downlode: 'open'
                 },
                 'print'

@@ -37,18 +37,16 @@ if (!isset($_SESSION['logedin'])) {
 
 <body>
 
-<style>
- 
-.alert{
-  width: 400px;
-  /* margin-left: 150px; */
-  left: 520px;
-  
+  <style>
+    .alert {
+      width: 400px;
+      /* margin-left: 150px; */
+      left: 520px;
 
-  
-}
 
-</style>
+
+    }
+  </style>
 
   <!-- Inserting Data into faculty table from modal -->
   <div class="wrapper" id="main-wrapper" data-layout="vertical" data-navbarbg="skin5" data-sidebartype="full"
@@ -72,7 +70,12 @@ if (!isset($_SESSION['logedin'])) {
       $email = $_POST['email'];
       $phone = $_POST['ph'];
       $workload = $_POST['workload'];
+      $experience = $_POST['experience'];
+      $basic = $_POST['basic'];
 
+      //? Current Year
+      $currYear = date('y');
+      
       // Check if faculty id already exists or not
     
       $existsql = "SELECT * FROM `faculty` WHERE `fac_id` = '$facid'";
@@ -85,7 +88,8 @@ if (!isset($_SESSION['logedin'])) {
       } else {
 
         // insert into faculty table
-        $sql = "INSERT INTO `faculty`(`fac_id`, `name`, `alias`, `designation`, `phone`, `email`) VALUES ('$facid','$name','$alias','$designation','$phone','$email')";
+        $financial_year = $currYear .'-'.  $currYear + 1;
+        $sql = "INSERT INTO `faculty`(`fac_id`, `name`, `alias`, `designation`, `phone`, `email`,`experience`,`basic_salary`,`financial_year`) VALUES ('$facid','$name','$alias','$designation',$phone,'$email',$experience,$basic,'$financial_year')";
         $result = mysqli_query($conn, $sql);
 
         // insert into totalworkload table
@@ -102,18 +106,21 @@ if (!isset($_SESSION['logedin'])) {
         // insert into fac_status table
         $days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"];
 
-        foreach ($days as $day) {
+        foreach ($days as $day) { 
 
           $sql = "insert into fac_status (day,fac_id,slot1,slot2,slot3,slot4,slot5,slot6,slot7) values('$day','$facid',1,1,1,1,1,1,1)";
           mysqli_query($conn, $sql);
 
 
         }
+        // insert into tax table
+    
+        $taxInsertSql = "insert into tax (fac_id,tax,total_pay,year,refund_amount) values('$facid',0,0,$currYear,0)";
+        $insertTaxRes = mysqli_query($conn, $taxInsertSql);
 
 
 
-
-        if ($result && $totalWlRes) {
+        if ($result && $totalWlRes && $eachWlRes && $insertTaxRes) {
           $insert = true;
 
 
@@ -135,7 +142,7 @@ if (!isset($_SESSION['logedin'])) {
       $FacExistsSql = "Select distinct year from sub_allot join faculty on sub_allot.fac_id= faculty.fac_id where sub_allot.fac_id = '$sno'";
       $FacExistsRes = mysqli_query($conn, $FacExistsSql);
       $FacNum = mysqli_num_rows($FacExistsRes);
-      
+
       //? Getting number of row rows from faculty table
       $FacSql = "SELECT * FROM faculty WHERE fac_id='$sno'";
       $FacRes = mysqli_query($conn, $FacSql);
@@ -197,25 +204,30 @@ if (!isset($_SESSION['logedin'])) {
           $showError = "Can't delete";
           header("location: teacher.php?deletelog='.$ShowError.'");
         }
-      }elseif($FacNumRow>0){
-        
+      } elseif ($FacNumRow > 0) {
+
 
         //? Deleting from totalWorkLoad table
         $DelTwlSql = "Delete from total_wl where fac_id = '$sno'";
         mysqli_query($conn, $DelTwlSql);
 
-        // ?Deleting from Individual workload table
+        //? Deleting from Individual workload table
         $DelInWlSql = "Delete from workload where facId = '$sno'";
         mysqli_query($conn, $DelInWlSql);
 
         //? Deleting from fac_status
-    
         $sql = " Delete from fac_status where fac_id = '$sno'";
         mysqli_query($conn, $sql);
 
+        //? Deleting from tax table
+        $deleteTaxSql = "Delete from tax where fac_id = '$sno'";
+        $DeleteRes = mysqli_query($conn, $deleteTaxSql);
+
         //? Deleting from faculty table
         $DeleteSql = "DELETE FROM `faculty` WHERE `fac_id` = '$sno'";
-        $DeleteRes = mysqli_query($conn, $DeleteSql);
+        mysqli_query($conn, $DeleteSql);
+
+
 
         if ($DeleteRes) {
           $delete = true;
@@ -227,25 +239,25 @@ if (!isset($_SESSION['logedin'])) {
       }
 
     }
-    
+
 
     ?>
 
 
 
 
-<div class="alert ">
+    <div class="alert ">
 
 
 
-    <?php
-    // include 'partials/_header.php';
-    // include 'partials/_nav.php'; 
-    
+      <?php
+      // include 'partials/_header.php';
+      // include 'partials/_nav.php'; 
+      
 
 
-    if ($insert) {
-      echo '<div class="alert alert-success alert-dismissible fade show my-0" role="alert">
+      if ($insert) {
+        echo '<div class="alert alert-success alert-dismissible fade show my-0" role="alert">
     <strong>Inserted successfully.</strong>
     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
     <span aria-hidden="true">&times;</span>
@@ -253,46 +265,46 @@ if (!isset($_SESSION['logedin'])) {
   </div>';
 
 
-    } else if (isset($_GET['insertlog'])) {
-      $insertlog = $_GET['insertlog'];
-      echo '<div class="alert alert-warning alert-dismissible fade show my-0" role="alert">
+      } else if (isset($_GET['insertlog'])) {
+        $insertlog = $_GET['insertlog'];
+        echo '<div class="alert alert-warning alert-dismissible fade show my-0" role="alert">
     <strong>Insertion Failed!</strong> ' . $insertlog . '.
     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
       <span aria-hidden="true">&times;</span>
     </button>
   </div>';
-    } else if (isset($_GET['updatelog']) == true) {
+      } else if (isset($_GET['updatelog']) == true) {
 
-      echo '<div class="alert alert-success alert-dismissible fade show my-0" role="alert">
+        echo '<div class="alert alert-success alert-dismissible fade show my-0" role="alert">
     <strong>Successfully Updated!</strong>
     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
       <span aria-hidden="true">&times;</span>
     </button>
   </div>';
 
-    }
+      }
 
-    if ($delete) {
-      echo '<div class="alert alert-success alert-dismissible fade show my-0" role="alert">
+      if ($delete) {
+        echo '<div class="alert alert-success alert-dismissible fade show my-0" role="alert">
     <strong> successfully Deleted!.</strong>
     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
     <span aria-hidden="true">&times;</span>
     </button>
   </div>';
-    } elseif (isset($_GET['deletelog'])) {
-      $deletelog = $_GET['deletelog'];
-      echo '<div class="alert alert-warning alert-dismissible fade show my-0" role="alert">
+      } elseif (isset($_GET['deletelog'])) {
+        $deletelog = $_GET['deletelog'];
+        echo '<div class="alert alert-warning alert-dismissible fade show my-0" role="alert">
     <strong>Delete Failed!</strong> ' . $deletelog . '.
     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
       <span aria-hidden="true">&times;</span>
     </button>
   </div>';
 
-    }
+      }
 
 
-    ?>
-</div>
+      ?>
+    </div>
     <div class="container d-flex justify-content-center mt-5  align-items-center">
       <?php include 'partials/faculty_modal.php' ?>
 
@@ -312,16 +324,16 @@ if (!isset($_SESSION['logedin'])) {
         <thead>
           <tr>
             <th scope="col">Id</th>
-            <th scope="col">Name</th>
-            <th scope="col">Designation</th>
-            <th scope="col">Alias</th>
-            <th scope="col">Phone</th>
-            <th scope="col">Email</th>
-            <th scope="col">Experience</th>
-            <th scope="col">JoinAt</th>
-            <th scope="col">Basic</th>
-            <th scope="col">Increament</th>
-            <th scope="col">Action</th>
+            <th class="text-center" scope="col">Name</th>
+            <th class="text-center" scope="col">Designation</th>
+            <th class="text-center" scope="col">Alias</th>
+            <th class="text-center" scope="col">Phone</th>
+            <th class="text-center" scope="col">Email</th>
+            <th class="text-center" scope="col">Experience</th>
+            <th class="text-center" scope="col">JoinAt</th>
+            <th class="text-center" scope="col">Basic</th>
+            <th class="text-center" scope="col">Increment</th>
+            <th class="text-center" scope="col">Action</th>
 
           </tr>
         </thead>
@@ -343,7 +355,7 @@ if (!isset($_SESSION['logedin'])) {
                 <td>" . $row['experience'] . "</td>
                 <td>" . $row['joinAt'] . "</td>
                 <td>" . $row['basic_salary'] . "</td>
-                <td>&#8377; " . $row['increament_ammount'] . "</td>
+                <td>&#8377; " . $row['increment_amount'] . "</td>
                 <td><button class = 'edit btn btn-sm btn-primary' name = 'edit'> <a class = 'text-light'href='partials/fac_update.php?updateid=" . $row['fac_id'] . "'>Update</a></button>  <button class='delete btn btn-sm btn-primary' id=d" . $row['fac_id'] . ">Delete</button>  </td>
             
               </tr>";
@@ -415,7 +427,7 @@ if (!isset($_SESSION['logedin'])) {
         if (confirm("Are you sure you want to delete this note!")) {
           console.log("yes");
           window.location = `teacher.php?delete=${sno}`;
-          
+
         }
         else {
           console.log("no");
