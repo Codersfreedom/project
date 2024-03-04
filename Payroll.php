@@ -87,7 +87,7 @@ if (!isset($_SESSION['logedin'])) {
         <div class="container p-5 mt-5  text-nowrap text-center ">
             <?php
             //? Current Month
-            $currMonth = 2;
+            $currMonth = date('m');
             //? Current Year
             $currYear = date('Y');
             //? getting fac_id from faculty table
@@ -129,7 +129,7 @@ if (!isset($_SESSION['logedin'])) {
             {
 
                 //* Current month taking
-            
+            echo $currMonth;
 
                 foreach ($facSal as $fac => $fs) {
 
@@ -191,6 +191,52 @@ if (!isset($_SESSION['logedin'])) {
                     return false;
             }
 
+            //? Tax Calculation Function 
+            /**
+             * @param $conn
+             * @param $facSal is basic salary of faculty
+             * @param $fac_id is faculty id
+             */
+            function taxCalculation($facSal, $fac_id, $conn){
+                $gross=$facSal+($facSal*46)/100;
+                $pf=($gross*12)/100;
+                $pt=200;
+                $taxable=($gross-($pf+$pt))*12;
+                $tax=0;
+                if($taxable>300000 && $taxable<=600000){
+                    $tax=($taxable-300000)*5/100;
+                }
+                elseif($taxable>600000 && $taxable<=900000){
+                    $tax=15000+($taxable-600000)*10/100;
+                }
+                elseif($taxable>900000 && $taxable<=1200000){
+                    $tax=45000+($taxable-900000)*15/100;
+                }
+                elseif($taxable>1200000 && $taxable<=1500000){
+                    $tax=90000+($taxable-1200000)*20/100;
+                }
+                elseif($taxable>1500000){
+                    $tax=150000+($taxable-1500000)*30/100;
+                }
+
+                $monthlyTax=$tax/12;
+                //? Fetching tax from database
+                $taxSql="SELECT tax from tax where fac_id='$fac_id'";
+                $taxResult=mysqli_query($conn,$taxSql);
+                $taxRow=mysqli_fetch_assoc($taxResult);
+                $totalTax=round($taxRow['tax']+ $monthlyTax);
+
+                //? Monthly Tax update in database
+                $taxUpdateSql="UPDATE tax SET tax=$totalTax WHERE fac_id='$fac_id'";
+                mysqli_query($conn,$taxUpdateSql);
+                return $monthlyTax;
+                // echo $totalTax;
+            
+            }
+
+
+
+
             //? Salary Calculation Function
             function SalaryCalculation($conn, $fac_id, $facSal, $salPerDay, $att, $calMonth, $calYear)
             {
@@ -205,8 +251,14 @@ if (!isset($_SESSION['logedin'])) {
                 $pf = ($grossSal * 12) / 100;
                 $pt = 200;
                 $newSal = ceil($grossSal - ($pf + $pt));
+                $tax = taxCalculation($facSal, $fac_id, $conn);
+                $newSal = $newSal - $tax;
                 $payrollSql = "INSERT INTO payroll (fac_id,payAmount,payMonth,year,status) VALUES ('$fac_id',$newSal,$calMonth,$calYear,0)";
                 $payrollResult = mysqli_query($conn, $payrollSql);
+                if($payrollResult){
+                    //? Fetching total pay from tax table
+                    
+                }
                 //echo ($newSal);
             }
 
@@ -236,7 +288,7 @@ if (!isset($_SESSION['logedin'])) {
                         <th scope="col">Name</th>
                         <th scope="col">Pay Month</th>
                         <th scope="col">Pay Date</th>
-                        <th scope="col">Pay Ammount</th>
+                        <th scope="col">Pay Amount</th>
                         <th scope="col">Year</th>
                         <th scope="col">Status</th>
                         <th scope="col">Action</th>
@@ -246,7 +298,7 @@ if (!isset($_SESSION['logedin'])) {
                 <tbody>
                     <?php
 
-                    $sql = "SELECT faculty.name as faculty , payroll.* from faculty inner join payroll on faculty.fac_id = payroll.fac_id WHERE payroll.payMonth= $calMonth and payroll.year=$year order by payroll.slNo asc";
+                    $sql = "SELECT faculty.name as faculty , payroll.* from faculty inner join payroll on faculty.fac_id = payroll.fac_id WHERE payroll.year=$year order by payroll.slNo asc";
                     $result = mysqli_query($conn, $sql);
                     $sr = 1;
                     while ($row = mysqli_fetch_assoc($result)) {
@@ -258,11 +310,11 @@ if (!isset($_SESSION['logedin'])) {
                         $hour=$date['hour']<10?"0".$date['hour']:$date['hour'];
                         $minute=$date['minute']<10?"0".$date['minute']:$date['minute'];
                         $time = $hour.":" .$minute;
-                        echo $monthNo;
                         echo "   <tr>
                         
                         <form action='Payroll.php' method='post'>
-                        
+                        <input type='hidden' name='payAmount' value='" . $row['payAmount'] . "'>
+                        <input type='hidden' name='month' value='" . $row['payMonth'] . "'>
             <td>" . $sr . "</td>
             <td>  " . $row['fac_id'] . " <input type='hidden' name='faculty'value='" . $row['fac_id'] . "'> </td>
             <td>" . $row['faculty'] . " </td>
@@ -292,13 +344,17 @@ if (!isset($_SESSION['logedin'])) {
     </div>
     <?php
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+        
         if (isset($_POST['faculty']) && isset($_POST['date']) && isset($_POST['status'])) {
 
             $facId = $_POST['faculty'];
             $date = $_POST['date'];
             $status = $_POST['status'];
+            $newSal = $_POST['payAmount'];
+            $month = $_POST['month'];
             $sql = "UPDATE `payroll` SET `pay_date`='$date',`status`='$status' WHERE `fac_id` ='$facId'";
-            mysqli_query($conn, $sql);
+            $res=mysqli_query($conn, $sql);
+            
         }
 
 
