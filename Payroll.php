@@ -57,7 +57,7 @@ if (!isset($_SESSION['logedin'])) {
 </style>
 
 <body>
-    <div id="main-wrapper" data-layout="vertical" data-navbarbg="skin5" data-sidebartype="full"
+    <div id="main-wrapper" data-layout="vertical" data-navbar-bg="skin5" data-sidebar-type="full"
         data-sidebar-position="absolute" data-header-position="absolute" data-boxed-layout="full">
         <?php
         include 'header.php';
@@ -71,11 +71,11 @@ if (!isset($_SESSION['logedin'])) {
                     <label for="year">Year</label>
                     <select name="year" id="year">
                         <?php
-                            $sql = "select Distinct year from payroll";
+                            $sql = "select Distinct financial_year from payroll";
                             $result = mysqli_query($conn,$sql);
                             
                             while($row = mysqli_fetch_assoc($result)){
-                                echo "<option value=".$row['year'].">" .$row['year']."</option>";
+                                echo "<option value=".$row['financial_year'].">" .$row['financial_year']."</option>";
                             }
                         ?>
                     </select>
@@ -87,7 +87,8 @@ if (!isset($_SESSION['logedin'])) {
         <div class="container p-5 mt-5  text-nowrap text-center ">
             <?php
             //? Current Month
-            $currMonth = date('m');
+            //TODO: Change the month to current month
+            $currMonth = 3;
             //? Current Year
             $currYear = date('Y');
             //? getting fac_id from faculty table
@@ -129,7 +130,7 @@ if (!isset($_SESSION['logedin'])) {
             {
 
                 //* Current month taking
-            echo $currMonth;
+            // echo $currMonth;
 
                 foreach ($facSal as $fac => $fs) {
 
@@ -197,7 +198,7 @@ if (!isset($_SESSION['logedin'])) {
              * @param $facSal is basic salary of faculty
              * @param $fac_id is faculty id
              */
-            function taxCalculation($facSal, $fac_id, $conn){
+            function taxCalculation($facSal, $fac_id, $conn){ 
                 $gross=$facSal+($facSal*46)/100;
                 $pf=($gross*12)/100;
                 $pt=200;
@@ -234,9 +235,17 @@ if (!isset($_SESSION['logedin'])) {
             
             }
 
+           
 
 
-
+            $currYear=date('Y');
+            $financialYear="";
+            if($currMonth>3){
+                $financialYear=$currYear ."-".$currYear+1;
+            }
+            else{
+                $financialYear=$currYear-1 ."-".$currYear;
+            }
             //? Salary Calculation Function
             function SalaryCalculation($conn, $fac_id, $facSal, $salPerDay, $att, $calMonth, $calYear)
             {
@@ -253,12 +262,10 @@ if (!isset($_SESSION['logedin'])) {
                 $newSal = ceil($grossSal - ($pf + $pt));
                 $tax = taxCalculation($facSal, $fac_id, $conn);
                 $newSal = $newSal - $tax;
-                $payrollSql = "INSERT INTO payroll (fac_id,payAmount,payMonth,year,status) VALUES ('$fac_id',$newSal,$calMonth,$calYear,0)";
+                global $financialYear;
+                $payrollSql = "INSERT INTO payroll (fac_id,payAmount,payMonth,financial_year,status) VALUES ('$fac_id',$newSal,$calMonth,'$financialYear',0)";
                 $payrollResult = mysqli_query($conn, $payrollSql);
-                if($payrollResult){
-                    //? Fetching total pay from tax table
-                    
-                }
+                
                 //echo ($newSal);
             }
 
@@ -297,8 +304,9 @@ if (!isset($_SESSION['logedin'])) {
                 </thead>
                 <tbody>
                     <?php
-
-                    $sql = "SELECT faculty.name as faculty , payroll.* from faculty inner join payroll on faculty.fac_id = payroll.fac_id WHERE payroll.year=$year order by payroll.slNo asc";
+                    $currYear=date('Y');
+                    $financialYear=$currYear-1 ."-".$currYear;
+                    $sql = "SELECT faculty.name as faculty , payroll.* from faculty inner join payroll on faculty.fac_id = payroll.fac_id WHERE payroll.financial_year='$financialYear' order by payroll.slNo asc";
                     $result = mysqli_query($conn, $sql);
                     $sr = 1;
                     while ($row = mysqli_fetch_assoc($result)) {
@@ -319,9 +327,9 @@ if (!isset($_SESSION['logedin'])) {
             <td>  " . $row['fac_id'] . " <input type='hidden' name='faculty'value='" . $row['fac_id'] . "'> </td>
             <td>" . $row['faculty'] . " </td>
             <td>" . date_format($month, "F") . " </td>
-            <td> <input type='datetime-local' name='date' value = '" . $Date . "T" . $time . "' id='date'> </td>
+            <td> <input type='datetime-local' name='date' value = '";echo $row['status']==1? $Date . "T" . $time : "";echo "' id='date'> </td>
             <td> &#8377; " . $row['payAmount'] . "</td>
-            <td>" . $row['year'] . " </td>
+            <td>" . $row['financial_year'] . " </td>
             <td><select id='status' name='status'>
             <option value ='0' >Pending</option>
             <option value ='1'";

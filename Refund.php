@@ -64,7 +64,59 @@ if (!isset($_SESSION['logedin'])) {
                 <tbody>
                     <?php
 
-                    $sql = "select  faculty.name, tax.*  from faculty inner join  tax on faculty.fac_id = tax.fac_id  ";
+                    $currMonth= date('m');
+                    $currYear= date('Y');
+                    $financialYear = $currYear-1 . "-" . $currYear;
+                    $facultyIdSql= "select fac_id from faculty";
+                    $result = mysqli_query($conn, $facultyIdSql);
+                    $facIds=array();
+                    while($row = mysqli_fetch_assoc($result)){
+                        array_push($facIds, $row['fac_id']);
+                    }
+                    if($currMonth > 3){
+                        //? Call the function
+                    }
+                    refundCalculation('C1');
+                    function refundCalculation($facId){
+                        global $conn;
+                        global $financialYear;
+                        $totalPaySql= "Select sum(payAmount) as totalPay from payroll where fac_id = '$facId' and financial_year = '$financialYear'";
+                        $result = mysqli_query($conn, $totalPaySql);
+                        $row = mysqli_fetch_assoc($result);
+                        $totalPay = $row['totalPay'];
+                        $totalTaxSql="Select tax from tax where fac_id = '$facId' and financial_year = '$financialYear'";
+                        $result = mysqli_query($conn, $totalTaxSql);
+                        $row = mysqli_fetch_assoc($result);
+                        $totalTax = $row['tax'];
+                        $annualIncome=$totalPay+$totalTax;
+                        $tax = taxCalculation(670000);
+                        $refundAmount = $totalTax-$tax;
+                        $refundSql = "update tax set refund_amount = $refundAmount where fac_id = '$facId' and financial_year = '$financialYear'";
+                        mysqli_query($conn, $refundSql);
+                        
+                    }
+                    function taxCalculation($totalPay){ 
+                        $tax=0;
+                        if($totalPay>300000 && $totalPay<=600000){
+                            $tax=($totalPay-300000)*5/100;
+                        }
+                        elseif($totalPay>600000 && $totalPay<=900000){
+                            $tax=15000+($totalPay-600000)*10/100;
+                        }
+                        elseif($totalPay>900000 && $totalPay<=1200000){
+                            $tax=45000+($totalPay-900000)*15/100;
+                        }
+                        elseif($totalPay>1200000 && $totalPay<=1500000){
+                            $tax=90000+($totalPay-1200000)*20/100;
+                        }
+                        elseif($totalPay>1500000){
+                            $tax=150000+($totalPay-1500000)*30/100;
+                        }
+                        return $tax;
+                    }
+
+
+                    $sql = "select  faculty.name, tax.*  from faculty inner join  tax on faculty.fac_id = tax.fac_id  where tax.financial_year = '$financialYear'";
                     $result = mysqli_query($conn, $sql);
                     $sr = 1;
                     while ($row = mysqli_fetch_assoc($result)) {
@@ -107,7 +159,7 @@ if (!isset($_SESSION['logedin'])) {
                 $facId = $_POST['faculty'];
                 $amount = $_POST['refund_amount'];
                 $status = $_POST['status'];
-                $sql = "UPDATE `tax` SET `refund_amount`=0,`refund_status`=$status WHERE `fac_id` ='$facId'";
+                $sql = "UPDATE `tax` SET `refund_status`=$status WHERE `fac_id` ='$facId'";
                 mysqli_query($conn, $sql);
             }
 
