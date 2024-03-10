@@ -32,10 +32,18 @@ if (!isset($_SESSION['logedin'])) {
         border-radius: 3px;
         padding: 5px;
         text-align: center;
+        
     }
     select{
         text-align: center;
     }
+    input[type="datetime-local"]{
+        height: 35px;
+        border-radius: 3px;
+        padding: 5px;
+        border: 1px solid #dadada;
+    }
+
 </style>
 
 <body>
@@ -56,6 +64,8 @@ if (!isset($_SESSION['logedin'])) {
                         <th class="text-center" scope="col">Id</th>
                         <th class="text-center" scope="col">Name</th>
                         <th class="text-center" scope="col">Refund amount</th>
+                        <th class="text-center" scope="col">Financial Year</th>
+                        <th class="text-center" scope="col">Refund Date</th>
                         <th class="text-center" scope="col">Refund Status</th>
                         <th class="text-center" scope="col">Action</th>
 
@@ -120,6 +130,15 @@ if (!isset($_SESSION['logedin'])) {
                     $result = mysqli_query($conn, $sql);
                     $sr = 1;
                     while ($row = mysqli_fetch_assoc($result)) {
+                        $month = date_create_from_format("m", $row['refund_month']);
+                        $date = date_parse($row['refund_date']);
+                        $monthNo = $date['month'] < 10 ? "0" . $date['month'] : $date['month'];
+                        $day = $date['day'] < 10 ? "0" . $date['day'] : $date['day'];
+                        $Date = $date['year'] . "-" . $monthNo . "-" . $day;
+                        $hour=$date['hour']<10?"0".$date['hour']:$date['hour'];
+                        $minute=$date['minute']<10?"0".$date['minute']:$date['minute'];
+                        $time = $hour.":" .$minute;
+
 
                         echo "   <tr>
                         
@@ -130,6 +149,8 @@ if (!isset($_SESSION['logedin'])) {
             <td>" . $row['name'] . " </td>
            
             <td> &#8377; " . $row['refund_amount'] . " <input type='hidden' name='refund_amount'value='" . $row['refund_amount'] . "'</td>
+            <td>".$row['financial_year'] ."</td>
+            <td> <input type='datetime-local' name='date' value = '";echo $row['refund_status']==1? $Date . "T" . $time : "";echo "' id='date'> </td>
             <td><select id='status' name='status'>
             <option value ='0' >Pending</option>
             <option value ='1'";
@@ -137,7 +158,7 @@ if (!isset($_SESSION['logedin'])) {
                         echo " >Paid</option>
             </select> </td>
              
-        <td> <button type='submit' class = 'edit btn btn-sm btn-primary' name = 'edit'>Update</button>  </td>
+        <td> <button type='submit' class = 'edit btn btn-sm btn-primary' name = 'edit'"; echo $row['refund_status'] ==1 ? "disabled":'' ; echo " >Update</button>  </td>
          </form>
         </tr>";
                         $sr++;
@@ -153,13 +174,17 @@ if (!isset($_SESSION['logedin'])) {
 
         <?php
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-
+            global $conn;
             if (isset($_POST['faculty']) && isset($_POST['refund_amount']) && isset($_POST['status'])) {
-
+        
                 $facId = $_POST['faculty'];
-                $amount = $_POST['refund_amount'];
+                // $amount = $_POST['refund_amount'];
                 $status = $_POST['status'];
-                $sql = "UPDATE `tax` SET `refund_status`=$status WHERE `fac_id` ='$facId'";
+                $date = $_POST['date'];
+
+                
+
+                $sql = "UPDATE `tax` SET `refund_date`='$date',`refund_status`='$status' WHERE `fac_id` ='$facId'";
                 mysqli_query($conn, $sql);
             }
 
