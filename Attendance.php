@@ -36,13 +36,13 @@ if (!isset($_SESSION['logedin'])) {
     #year {
         margin-left: 10px;
     }
+
     form {
         display: flex;
         justify-content: center;
         align-items: center;
         gap: 15px;
     }
-  
 </style>
 
 <body>
@@ -53,78 +53,134 @@ if (!isset($_SESSION['logedin'])) {
         require 'partials/dbconnect.php';
         include 'aside.php';
         ?>
-    
-    <div class="container d-flex my-5 pt-4 align-items-center justify-content-center">
-        <div class="year-box">
-            <form action="Attendance.php" method="post" >
-            <label for="year">Year</label>
-            <select name="year" id="year">
-            <?php
-                            $sql = "select Distinct year from attendance";
-                            $result = mysqli_query($conn,$sql);
-                            
-                            while($row = mysqli_fetch_assoc($result)){
-                                echo "<option value=".$row['year'].">" .$row['year']."</option>";
-                            }
+
+        <div class="container d-flex my-5 pt-4 align-items-center justify-content-center">
+            <div class="year-box">
+                <form action="Attendance.php" method="post">
+                    <label for="year">Year</label>
+                    <select name="year" id="year">
+                        <?php
+                        $sql = "select Distinct year from attendance";
+                        $result = mysqli_query($conn, $sql);
+
+                        while ($row = mysqli_fetch_assoc($result)) {
+                            echo "<option value=" . $row['year'] . ">" . $row['year'] . "</option>";
+                        }
                         ?>
 
-            </select>
-            <button type="submit" class='btn btn-primary '>Confirm</button>
-            </form>
-        </div>
+                    </select>
+                    <button type="submit" class='btn btn-primary '>Confirm</button>
+                </form>
+            </div>
 
-    </div>
-    <div class="container p-5 mt-5 col-12 text-nowrap text-center">
-    <?php
-    
+        </div>
+        <div class="container p-5 mt-5 col-12 text-nowrap text-center">
+            <?php
+
             $year = date('Y');
-    
+
             if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 if (isset($_POST['year'])) {
                     $year = $_POST['year'];
-                    
+
                 }
 
             }
-    ?>
-        <table class="table" id="myTable">
-            <thead>
-                <tr>
-                    <th class="text-center" scope="col">Sno.</th>
-                    <th class="text-center" scope="col">Month</th>
-                    <th class="text-center" scope="col">Year</th>
-                    <th class="text-center" scope="col">Id</th>
-                    <th class="text-center" scope="col">Name</th>
-                    <th class="text-center" scope="col">In-Time</th>
-                    <th class="text-center" scope="col">Out-Time</th>
-                    <th class="text-center" scope="col">Attendance</th>
+            ?>
+            <table class="table" id="myTable">
+                <thead>
+                    <tr>
+                        <th class="text-center" scope="col">Sno.</th>
+                        <th class="text-center" scope="col">Month</th>
+                        <th class="text-center" scope="col">Year</th>
+                        <th class="text-center" scope="col">Id</th>
+                        <th class="text-center" scope="col">Name</th>
+                        <th class="text-center" scope="col">In-Time</th>
+                        <th class="text-center" scope="col">Out-Time</th>
+                        <th class="text-center" scope="col">Attendance</th>
 
-                </tr>
-            </thead>
-            <tbody>
-                <?php
-                $sql = "SELECT faculty.name , attendance.* from faculty INNER JOIN attendance ON faculty.fac_id=attendance.fac_id where attendance.year= $year";
-                $result = mysqli_query($conn, $sql);
-                while ($row = mysqli_fetch_assoc($result)) {
-                    echo "   <tr>
-            <td>" . $row['sno'] . "</td>
-            <td>" . $row['month'] . "  </td>
-            <td>" . $row['year'] . " </td>
-            <td>" . $row['fac_id'] . " </td>
-            <td>" . $row['name'] . " </td>
-            <td> " . $row['inTime'] . " </td>
-            <td>" . $row['outTime'] . " </td>
-            <td>" . $row['attendance'] . " </td>
-        
-        
-          </tr>";
-                }
-                ?>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php
+
+                    // for ($i=1; $i <=25; $i++) { 
+                    //     # code...
+                    //     $lazy = "INSERT INTO `attendance` (`sno`, `month`, `year`, `fac_id`, `inTime`, `outTime`, `attendance`) VALUES (NULL, '6', '2024', 'C1', '2024-06-0$i 09:20:52.121000', '2024-06-0$i 05:20:52.475000', '1')";
+                    //     mysqli_query($conn,$lazy);
+                    // }
+                    
+                    $months = array(
+                        1 => "January",
+                        2 => "February",
+                        3 => "March",
+                        4 => "April",
+                        5 => "May",
+                        6 => "June",
+                        7 => "July",
+                        8 => "August",
+                        9 => "September",
+                        10 => "October",
+                        11 => "November",
+                        12 => "December"
+                    );
 
 
-            </tbody>
-        </table>
-    </div>
+
+                    $sno = 1;
+                    $faculty = [];
+                    $facSql = "Select distinct fac_id from attendance";
+                    $result = mysqli_query($conn, $facSql);
+                    while ($row = mysqli_fetch_assoc($result)) {
+                        array_push($faculty, $row['fac_id']);
+                    }
+
+                    foreach ($faculty as $facKey => $fac) {
+
+
+                        for ($i = 1; $i <= 12; $i++) {
+
+                            $checkMonth = "select fac_id from attendance where month = $i and attendance =1";
+                            $checkMonthRes = mysqli_query($conn, $checkMonth);
+                            $monthCount = mysqli_num_rows($checkMonthRes);
+                            if ($monthCount < 1) {
+                                break;
+                            }
+
+                            $sql = "select faculty.name, attendance.*, count(attendance) as count from faculty inner join attendance on faculty.fac_id = attendance.fac_id where attendance.month = $i and attendance.attendance =1 and attendance.fac_id ='$fac' ";
+                            $newRes = mysqli_query($conn, $sql);
+
+
+                            while ($row = mysqli_fetch_assoc($newRes)) {
+                                if (isset($row['month'])) {
+
+                                    $month = $row['month'];
+                                }
+
+                                echo "   <tr>
+                        <td>" . $sno . "</td>
+                        <td>" . $months[$month] . "  </td>
+                        <td>" . $row['year'] . " </td>
+                        <td>" . $row['fac_id'] . " </td>
+                        <td>" . $row['name'] . " </td>
+                        <td> " . $row['inTime'] . " </td>
+                        <td>" . $row['outTime'] . " </td>
+                        <td>" . $row['count'] . " </td>
+                    
+
+                      </tr>";
+                                $sno++;
+                            }
+                        }
+                    }
+                    ?>
+
+
+
+
+                </tbody>
+            </table>
+        </div>
     </div>
 </body>
 
@@ -168,7 +224,7 @@ if (!isset($_SESSION['logedin'])) {
 
     $(document).ready(function () {
         $('#myTable').DataTable({
-            
+
             "aaSorting": [],
             dom: 'Blfrtip',
 
