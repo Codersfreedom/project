@@ -74,8 +74,8 @@ if (!isset($_SESSION['logedin'])) {
                 <tbody>
                     <?php
 
-                    $currMonth= date('m');
-                    $currYear= date('Y');
+                    $currMonth= 4;
+                    $currYear= 2025;
                     $financialYear = $currYear-1 . "-" . $currYear;
                     $facultyIdSql= "select fac_id from faculty";
                     $result = mysqli_query($conn, $facultyIdSql);
@@ -83,25 +83,30 @@ if (!isset($_SESSION['logedin'])) {
                     while($row = mysqli_fetch_assoc($result)){
                         array_push($facIds, $row['fac_id']);
                     }
-                    if($currMonth > 3){
-                        //? Call the function
+                    // print_r($facIds);
+                    foreach($facIds as $facId){
+                        if($currMonth > 3){
+                            //? Call the function
+                            refundCalculation($facId); //! Need to checking  existence of refund amount for this faculty
+                        }
                     }
-                    refundCalculation('C1');
                     function refundCalculation($facId){
                         global $conn;
                         global $financialYear;
                         $totalPaySql= "Select sum(payAmount) as totalPay from payroll where fac_id = '$facId' and financial_year = '$financialYear'";
+                        
                         $result = mysqli_query($conn, $totalPaySql);
                         $row = mysqli_fetch_assoc($result);
                         $totalPay = $row['totalPay'];
-                        $totalTaxSql="Select tax from tax where fac_id = '$facId' and financial_year = '$financialYear'";
+                        
+                        $totalTaxSql="Select sum(tax) as tax from payroll where fac_id = '$facId' and financial_year = '$financialYear'";
                         $result = mysqli_query($conn, $totalTaxSql);
                         $row = mysqli_fetch_assoc($result);
                         $totalTax = $row['tax'];
                         $annualIncome=$totalPay+$totalTax;
-                        $tax = taxCalculation(670000);
+                        $tax = taxCalculation($annualIncome); //? Tax on actual annual income
                         $refundAmount = $totalTax-$tax;
-                        $refundSql = "update tax set refund_amount = $refundAmount where fac_id = '$facId' and financial_year = '$financialYear'";
+                        $refundSql = "insert into tax (fac_id,financial_year,refund_amount,refund_status) Values ('$facId','$financialYear',$refundAmount,0)";
                         mysqli_query($conn, $refundSql);
                         
                     }
@@ -130,7 +135,7 @@ if (!isset($_SESSION['logedin'])) {
                     $result = mysqli_query($conn, $sql);
                     $sr = 1;
                     while ($row = mysqli_fetch_assoc($result)) {
-                        $month = date_create_from_format("m", $row['refund_month']);
+                        
                         $date = date_parse($row['refund_date']);
                         $monthNo = $date['month'] < 10 ? "0" . $date['month'] : $date['month'];
                         $day = $date['day'] < 10 ? "0" . $date['day'] : $date['day'];

@@ -88,9 +88,9 @@ if (!isset($_SESSION['logedin'])) {
             <?php
             //? Current Month
             //TODO: Change the month to current month
-            $currMonth = 3;
+            $currMonth = 1;
             //? Current Year
-            $currYear = date('Y');
+            $currYear = 2025;
             //? getting fac_id from faculty table
             $faculty = array();
             $facSql = "SELECT fac_id FROM faculty";
@@ -113,9 +113,18 @@ if (!isset($_SESSION['logedin'])) {
 
             //? Getting Attendance from database
             $calMonth = $currMonth - 1;
+            if($currMonth==1){
+                $calMonth=12;
+            }
+
             $facAtt = array();
+            
+            $crYear=$currYear;
+            if($currMonth==1){
+                $crYear=$crYear-1;
+            }
             foreach ($faculty as $fac) {
-                $facAttSql = "SELECT count(attendance) as att FROM attendance where fac_id='$fac' and month=$calMonth and year=$currYear and attendance=1";
+                $facAttSql = "SELECT count(attendance) as att FROM attendance where fac_id='$fac' and month=$calMonth and year=$crYear and attendance=1";
                 $facAttResult = mysqli_query($conn, $facAttSql);
                 //* Faculty and attendance associative array
                 while ($facAttRow = mysqli_fetch_assoc($facAttResult)) {
@@ -123,7 +132,7 @@ if (!isset($_SESSION['logedin'])) {
                 }
             }
 
-            //print_r($facAtt);
+            print_r($facAtt);
             
 
             function payroll($conn, $facSal, $currMonth, $facAtt)
@@ -136,9 +145,12 @@ if (!isset($_SESSION['logedin'])) {
 
                     if ($currMonth == 1) {
                         $calMonth = 12;
-                        $calYear = date('Y') - 1;
+                        $calYear = 2024; //! need to change
                         $salPerDay = $fs / 31;
+                        
                         $Attendance = isset($facAtt[$fac]) ? $facAtt[$fac] : 0;
+                        echo $Attendance;
+                        echo "<br/>";
                         SalaryCalculation($conn, $fac, $fs, $salPerDay, $Attendance, $calMonth, $calYear);
                         //echo "<br>";
                     } else {
@@ -220,17 +232,8 @@ if (!isset($_SESSION['logedin'])) {
                     $tax=150000+($taxable-1500000)*30/100;
                 }
 
-                $monthlyTax=$tax/12;
-                //? Fetching tax from database
-                $taxSql="SELECT tax from tax where fac_id='$fac_id'";
-                $taxResult=mysqli_query($conn,$taxSql);
-                $taxRow=mysqli_fetch_assoc($taxResult);
-                $totalTax=round($taxRow['tax']+ $monthlyTax);
-
-                //? Monthly Tax update in database
-                $taxUpdateSql="UPDATE tax SET tax=$totalTax WHERE fac_id='$fac_id'";
-                mysqli_query($conn,$taxUpdateSql);
-                return $monthlyTax;
+        
+                return $tax/12;
                 // echo $totalTax;
             
             }
@@ -263,13 +266,16 @@ if (!isset($_SESSION['logedin'])) {
                 $tax = taxCalculation($facSal, $fac_id, $conn);
                 $newSal = $newSal - $tax;
                 global $financialYear;
-                $payrollSql = "INSERT INTO payroll (fac_id,payAmount,payMonth,financial_year,status) VALUES ('$fac_id',$newSal,$calMonth,'$financialYear',0)";
+                $payrollSql = "INSERT INTO payroll (fac_id,payAmount,payMonth,tax,financial_year,status) VALUES ('$fac_id',$newSal,$calMonth,$tax,'$financialYear',0)";
                 $payrollResult = mysqli_query($conn, $payrollSql);
                 
                 //echo ($newSal);
             }
 
             $calMonth = $currMonth - 1;
+            if($currMonth==1){
+                $calMonth=12;
+            }
             $payrollExistSql = "select *from payroll where payMonth = $calMonth";
             $payrollExistResult = mysqli_query($conn, $payrollExistSql);
             if (mysqli_num_rows($payrollExistResult) < 1) {
@@ -306,7 +312,7 @@ if (!isset($_SESSION['logedin'])) {
                     <?php
                     $currYear=date('Y');
                     $financialYear=$currYear-1 ."-".$currYear;
-                    $sql = "SELECT faculty.name as faculty , payroll.* from faculty inner join payroll on faculty.fac_id = payroll.fac_id WHERE payroll.financial_year='$financialYear' order by payroll.slNo asc";
+                    $sql = "SELECT faculty.name as faculty , payroll.* from faculty inner join payroll on faculty.fac_id = payroll.fac_id order by payroll.slNo asc";
                     $result = mysqli_query($conn, $sql);
                     $sr = 1;
                     while ($row = mysqli_fetch_assoc($result)) {
