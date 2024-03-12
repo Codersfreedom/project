@@ -61,7 +61,7 @@ if (!isset($_SESSION['logedin'])) {
                 <tbody>
                     <?php
 
-                    $sql = "select fac_id, name, increment_amount,status from faculty where status=0 ";
+                    $sql = "select fac_id, name, increment_amount,status from faculty ";
                     $result = mysqli_query($conn, $sql);
                     $sr = 1;
                     while ($row = mysqli_fetch_assoc($result)) {
@@ -104,7 +104,7 @@ if (!isset($_SESSION['logedin'])) {
                 $facId = $_POST['faculty'];
                 $amount = $_POST['increment'];
                 $status = $_POST['status'];
-                $sql = "UPDATE `faculty` SET `increment_amount`=0,`status`=1 WHERE `fac_id` ='$facId'";
+                $sql = "UPDATE `faculty` SET `increment_amount`=0,`status`=$status WHERE `fac_id` ='$facId'";
                 mysqli_query($conn, $sql);
             }
 
