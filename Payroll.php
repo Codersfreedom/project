@@ -140,12 +140,12 @@ if (!isset($_SESSION['logedin'])) {
 
                 //* Current month taking
             // echo $currMonth;
-
+            global $currYear;
                 foreach ($facSal as $fac => $fs) {
 
                     if ($currMonth == 1) {
                         $calMonth = 12;
-                        $calYear = 2024; //! need to change
+                        $calYear = $currYear-1; //! need to change
                         $salPerDay = $fs / 31;
                         
                         $Attendance = isset($facAtt[$fac]) ? $facAtt[$fac] : 0;
@@ -241,7 +241,6 @@ if (!isset($_SESSION['logedin'])) {
            
 
 
-            $currYear=date('Y');
             $financialYear="";
             if($currMonth>3){
                 $financialYear=$currYear ."-".$currYear+1;

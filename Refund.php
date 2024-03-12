@@ -74,8 +74,8 @@ if (!isset($_SESSION['logedin'])) {
                 <tbody>
                     <?php
 
-                    $currMonth= 4;
-                    $currYear= 2025;
+                    $currMonth= date('m'); //! For Presentation change here
+                    $currYear= date('Y'); //! For Presentation change here
                     $financialYear = $currYear-1 . "-" . $currYear;
                     $facultyIdSql= "select fac_id from faculty";
                     $result = mysqli_query($conn, $facultyIdSql);
@@ -87,7 +87,11 @@ if (!isset($_SESSION['logedin'])) {
                     foreach($facIds as $facId){
                         if($currMonth > 3){
                             //? Call the function
-                            refundCalculation($facId); //! Need to checking  existence of refund amount for this faculty
+                            $refundExistSql="SELECT * FROM tax where fac_id='$facId' and financial_year='$financialYear'";
+                            $result = mysqli_query($conn, $refundExistSql);
+                            if(mysqli_num_rows($result)==0){
+                            refundCalculation($facId);
+                            }
                         }
                     }
                     function refundCalculation($facId){
