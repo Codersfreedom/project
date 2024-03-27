@@ -35,7 +35,7 @@
     $phone = $row['phone'];
     $experience = $row['experience'];
     $basic = $row['basic_salary'];
-
+    $area = $row['area'];
 
     $wlSql = "select totalWL from total_wl join faculty on  total_wl.fac_id = faculty.fac_id WHERE faculty.fac_id = '$facid'";
     $wlRow = mysqli_fetch_assoc(mysqli_query($conn, $wlSql));
@@ -58,16 +58,16 @@
     $workload = $_POST['workload'];
     $experience = $_POST['experience'];
     $basic = $_POST['basic'];
+    $Area = $_POST['area'];
 
-
-    echo $experience;
+    
 
 
 
 
     // sql update
   
-    $sql = "UPDATE `faculty` SET  `name` = '$Name', `designation` = '$Designation' , `alias` = '$Alias', `email` = '$Email', `phone` ='$Phone', `experience` =$experience,`basic_salary`=$basic  WHERE `fac_id` = '$Facid'";
+    $sql = "UPDATE `faculty` SET  `name` = '$Name', `designation` = '$Designation' , `alias` = '$Alias', `email` = '$Email', `area` = '$Area', `phone` ='$Phone', `experience` =$experience,`basic_salary`=$basic  WHERE `fac_id` = '$Facid'";
     $result = mysqli_query($conn, $sql);
     $WlUpdateSql = "UPDATE total_wl SET totalWL=$workload WHERE fac_id = '$Facid'";
     $WlupdateRes = mysqli_query($conn, $WlUpdateSql);
@@ -108,11 +108,8 @@
       <div class="form-group">
         <label for="select">Designation</label>
         <select class="form-control" id="select" name="designation">
-          <option selected>
-            <?php echo $designation; ?>
-          </option>
-          <option>Professor</option>
-          <option>Asst. Professor</option>
+          <option <?php echo $designation === 'Professor' ? 'selected':'' ?> >Professor</option>
+          <option <?php echo $designation === 'Asst. Professor' ? 'selected':'' ?> >Asst. Professor</option>
         </select>
       </div>
 
@@ -133,8 +130,19 @@
       </div>
 
       <div class="form-group">
+        <label for="area">Area</label>
+        <select class="form-control" id="area" name="area">
+        
+         <option <?php echo $area ==='Metropliton(X)' ? 'selected' :''?> >Metropliton(X)</option>
+          <option <?php echo $area ==='Urban(Y)' ? 'selected' :''?> >Urban(Y)</option>
+          <option <?php echo $area ==='Rural(Z)' ? 'selected' :''?> >Rural(Z)</option>' 
+        </select>
+      </div>
+
+
+      <div class="form-group">
         <label for="experience">Experience</label>
-        <input type="number" class="form-control" id="experience" name="experience" value="<?php echo $experience; ?>">
+        <input type="number" class="form-control" id="experience" max="5" name="experience" value="<?php echo $experience; ?>">
       </div>
 
       <div class="form-group">

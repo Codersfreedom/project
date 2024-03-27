@@ -39,9 +39,9 @@ if (!isset($_SESSION['logedin'])) {
 
   <style>
     .alert {
-      width: 400px;
+      width: 350px;
       /* margin-left: 150px; */
-      left: 520px;
+      left: 460px;
 
 
 
@@ -72,10 +72,20 @@ if (!isset($_SESSION['logedin'])) {
       $workload = $_POST['workload'];
       $experience = $_POST['experience'];
       $basic = $_POST['basic'];
+      $address = $_POST['address'];
+      $area = $_POST['area'];
 
       //? Current Year
-      $currYear = date('y');
-      
+      $currYear = date('Y');
+      $currMonth = date('m');
+
+      if($currMonth >3 ){
+        $financial_year = $currYear . '-' . $currYear + 1;
+
+      }else{
+        $financial_year = $currYear-1 .'-'. $currYear;
+      }
+
       // Check if faculty id already exists or not
     
       $existsql = "SELECT * FROM `faculty` WHERE `fac_id` = '$facid'";
@@ -88,8 +98,8 @@ if (!isset($_SESSION['logedin'])) {
       } else {
 
         // insert into faculty table
-        $financial_year = $currYear .'-'.  $currYear + 1;
-        $sql = "INSERT INTO `faculty`(`fac_id`, `name`, `alias`, `designation`, `phone`, `email`,`experience`,`basic_salary`,`financial_year`) VALUES ('$facid','$name','$alias','$designation',$phone,'$email',$experience,$basic,'$financial_year')";
+
+        $sql = "INSERT INTO `faculty`(`fac_id`, `name`, `alias`, `designation`, `phone`, `email`, `addr`, `area`, `experience`,`basic_salary`,`financial_year`) VALUES ('$facid','$name','$alias','$designation',$phone,'$email', '$address','$area'  ,$experience,$basic,'$financial_year')";
         $result = mysqli_query($conn, $sql);
 
         // insert into totalworkload table
@@ -106,7 +116,7 @@ if (!isset($_SESSION['logedin'])) {
         // insert into fac_status table
         $days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"];
 
-        foreach ($days as $day) { 
+        foreach ($days as $day) {
 
           $sql = "insert into fac_status (day,fac_id,slot1,slot2,slot3,slot4,slot5,slot6,slot7) values('$day','$facid',1,1,1,1,1,1,1)";
           mysqli_query($conn, $sql);
@@ -115,7 +125,7 @@ if (!isset($_SESSION['logedin'])) {
         }
         // insert into tax table
     
-        $taxInsertSql = "insert into tax (fac_id,tax,total_pay,year,refund_amount) values('$facid',0,0,$currYear,0)";
+        $taxInsertSql = "insert into tax (fac_id,tax,total_pay,financial_year,refund_amount) values('$facid',0,0,$financial_year,0)";
         $insertTaxRes = mysqli_query($conn, $taxInsertSql);
 
 

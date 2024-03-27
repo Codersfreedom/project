@@ -72,6 +72,21 @@
               <input type="email" class="form-control" id="email" name="email" placeholder="Enter the email address">
             </div>
 
+            <div class="form-group">
+              <label for="address">Address</label>
+              <input type="text" class="form-control" id="address" name="address" placeholder="Enter the address">
+            </div>
+
+            <div class="form-group">
+              <label for="area">Area</label>
+              <select class="form-control" id="area" name="area" required >
+                <option>Metropoliton(X)</option>
+                <option>Urban(Y)</option>
+                <option>Rural(Z)</option>
+               
+              </select>
+            </div>
+
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>

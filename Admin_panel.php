@@ -352,9 +352,8 @@ require 'partials/dbconnect.php';
             </li>
 
             <li class="sidebar-item">
-              <a class="sidebar-link waves-effect waves-dark sidebar-link" href="Refund.php"
-                aria-expanded="false"><i class="mdi mdi-receipt"></i><span
-                  class="hide-menu">Refund</span></a>
+              <a class="sidebar-link waves-effect waves-dark sidebar-link" href="Refund.php" aria-expanded="false"><i
+                  class="mdi mdi-receipt"></i><span class="hide-menu">Refund</span></a>
             </li>
           </ul>
         </nav>
@@ -548,7 +547,136 @@ require 'partials/dbconnect.php';
           </div>
         </div>
 
+        <div class="row">
+          <div class="col-md-6">
+            <div class="card">
+              <form class="form-horizontal" action="allowance.php" method="post">
+                <div class="card-body">
+                  <h4 class="card-title">Allowance info</h4>
+                  <div class="form-group row">
+                    <label for="da" class="col-sm-3 text-start control-label col-form-label">Dearness Allowance</label>
+                    <div class="col-sm-9">
+                      <input type="number" class="form-control" min="0" max="100" id="da" name="da" placeholder="eg.46">
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label for="pt" class="col-sm-3 text-start control-label col-form-label">Professional Tax</label>
+                    <div class="col-sm-9">
+                      <input type="number" class="form-control" min="0"  id="pt" name="pt"
+                        placeholder="eg.200">
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label for="pf" class="col-sm-3 text-start  control-label col-form-label">Provident Fund</label>
+                    <div class="col-sm-9">
+                      <input type="number" class="form-control" min="0" max="100" id="pf" name="pf" placeholder="eg.12">
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label for="Hra" class="col-sm-3 text-start  control-label col-form-label">House Rent
+                      Allowance</label>
+                    <div class="col-sm-9">
+                      <input type="number" class="form-control" min="0" max="100" id="hra" name="hra" placeholder="eg. ">
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label for="ma" class="col-sm-3 text-start control-label col-form-label">Medical Allowance</label>
+                    <div class="col-sm-9">
+                      <input type="number" class="form-control" min="0" max="100" id="ma" name="ma" placeholder="eg. ">
+                    </div>
+                  </div>
 
+                </div>
+                <div class="border-top">
+                  <div class="card-body">
+                    <button type="submit" class="btn btn-primary">
+                      Submit
+                    </button>
+                  </div>
+                </div>
+              </form>
+            </div>
+
+          </div>
+
+          <div class="col-md-6">
+
+          <div class="card">
+
+          <?php 
+
+            require 'partials/dbconnect.php';
+            $sql = "select * from allowance";
+            $result = mysqli_query($conn,$sql);
+            $row = mysqli_fetch_assoc($result);
+
+            ?>
+
+                <div class="card-body">
+                  <h4 class="card-title mb-0">Progress Box</h4>
+                  <div class="mt-3">
+                    <div class="d-flex no-block align-items-center">
+                      <span> Dearness Allowance </span>
+                      <div class="ms-auto">
+                        <span><?php echo $row['Dearness_allowance']; ?></span>
+                      </div>
+                    </div>
+                    <div class="progress">
+                      <div class="progress-bar progress-bar-striped" role="progressbar" <?php echo "style = width:" .($row['Dearness_allowance']) . '%' ?>    aria-valuenow="10" aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+                  </div>
+                  <div>
+                    <div class="d-flex no-block align-items-center mt-4">
+                      <span>Professional Tax</span>
+                      <div class="ms-auto">
+                        <span><?php echo $row['Professional_tax'] ?> </span>
+                      </div>
+                    </div>
+                    <div class="progress">
+                      <div class="progress-bar progress-bar-striped bg-success" role="progressbar" <?php echo "style = width:" .($row['Professional_tax']) . '%' ?> aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+                  </div>
+                  <div>
+                    <div class="d-flex no-block align-items-center mt-4">
+                      <span>Provident Fund</span>
+                      <div class="ms-auto">
+                        <span><?php echo $row['Provident_fund'] ?></span>
+                      </div>
+                    </div>
+                    <div class="progress">
+                      <div class="progress-bar progress-bar-striped bg-info" role="progressbar"  <?php echo "style = width:" .($row['Provident_fund']) . '%' ?> aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+                  </div>
+                  <div>
+                    <div class="d-flex no-block align-items-center mt-4">
+                      <span>House Rent Allowance</span>
+                      <div class="ms-auto">
+                        <span><?php echo $row['House_rent_allowance'] ?></span>
+                      </div>
+                    </div>
+                    <div class="progress">
+                      <div class="progress-bar progress-bar-striped bg-danger" role="progressbar"  <?php echo "style = width:" .($row['House_rent_allowance']) . '%' ?> aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+                  </div>
+
+                  <div>
+                    <div class="d-flex no-block align-items-center mt-4">
+                      <span>Medical Allowance</span>
+                      <div class="ms-auto">
+                        <span><?php echo $row['Medical_allowance'] ?></span>
+                      </div>
+                    </div>
+                    <div class="progress">
+                      <div class="progress-bar progress-bar-striped bg-danger" role="progressbar"  <?php echo "style = width:" .($row['Medical_allowance']) . '%' ?> aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+
+          </div>
+
+        </div>
 
 
       </div>
