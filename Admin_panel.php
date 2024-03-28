@@ -572,7 +572,7 @@ require 'partials/dbconnect.php';
                   <div class="form-group row" title="It will be in 0% - 100%">
                     <label for="da" class="col-sm-3 text-start control-label col-form-label">Dearness Allowance</label>
                     <div class="col-sm-9">
-                      <input type="number" class="form-control" min="0" max="100" id="da" name="da" value=" <?php echo $row['Dearness_allowance']  ?> " placeholder="0% - 100%">
+                      <input type="number" class="form-control" min="0" max="100" id="da" name="da" value="<?php echo $row['Dearness_allowance']  ?>" placeholder="0% - 100%">
                     </div>
                   </div>
                   <div class="form-group row" >
@@ -589,9 +589,9 @@ require 'partials/dbconnect.php';
                     </div>
                   </div>
                   <div class="form-group row">
-                    <label for="Hrax" class="col-sm-3 text-start  control-label col-form-label">HRA for metropliton</label> 
+                    <label for="Hrax" class="col-sm-3 text-start  control-label col-form-label">HRA for metropolitan</label> 
                     <div class="col-sm-9">
-                      <input type="number" class="form-control" title="House Rent allowance for metropliton" value="<?php echo $row['House_rent_allowance_X']  ?>" min="0" max="100" id="hrax" name="hrax" placeholder="0% - 100%">
+                      <input type="number" class="form-control" title="House Rent allowance for metropolitan" value="<?php echo $row['House_rent_allowance_X']  ?>" min="0" max="100" id="hrax" name="hrax" placeholder="0% - 100%">
                     </div>
                   </div>
                   <div class="form-group row">

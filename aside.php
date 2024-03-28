@@ -1,6 +1,6 @@
 <style>
   .left-sidebar {
-
+    
     width: 170px;
 
   }
