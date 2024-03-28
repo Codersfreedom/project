@@ -94,9 +94,10 @@ if (!isset($_SESSION['logedin'])) {
             <?php
             //? Current Month
             //TODO: Change the month to current month
-            $currMonth = 1;
+            $currMonth = date('m');
+            
             //? Current Year
-            $currYear = 2025;
+            $currYear = date('Y');
             //? getting fac_id from faculty table
             $faculty = array();
             $facSql = "SELECT fac_id FROM faculty";

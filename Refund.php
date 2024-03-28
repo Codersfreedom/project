@@ -74,8 +74,8 @@ if (!isset($_SESSION['logedin'])) {
                 <tbody>
                     <?php
 
-                    $currMonth= date('m'); //! For Presentation change here
-                    $currYear= date('Y'); //! For Presentation change here
+                    $currMonth= 4;//! For Presentation change here
+                    $currYear= 2025; //! For Presentation change here
                     $financialYear = $currYear-1 . "-" . $currYear;
                     $facultyIdSql= "select fac_id from faculty";
                     $result = mysqli_query($conn, $facultyIdSql);

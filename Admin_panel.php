@@ -63,6 +63,14 @@ require 'partials/dbconnect.php';
     .custom-tooltip:hover::after {
       opacity: 1;
     }
+    input::-webkit-inner-spin-button,
+    input::-webkit-outer-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+    input[type="number"]{
+      -moz-appearance: textfield
+    }
   </style>
 </head>
 
@@ -553,36 +561,36 @@ require 'partials/dbconnect.php';
               <form class="form-horizontal" action="allowance.php" method="post">
                 <div class="card-body">
                   <h4 class="card-title">Allowance info</h4>
-                  <div class="form-group row">
+                  <div class="form-group row" title="It will be in 0% - 100%">
                     <label for="da" class="col-sm-3 text-start control-label col-form-label">Dearness Allowance</label>
                     <div class="col-sm-9">
-                      <input type="number" class="form-control" min="0" max="100" id="da" name="da" placeholder="eg.46">
+                      <input type="number" class="form-control" min="0" max="100" id="da" name="da" placeholder="0% - 100%">
                     </div>
                   </div>
                   <div class="form-group row">
                     <label for="pt" class="col-sm-3 text-start control-label col-form-label">Professional Tax</label>
                     <div class="col-sm-9">
                       <input type="number" class="form-control" min="0"  id="pt" name="pt"
-                        placeholder="eg.200">
+                        placeholder="Amount">
                     </div>
                   </div>
                   <div class="form-group row">
                     <label for="pf" class="col-sm-3 text-start  control-label col-form-label">Provident Fund</label>
                     <div class="col-sm-9">
-                      <input type="number" class="form-control" min="0" max="100" id="pf" name="pf" placeholder="eg.12">
+                      <input type="number" class="form-control" min="0" max="100" id="pf" name="pf" placeholder="0% - 100%">
                     </div>
                   </div>
                   <div class="form-group row">
                     <label for="Hra" class="col-sm-3 text-start  control-label col-form-label">House Rent
                       Allowance</label>
                     <div class="col-sm-9">
-                      <input type="number" class="form-control" min="0" max="100" id="hra" name="hra" placeholder="eg. ">
+                      <input type="number" class="form-control" min="0" max="100" id="hra" name="hra" placeholder="0% - 100%">
                     </div>
                   </div>
                   <div class="form-group row">
                     <label for="ma" class="col-sm-3 text-start control-label col-form-label">Medical Allowance</label>
                     <div class="col-sm-9">
-                      <input type="number" class="form-control" min="0" max="100" id="ma" name="ma" placeholder="eg. ">
+                      <input type="number" class="form-control" min="0"  id="ma" name="ma" placeholder="Amount">
                     </div>
                   </div>
 
