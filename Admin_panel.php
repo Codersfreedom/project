@@ -558,39 +558,58 @@ require 'partials/dbconnect.php';
         <div class="row">
           <div class="col-md-6">
             <div class="card">
+
+            <?php
+               
+              $sql = "select *from allowance";
+              $result = mysqli_query($conn,$sql);
+              $row = mysqli_fetch_assoc($result);
+            ?>
+
               <form class="form-horizontal" action="allowance.php" method="post">
                 <div class="card-body">
                   <h4 class="card-title">Allowance info</h4>
                   <div class="form-group row" title="It will be in 0% - 100%">
                     <label for="da" class="col-sm-3 text-start control-label col-form-label">Dearness Allowance</label>
                     <div class="col-sm-9">
-                      <input type="number" class="form-control" min="0" max="100" id="da" name="da" placeholder="0% - 100%">
+                      <input type="number" class="form-control" min="0" max="100" id="da" name="da" value=" <?php echo $row['Dearness_allowance']  ?> " placeholder="0% - 100%">
                     </div>
                   </div>
-                  <div class="form-group row">
+                  <div class="form-group row" >
                     <label for="pt" class="col-sm-3 text-start control-label col-form-label">Professional Tax</label>
                     <div class="col-sm-9">
-                      <input type="number" class="form-control" min="0"  id="pt" name="pt"
+                      <input type="number" class="form-control" min="0" value="<?php echo $row['Professional_tax']  ?>"  id="pt" name="pt"
                         placeholder="Amount">
                     </div>
                   </div>
                   <div class="form-group row">
                     <label for="pf" class="col-sm-3 text-start  control-label col-form-label">Provident Fund</label>
                     <div class="col-sm-9">
-                      <input type="number" class="form-control" min="0" max="100" id="pf" name="pf" placeholder="0% - 100%">
+                      <input type="number" class="form-control" min="0" max="100" id="pf" value="<?php echo $row['Provident_fund']  ?>" name="pf" placeholder="0% - 100%">
                     </div>
                   </div>
                   <div class="form-group row">
-                    <label for="Hra" class="col-sm-3 text-start  control-label col-form-label">House Rent
-                      Allowance</label>
+                    <label for="Hrax" class="col-sm-3 text-start  control-label col-form-label">HRA for metropliton</label> 
                     <div class="col-sm-9">
-                      <input type="number" class="form-control" min="0" max="100" id="hra" name="hra" placeholder="0% - 100%">
+                      <input type="number" class="form-control" title="House Rent allowance for metropliton" value="<?php echo $row['House_rent_allowance_X']  ?>" min="0" max="100" id="hrax" name="hrax" placeholder="0% - 100%">
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label for="Hray" class="col-sm-3 text-start  control-label col-form-label">HRA for Urban</label> 
+                    <div class="col-sm-9">
+                      <input type="number" class="form-control" title="House Rent allowance for Urban" min="0" value="<?php echo $row['House_rent_allowance_Y'] ?>" max="100" id="hray" name="hray" placeholder="0% - 100%">
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label for="Hraz" class="col-sm-3 text-start  control-label col-form-label">HRA for Rural</label> 
+                    <div class="col-sm-9">
+                      <input type="number" class="form-control" title="House Rent allowance for Rural" value="<?php echo $row['House_rent_allowance_Z'] ?>"  min="0" max="100" id="hraz" name="hraz" placeholder="0% - 100%">
                     </div>
                   </div>
                   <div class="form-group row">
                     <label for="ma" class="col-sm-3 text-start control-label col-form-label">Medical Allowance</label>
                     <div class="col-sm-9">
-                      <input type="number" class="form-control" min="0"  id="ma" name="ma" placeholder="Amount">
+                      <input type="number" class="form-control" min="0" value="<?php echo $row['Medical_allowance'] ?>"   id="ma" name="ma" placeholder="Amount">
                     </div>
                   </div>
 
@@ -659,11 +678,11 @@ require 'partials/dbconnect.php';
                     <div class="d-flex no-block align-items-center mt-4">
                       <span>House Rent Allowance</span>
                       <div class="ms-auto">
-                        <span><?php echo $row['House_rent_allowance'] ?></span>
+                        <span><?php echo $row['House_rent_allowance_X'] ?></span>
                       </div>
                     </div>
                     <div class="progress">
-                      <div class="progress-bar progress-bar-striped bg-danger" role="progressbar"  <?php echo "style = width:" .($row['House_rent_allowance']) . '%' ?> aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+                      <div class="progress-bar progress-bar-striped bg-danger" role="progressbar"  <?php echo "style = width:" .($row['House_rent_allowance_X']) . '%' ?> aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
                     </div>
                   </div>
 
