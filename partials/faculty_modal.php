@@ -80,9 +80,9 @@
             <div class="form-group">
               <label for="area">Area</label>
               <select class="form-control" id="area" name="area" required >
-                <option>Metropoliton(X)</option>
-                <option>Urban(Y)</option>
-                <option>Rural(Z)</option>
+                <option value="m" >Metropoliton</option>
+                <option value="u" >Urban</option>
+                <option value="r" >Rural</option>
                
               </select>
             </div>
